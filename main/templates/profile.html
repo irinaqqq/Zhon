@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {% include 'navbar.html' %}
+    <style>
+        /* Add your custom styles here */
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .progress-info {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>User Profile</h1>
+        <div class="profile-info">
+            <img src="{{ profile_info.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+            <p>Name: {{ profile_info.get_name }}</p>
+            <p>User ID: {{ profile_info.get_id }}</p>
+            <!-- You can add more user information here -->
+        </div>
+        <!-- Progress-related information -->
+        <div class="progress-info">
+            <p>Progress Percentage: {{ profile_info.progress_percentage }}%</p>
+            <p>Completed Tasks: {{ profile_info.completed_tasks_count }}</p>
+            <!-- Display tasks count data -->
+            <h2>Tasks Completed</h2>
+            <ul>
+                {% for item in tasks_count_by_date %}
+                    <li>{{ item.completion_date|date:'j F Y' }}: Solved {{ item.count }} task{% if item.count != 1 %}s{% endif %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

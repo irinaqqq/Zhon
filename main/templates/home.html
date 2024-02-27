@@ -1,18 +1,2 @@
-
-    <div>
-        <a href="{% url 'classroom' %}">Classroom</a>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'library' %}">Library</a>
-        {% if user.is_authenticated %}
-        Привет, {{ user.username }}!
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Выйти</button>
-        </form>
-        {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'registration' %}">Registration</a>
-        {% endif %}
-    </div>
-
- 
+{% include 'navbar.html' %}
+{% load static %}

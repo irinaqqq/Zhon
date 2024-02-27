@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 {% load widget_tweaks %}
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title></title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'navbar.html' %}
     <style>
-      body {
-        background-color: #f1f1f1;
-        font-family: Arial, sans-serif;
-      }
       .card {
         background-color: #fff;
         border-radius: 10px;
@@ -18,21 +13,18 @@
         padding: 20px;
         margin-top: 50px;
         margin-bottom: 50px;
+        max-width: 400px;
+        margin-left: auto; /* Align card to the center horizontally */
+        margin-right: auto; /* Align card to the center horizontally */
       }
       h1 {
-        text-align: center;
-        font-size: 2rem;
-        margin-bottom: 20px;
-        color: #333;
-      }
-      p {
-        text-align: center;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        color: #666;
-      }
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
       input[type="submit"] {
-        background-color: #6c63ff;
+        background-color: #333;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -40,48 +32,53 @@
         font-size: 1.2rem;
         cursor: pointer;
         margin-top: 20px;
+        width: 100%;
         transition: all 0.3s ease;
       }
       input[type="submit"]:hover {
-        background-color: #524bd1;
+        background-color: #777;
       }
       label {
-        margin-top: 10px;
         color: #666;
         font-size: 1.2rem;
       }
       input[type="text"],
-      input[type="password"] {
-        border-radius: 5px;
-        border: 1px solid #d9d9d9;
-        padding: 10px;
+      input[type="password"],
+      input[type="email"] {
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
         width: 100%;
-        margin-top: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
       }
-    </style>
-  </head>
-  <body>
 
-    <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-md-center"> <!-- Center the form horizontally -->
+        <div class="col-md-6">
             <div class="card">
-              <form class="box" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h1>ТІРКЕЛУ</h1>
-                <p class="text-muted">Тіркелгі жасау үшін деректеріңізді енгізіңіз!</p>
-                {{ userForm.first_name }}
-                {{ userForm.last_name }}
-                {{ userForm.username }}
-                {{ userForm.password }}
-                {{ userForm.email }}
-                {{ customForm.profile_pic }}
-                <input type="submit" name="" value="Жасау">
-            </form>
-            
+                <form class="box" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h1>ТІРКЕЛУ</h1>
+                    {{ userForm.first_name }}
+                    {{ userForm.last_name }}
+                    {{ userForm.username }}
+                    {{ userForm.password }}
+                    {{ userForm.email }}
+                    {{ customForm.profile_pic }}
+                    <input type="submit" name="" value="Жасау">
+                </form>
+                <div class="register-link">
+                    <p>Егер сізде алғашқы есеп жоқ болса? <a href="{% url 'login' %}">Кіру</a></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-  </body>
+</body>
 </html>

@@ -1,86 +1,84 @@
 <!DOCTYPE html>
 {% load widget_tweaks %}
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% include 'navbar.html' %}
     <style>
-      body {
-        background-color: #f1f1f1;
-        font-family: Arial, sans-serif;
-      }
-      .card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px #d9d9d9;
-        padding: 20px;
-        margin-top: 50px;
-      }
-      h1 {
-        text-align: center;
-        font-size: 2rem;
-        margin-bottom: 20px;
-        color: #333;
-      }
-      .text-muted {
-        text-align: center;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        color: #666;
-      }
-      .form-control {
-        border-radius: 20px;
-        border: none;
-        background-color: #f5f5f5;
-        padding: 20px;
-        margin-bottom: 20px;
-        font-size: 1.2rem;
-        color: #333;
-      }
-      input[type="submit"] {
-        background-color: #428bca;
-        color: #fff;
-        border-radius: 20px;
-        border: none;
-        padding: 10px 30px;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-      input[type="submit"]:hover {
-        background-color: #574ed6;
-      }
-      .navbar-button {
-        padding: 20px 0;
-      }
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px #d9d9d9;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: auto; /* Align card to the center horizontally */
+            margin-right: auto; /* Align card to the center horizontally */
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .text-muted {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .form-control {
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border-radius: 20px;
+            border: none;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto; /* Center the button horizontally */
+        }
+        input[type="submit"]:hover {
+            background-color: #777;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .register-link a {
+            color: #333;
+        }
     </style>
-  </head>
-  <body>
-    <style>
-        .navbar-button {
-            padding: 10px 0;
-          }
-          .largenav{
-            right: 100 px;
-          }
-        </style>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 mx-auto">
-          <div class="card">
-            <form class="box" method="post">
-              {% csrf_token %}
-              <h1>Кіру</h1>
-              <p class="text-muted">Логин мен парольді енгізіңіз!</p>
-              <input type="text" name="username" class="form-control" placeholder="Пайдаланушы аты" required>
-              <input type="password" name="password" class="form-control" placeholder="Құпия сөз" required>
-              <input type="submit" value="Кіру">
-            </form>
-          </div>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-md-center"> <!-- Center the form horizontally -->
+        <div class="col-md-6">
+            <div class="card">
+                <form class="box" method="post">
+                    {% csrf_token %}
+                    <h1>Кіру</h1>
+                    <p class="text-muted">Логин мен парольді енгізіңіз!</p>
+                    <input type="text" name="username" class="form-control" placeholder="Пайдаланушы аты" required>
+                    <input type="password" name="password" class="form-control" placeholder="Құпия сөз" required>
+                    <input type="submit" value="Кіру">
+                </form>
+                <div class="register-link">
+                    <p>Дауысқа тіркелу мүмкін емес пе? <a href="{% url 'registration' %}">Тіркелу</a></p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-  </body>
+</div>
+</body>
 </html>

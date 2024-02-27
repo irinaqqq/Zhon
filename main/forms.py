@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Custom
+from .models import *
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,8 @@ class CustomForm(forms.ModelForm):
         widgets = {
             'profile_pic': forms.FileInput(attrs={'placeholder': 'Профиль суреті'}),
         }
+
+class ClassroomForm(forms.ModelForm):
+    class Meta:
+        model = Classroom
+        fields = ['name', 'description']

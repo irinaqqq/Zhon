@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from main import views
 from django.contrib.auth.views import LogoutView
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('registration/', views.registration_view, name='registration'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
-]
+    path('profile/', views.profile_view, name='profile'),
+    path('admin_panel/', views.admin_panel, name='admin_panel'),
+    path('class/<int:class_id>/edit/', views.edit_class, name='edit_class'),
+]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

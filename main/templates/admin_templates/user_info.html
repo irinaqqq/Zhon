@@ -1,0 +1,60 @@
+<!-- user_info.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+    {% include 'navbar.html' %}
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .user-info {
+        list-style-type: none;
+        padding: 0;
+    }
+    .user-info li {
+        margin-bottom: 20px;
+        padding: 10px;
+        color: #000000;
+        border-radius: 5px;
+    }
+    .user-info li strong {
+        color: #333; /* Change text color to ensure visibility */
+    }
+    </style>
+</head>
+<body>
+    <!-- Include the navbar template -->
+
+
+    <div class="container">
+        <h1>User Information</h1>
+        <ul class="user-info">
+            {% for user in users %}
+            <li>
+                <strong>Username:</strong> {{ user.username }}<br>
+                <strong>Email:</strong> {{ user.email }}<br>
+                <!-- Add more user information fields as needed -->
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

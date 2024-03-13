@@ -24,6 +24,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('classroom/', views.classroom_view, name='classroom'),
+    path('classrooms/<int:classroom_id>/topics/', views.classroom_topics, name='classroom_topics'),
+    path('topics/<int:topic_id>/tasks/', views.topic_tasks, name='topic_tasks'),
+    path('tasks/<int:task_id>/', views.task_text, name='task_text'),
     path('', views.home_view, name='home'),
     path('library/', views.library_view, name='library'),
     path('login/', views.login_view, name='login'),
@@ -31,5 +34,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('profile/', views.profile_view, name='profile'),
     path('admin_panel/', views.admin_panel, name='admin_panel'),
-    path('class/<int:class_id>/edit/', views.edit_class, name='edit_class'),
+    path('class_info/', views.class_info, name='class_info'),
+    path('class_info/<int:class_id>/edit/', views.edit_class, name='edit_class'),
+    path('user_info/', views.user_info, name='user_info'),
+    path('topic_info/', views.topic_info, name='topic_info'),
+    path('topic_info/<int:topic_id>/edit/', views.edit_topic, name='edit_topic'),
+    path('task_info/', views.task_info, name='task_info'),
+    path('task_info/<int:task_id>/edit/', views.edit_task, name='edit_task'),
 ]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

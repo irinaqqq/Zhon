@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Classrooms</title>
+    <title>{{ topic.name }} Tasks</title>
     {% include 'navbar.html' %}
     <style>
         /* Global styles */
@@ -28,14 +28,14 @@
             color: #333;
         }
 
-        /* Classroom list styles */
-        .classroom-list {
+        /* Task list styles */
+        .task-list {
             list-style-type: none;
             padding: 0;
             margin: 0;
         }
 
-        .classroom-item {
+        .task-item {
             background-color: #f9f9f9;
             padding: 10px;
             margin-bottom: 10px;
@@ -43,19 +43,19 @@
             cursor: pointer; /* Добавлен курсор указывающий на возможность клика */
         }
 
-        .classroom-item:hover {
+        .task-item:hover {
             background-color: #e9e9e9;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>All Classrooms</h1>
+        <h1>{{ topic.name }} Tasks</h1>
 
-        <!-- Display all classrooms -->
-        <ul class="classroom-list">
-            {% for classroom in classrooms %}
-                <li class="classroom-item" onclick="window.location.href='{% url 'classroom_topics' classroom.id %}'">{{ classroom.name }}</li>
+        <!-- Display tasks for the selected topic -->
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-item"><a href="{% url 'task_text' task.id %}">{{ task.question }}</a></li>
             {% endfor %}
         </ul>
     </div>

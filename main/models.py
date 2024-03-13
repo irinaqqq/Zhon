@@ -28,19 +28,48 @@ class Custom(models.Model):
     def __str__(self):
         return self.user.first_name
 
-class Task(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    completed = models.BooleanField(default=False)
-    completion_date = models.DateField()
+# class Task(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
+#     completed = models.BooleanField(default=False)
+#     completion_date = models.DateField()
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
     
 
 class Classroom(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
 
     def __str__(self):
         return self.name
+    
+class Topic(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
+    
+class Task(models.Model):
+    QUESTION_TYPE_CHOICES = [
+        ('MCQ', 'Multiple Choice Question'),
+        ('TF', 'True/False Question'),
+        ('SHORT', 'Short Answer Question'),
+        ('LONG', 'Long Answer Question'),
+    ]
+
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True, blank=True)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True)
+    question = models.CharField(max_length=255, null=True, blank=True)
+    question_type = models.CharField(max_length=10, choices=QUESTION_TYPE_CHOICES, default='MCQ')
+    choice1 = models.CharField(max_length=100, blank=True)
+    choice2 = models.CharField(max_length=100, blank=True)
+    choice3 = models.CharField(max_length=100, blank=True)
+    choice4 = models.CharField(max_length=100, blank=True)
+    correct_answer = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.question

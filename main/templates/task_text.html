@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ task.question }}</title>
+    {% include 'navbar.html' %}
+    <style>
+        /* Ваши стили здесь */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ task.question }}</h1>
+
+        <!-- Отображение формы с вариантами ответов -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="task-text">
+                {% if task.question_type == 'MCQ' %}
+                    <input type="radio" id="choice1" name="choice" value="{{ task.choice1 }}">
+                    <label for="choice1">{{ task.choice1 }}</label><br>
+                    <input type="radio" id="choice2" name="choice" value="{{ task.choice2 }}">
+                    <label for="choice2">{{ task.choice2 }}</label><br>
+                    <input type="radio" id="choice3" name="choice" value="{{ task.choice3 }}">
+                    <label for="choice3">{{ task.choice3 }}</label><br>
+                    <input type="radio" id="choice4" name="choice" value="{{ task.choice4 }}">
+                    <label for="choice4">{{ task.choice4 }}</label><br>
+                {% else %}
+                    <!-- Отображение других типов вопросов -->
+                    <!-- Добавьте логику для других типов вопросов -->
+                {% endif %}
+            </div>
+
+            <!-- Кнопка для отправки ответа -->
+            <button type="submit">Submit Answer</button>
+        </form>
+
+        <!-- Отображение результата проверки ответа -->
+        {% if result %}
+            <p>{{ result }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

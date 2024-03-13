@@ -4,3 +4,5 @@ from .models import *
 
 admin.site.register(Task)
 admin.site.register(Custom)
+admin.site.register(Topic)
+admin.site.register(Classroom)

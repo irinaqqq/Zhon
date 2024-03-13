@@ -25,4 +25,20 @@ class CustomForm(forms.ModelForm):
 class ClassroomForm(forms.ModelForm):
     class Meta:
         model = Classroom
-        fields = ['name', 'description']
+        fields = ['name',]
+
+class TopicForm(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['name', 'description', 'classroom']  # Include the 'classroom' field
+
+    def __init__(self, *args, **kwargs):
+        super(TopicForm, self).__init__(*args, **kwargs)
+        # Customize the classroom field
+        self.fields['classroom'].queryset = Classroom.objects.all()
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['topic', 'classroom', 'question', 'question_type', 'choice1', 'choice2', 'choice3', 'choice4', 'correct_answer']

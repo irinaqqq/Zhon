@@ -1,1 +1,1 @@
-web: gunicorn 'Zhon.wsgi'
+web: gunicorn 'ZhonEdu.wsgi'

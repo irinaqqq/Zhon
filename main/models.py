@@ -59,13 +59,29 @@ class Task(models.Model):
     
 
 
+
+    
+
+
+class ClassroomProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    progress_percentage = models.IntegerField(default=0)
+    completed_tasks_count = models.IntegerField(default=0)
+    completed_tasks = models.ManyToManyField(Task, related_name='completed_in_classroom')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.classroom.name}"
+    
+
 class Custom(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to=generate_filename, null=True, blank=True, default="profile_pic/default.png")
 
-    progress_percentage = models.IntegerField(default=0)
-    completed_tasks_count = models.IntegerField(default=0)
-    completed_tasks = models.ManyToManyField(Task, related_name='completed_by')
+    # progress_percentage = models.IntegerField(default=0)
+    # completed_tasks_count = models.IntegerField(default=0)
+    # completed_tasks = models.ManyToManyField(Task, related_name='completed_by')
+    # classroom_progress = models.ManyToManyField(ClassroomProgress, related_name='user_progress')
 
     @property
     def get_name(self):
@@ -78,3 +94,5 @@ class Custom(models.Model):
     def __str__(self):
         return self.user.first_name
     
+
+

@@ -65,5 +65,34 @@
             <button type="submit">Save Changes</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const classroomField = document.getElementById("id_classroom");  // Get the classroom field
+    
+            // Listen for changes in the classroom field
+            classroomField.addEventListener("change", function() {
+                const classroomId = this.value;  // Get the ID of the selected classroom
+                const topicField = document.getElementById("id_topic");  // Get the topic field
+    
+                // Clear the topic field
+                topicField.innerHTML = '';
+    
+                // Send an AJAX request to get topics based on the selected classroom
+                fetch(`/get_topics_by_classroom/${classroomId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate the topic field with the retrieved data
+                        data.forEach(topic => {
+                            const option = document.createElement("option");
+                            option.value = topic.id;
+                            option.text = topic.name;
+                            topicField.add(option);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
 </body>
 </html>

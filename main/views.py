@@ -9,6 +9,11 @@ from datetime import datetime, timedelta
 from .models import *
 from .forms import *
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
+from django.db.models import F
+import logging
+logger = logging.getLogger(__name__)
+
 
 def classroom_view(request):
     classrooms = Classroom.objects.order_by('name')
@@ -25,17 +30,52 @@ def topic_tasks(request, topic_id):
     return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
 
 def task_text(request, task_id):
-    task = Task.objects.get(pk=task_id)
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+
     result = None
 
     if request.method == 'POST':
-        selected_choice = request.POST.get('choice')
-        if selected_choice == task.correct_answer:
-            result = 'Correct!'
+        if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
+            user_answer = request.POST.get('user_answer')
+            if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
+                result = 'Correct!'
+                print('Correct answer submitted')
+                if request.user.is_authenticated:
+                    print('Calling handle_correct_answer')
+                    handle_correct_answer(request.user, task)
+            else:
+                result = 'Incorrect!'
         else:
-            result = 'Incorrect!'
+            selected_choice = request.POST.get('choice')
+            if selected_choice == getattr(task, task.correct_answer):  # Используем getattr для получения значения поля
+                result = 'Correct!'
+                print('Correct choice selected')
+                if request.user.is_authenticated:
+                    print('Calling handle_correct_answer')
+                    handle_correct_answer(request.user, task)
+            else:
+                result = 'Incorrect!'
 
     return render(request, 'task_text.html', {'task': task, 'result': result})
+
+def handle_correct_answer(user, task):
+    # Get or create the Custom object for the user
+    custom_user, created = Custom.objects.get_or_create(user=user)
+    
+    # Check if the task is already completed by the user
+    if not custom_user.completed_tasks.filter(pk=task.pk).exists():
+        # Update the completed tasks count and progress percentage
+        custom_user.completed_tasks_count += 1
+        custom_user.save()
+        
+        # Add the task to the completed tasks list
+        custom_user.completed_tasks.add(task)
+
+
+
 
 def home_view(request):
     context = {'user': request.user}
@@ -91,16 +131,22 @@ def registration_view(request):
 def profile_view(request):
     # Get the user's profile information
     profile_info = Custom.objects.get(user=request.user)
-    
+    total_tasks_count = Task.objects.count()
+    print(total_tasks_count)
+    print(profile_info.completed_tasks_count)
+    profile_info.progress_percentage = (profile_info.completed_tasks_count / total_tasks_count) * 100
+    profile_info.save()
+    print(profile_info.progress_percentage)
+    # classroom_progress = ClassroomProgress.objects.filter(user=request.user)
     # Define start and end dates (for example, for the current month)
     start_date = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_date = start_date.replace(day=1, month=start_date.month+1) - timedelta(days=1)
     
     # Query and count tasks completed by the user within the date range
-    tasks_count_by_date = get_tasks_count_by_date(request.user, start_date, end_date)
+    # tasks_count_by_date = get_tasks_count_by_date(request.user, start_date, end_date)
     
     # Render the profile page template with the profile information and tasks count data
-    return render(request, 'profile.html', {'profile_info': profile_info, 'tasks_count_by_date': tasks_count_by_date})
+    return render(request, 'profile.html', {'profile_info': profile_info,})
 
 def get_tasks_count_by_date(user, start_date, end_date):
     tasks_count_by_date = Task.objects.filter(
@@ -221,3 +267,8 @@ def edit_task(request, task_id):
             form.save()
             return redirect('task_info')
     return render(request, 'admin_templates/edit_task.html', {'topics': topics,'classrooms': classrooms,'form': form, 'task': task})
+
+
+def get_topics_by_classroom(request, classroom_id):
+    topics = Topic.objects.filter(classroom_id=classroom_id).values('id', 'name')
+    return JsonResponse(list(topics), safe=False)

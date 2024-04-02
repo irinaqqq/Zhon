@@ -41,4 +41,5 @@ urlpatterns = [
     path('topic_info/<int:topic_id>/edit/', views.edit_topic, name='edit_topic'),
     path('task_info/', views.task_info, name='task_info'),
     path('task_info/<int:task_id>/edit/', views.edit_task, name='edit_task'),
+    path('get_topics_by_classroom/<int:classroom_id>/', views.get_topics_by_classroom, name='get_topics_by_classroom'),
 ]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

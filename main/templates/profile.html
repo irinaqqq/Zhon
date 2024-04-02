@@ -38,8 +38,8 @@
         </div>
         <!-- Progress-related information -->
         <div class="progress-info">
-            <p>Progress Percentage: {{ profile_info.progress_percentage }}%</p>
-            <p>Completed Tasks: {{ profile_info.completed_tasks_count }}</p>
+            <p>Progress Percentage: {{ request.user.custom.progress_percentage }}%</p>
+            <p>Completed Tasks: {{ request.user.custom.completed_tasks_count }}</p>
             <!-- Display tasks count data -->
             <h2>Tasks Completed</h2>
             <ul>

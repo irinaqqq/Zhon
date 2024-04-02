@@ -42,3 +42,21 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['topic', 'classroom', 'question', 'question_type', 'choice1', 'choice2', 'choice3', 'choice4', 'correct_answer']
+
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        # Ограничиваем выбор топиков только для выбранного класса
+        if 'classroom' in self.fields:
+            self.fields['classroom'].queryset = Classroom.objects.all()  # Все классы доступны для выбора
+
+        if 'topic' in self.fields:
+            self.fields['topic'].queryset = Topic.objects.none()  # Ни один топик пока не доступен
+
+            if 'classroom' in self.data:
+                try:
+                    classroom_id = int(self.data['classroom'])
+                    self.fields['topic'].queryset = Topic.objects.filter(classroom_id=classroom_id)
+                except (ValueError, TypeError):
+                    pass  # Если не удается получить classroom_id, пропускаем
+
+ 

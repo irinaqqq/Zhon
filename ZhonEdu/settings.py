@@ -130,4 +130,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ALLOWED_HOSTS = ['192.168.0.105', 'localhost', '127.0.0.1']
+CSRF_COOKIE_SECURE = True  # Set to True for HTTPS-only
+CSRF_COOKIE_HTTPONLY = True  # Ensures the cookie is accessible only via HTTP (not JavaScript)
 

@@ -8,19 +8,7 @@ def generate_filename(instance, filename):
     extension = filename.split('.')[-1]
     # Generate a unique filename using UUID
     new_filename = f"{uuid.uuid4().hex}.{extension}"
-    return os.path.join('profile_pic', new_filename)
-
-
-
-# class Task(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     name = models.CharField(max_length=100)
-#     completed = models.BooleanField(default=False)
-#     completion_date = models.DateField()
-
-#     def __str__(self):
-#         return self.name
-    
+    return os.path.join('profile_pic', new_filename) 
 
 class Classroom(models.Model):
     name = models.CharField(max_length=100)
@@ -77,11 +65,6 @@ class ClassroomProgress(models.Model):
 class Custom(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to=generate_filename, null=True, blank=True, default="profile_pic/default.png")
-
-    # progress_percentage = models.IntegerField(default=0)
-    # completed_tasks_count = models.IntegerField(default=0)
-    # completed_tasks = models.ManyToManyField(Task, related_name='completed_by')
-    # classroom_progress = models.ManyToManyField(ClassroomProgress, related_name='user_progress')
 
     @property
     def get_name(self):

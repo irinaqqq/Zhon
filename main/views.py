@@ -12,8 +12,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.db.models import F
 import logging
-logger = logging.getLogger(__name__)
+from .serializers import *
+from rest_framework import viewsets
 
+logger = logging.getLogger(__name__)
 
 def classroom_view(request):
     classrooms = Classroom.objects.order_by('name')
@@ -304,3 +306,25 @@ def recalculate_all_progress():
 
 
 
+
+
+
+class ClassroomViewSet(viewsets.ModelViewSet):
+    queryset = Classroom.objects.all()
+    serializer_class = ClassroomSerializer
+
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+class ClassroomProgressViewSet(viewsets.ModelViewSet):
+    queryset = ClassroomProgress.objects.all()
+    serializer_class = ClassroomProgressSerializer
+
+class CustomViewSet(viewsets.ModelViewSet):
+    queryset = Custom.objects.all()
+    serializer_class = CustomSerializer

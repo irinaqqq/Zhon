@@ -133,3 +133,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_COOKIE_SECURE = True  # Set to True for HTTPS-only
 CSRF_COOKIE_HTTPONLY = True  # Ensures the cookie is accessible only via HTTP (not JavaScript)
 
+CSRF_TRUSTED_ORIGINS = [
+‘https://*.railway.app’
+]
+

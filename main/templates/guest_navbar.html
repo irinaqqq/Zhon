@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Home Page</title>
+    <style>
+        .container {
+            background-color: beige;
+        }
+
+        .navbar {
+            position: relative;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <!-- <div class="container"> -->
+        <div class="navbar-outer">
+            <div class="navbar">
+                <ul>
+                    <li><a href="{% url 'home' %}">Logo</a></li>
+                    <li><a href="{% url 'classroom' %}">МЕКТЕП</a></li>
+                    <li><a href="{% url 'library' %}">КІТАПХАНА</a></li>
+                    <li><a onclick="openIns()"><img src="{% static 'img/help (2).png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
+                    <li><a onclick="openSet()"><img src="{% static 'img/settings.png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
+                    
+                    
+                    {% if user.is_authenticated %}
+                        {% if user.is_staff %}
+                            <li><a href="{% url 'admin_panel' %}">Админ беті</a></li>
+                        {% else %}
+                            <li><a href="{% url 'profile' %}">Профиль</a></li>
+                        {% endif %}
+                        <li class="user-info">Сәлем, {{ user.username }}!</li>
+                        <li>
+                            <form class="logout-form" action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="exit-btn">Шығу</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Кіру</a></li>
+                        <li><a href="{% url 'registration' %}">Тіркелу</a></li>
+                    {% endif %}
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+
+       
+        <!-- The overlay -->
+        <div id="set" class="overlay">
+
+            <!-- Overlay content -->
+            <div class="overlay-content">
+                <div class="outer-ins">
+                    <div><a href="javascript:void(0)" class="closebtn" onclick="closeSet()" style="font-family: Chelsea+Market; background-color: #424242;">&times;</a></div>
+                    <div class="inner-ins" style="background-color: #4d4d4d;    border: 1.5vh solid #424242; line-height: 1;">
+                        <h2 style="font-size: 4.5vh; color: white;">Параметрлер</h2>
+
+                        <div class="box sound-box">
+                            <div class="in-box">
+                            <h3>Дыбыс</h3></div>
+                            <div class="in-box-two">
+                                <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                        <div class="box music-box">
+                            <div class="in-box">
+                            <h3>Ән</h3></div>
+                            <div class="in-box-two">
+                                <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                        <div class="box pen-col-box">
+                            <div class="in-box">
+                            <h3>Қалам түсі</h3></div>
+                            <div class="in-box-two">
+                                <button class="pen red" style="background-color: #FF0000;"></button>
+                                <button class="pen orange" style="background-color: #FF7A00;"></button>
+                                <button class="pen yellow" style="background-color: #FAFF00;"></button>
+                                <button class="pen green" style="background-color: #00FF1A;"></button>
+                                <button class="pen skyblue" style="background-color: #00FFFF;"></button>
+                                <button class="pen blue" style="background-color: #1400FF;"></button>
+                                <button class="pen purple" style="background-color: #9E00FF;"></button>
+                                <button class="pen magenta" style="background-color: #FF008A;"></button>
+                            </div>
+                        </div>
+                        <div class="box pen-line-box">
+                            <div class="in-box">
+                            <h3>Қалам қалыңдығы</h3></div>
+                            <div class="in-box-two">
+                                <button class="pen"><img src="{% static 'img/smalline.jpg' %}" alt="s"></button>
+                                <button class="pen"><img src="{% static 'img/midline.jpg' %}" alt="m"></button>
+                                <button class="pen"><img src="{% static 'img/fatline.jpg' %}" alt="l"></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+
+    <script>
+    /* Open */
+    function openIns() {
+        document.getElementById("ins").style.display = "block";
+    }
+
+    /* Close */
+    function closeIns() {
+        document.getElementById("ins").style.display = "none";
+    }
+
+    /* Open */
+    function openSet() {
+        document.getElementById("set").style.display = "block";
+    }
+
+    /* Close */
+    function closeSet() {
+        document.getElementById("set").style.display = "none";
+    }
+    </script>
+</body>
+
+
+
+</html>

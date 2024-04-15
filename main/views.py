@@ -9,6 +9,11 @@ from datetime import datetime, timedelta
 from .models import *
 from .forms import *
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
+from django.db.models import F
+import logging
+logger = logging.getLogger(__name__)
+
 
 def classroom_view(request):
     classrooms = Classroom.objects.order_by('name')
@@ -25,20 +30,71 @@ def topic_tasks(request, topic_id):
     return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
 
 def task_text(request, task_id):
-    task = Task.objects.get(pk=task_id)
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+
     result = None
 
     if request.method == 'POST':
-        selected_choice = request.POST.get('choice')
-        if selected_choice == task.correct_answer:
-            result = 'Correct!'
+        if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
+            user_answer = request.POST.get('user_answer')
+            if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
+                result = 'Correct!'
+                # print('Correct answer submitted')
+                if request.user.is_authenticated:
+                    # print('Calling handle_correct_answer')
+                    handle_correct_answer(request.user, task)
+            else:
+                result = 'Incorrect!'
         else:
-            result = 'Incorrect!'
+            selected_choice = request.POST.get('choice')
+            if selected_choice == getattr(task, task.correct_answer):  # Используем getattr для получения значения поля
+                result = 'Correct!'
+                # print('Correct choice selected')
+                if request.user.is_authenticated:
+                    # print('Calling handle_correct_answer')
+                    handle_correct_answer(request.user, task)
+            else:
+                result = 'Incorrect!'
 
     return render(request, 'task_text.html', {'task': task, 'result': result})
 
+def handle_correct_answer(user, task):
+    # Get or create the Custom object for the user
+    custom_user, created = Custom.objects.get_or_create(user=user)
+    
+    # Get or create the ClassroomProgress for the user and task's classroom
+    classroom_progress, created = ClassroomProgress.objects.get_or_create(
+        user=user,
+        classroom=task.classroom
+    )
+    
+    # Check if the task is already completed by the user in this classroom
+    if not classroom_progress.completed_tasks.filter(pk=task.pk).exists():
+        # Update the completed tasks count and progress percentage
+        classroom_progress.completed_tasks_count += 1
+        classroom_progress.progress_percentage = (classroom_progress.completed_tasks_count / task.classroom.topic_set.count()) * 100
+        classroom_progress.save()
+        
+        # Add the task to the completed tasks list
+        classroom_progress.completed_tasks.add(task)
+
+
+
+
+
 def home_view(request):
-    context = {'user': request.user}
+    profile_pic = None  # По умолчанию нет изображения профиля
+    if request.user.is_authenticated:  # Проверка аутентификации пользователя
+        try:
+            # Получаем объект Custom для текущего пользователя
+            custom_profile = Custom.objects.get(user=request.user)
+            profile_pic = custom_profile.profile_pic.url if custom_profile.profile_pic else None
+        except Custom.DoesNotExist:
+            pass  # Профиль Custom отсутствует
+    context = {'user': request.user, 'profile_pic': profile_pic}
     return render(request, 'home.html', context)
 
 def library_view(request):
@@ -90,17 +146,16 @@ def registration_view(request):
 
 def profile_view(request):
     # Get the user's profile information
+    recalculate_all_progress()
     profile_info = Custom.objects.get(user=request.user)
-    
-    # Define start and end dates (for example, for the current month)
+    # print(profile_info)
+    classroom_progress = ClassroomProgress.objects.filter(user=request.user)
+    # print(classroom_progress)
+
     start_date = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_date = start_date.replace(day=1, month=start_date.month+1) - timedelta(days=1)
-    
-    # Query and count tasks completed by the user within the date range
-    tasks_count_by_date = get_tasks_count_by_date(request.user, start_date, end_date)
-    
-    # Render the profile page template with the profile information and tasks count data
-    return render(request, 'profile.html', {'profile_info': profile_info, 'tasks_count_by_date': tasks_count_by_date})
+
+    return render(request, 'profile.html', {'profile_info': profile_info, 'classroom_progress': classroom_progress})
 
 def get_tasks_count_by_date(user, start_date, end_date):
     tasks_count_by_date = Task.objects.filter(
@@ -193,12 +248,14 @@ def edit_topic(request, topic_id):
 
 @staff_member_required(login_url='/')
 def task_info(request):
+    # recalculate_all_progress()
     tasks = Task.objects.all()
     form = TaskForm()
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if 'create_task' in request.POST:
             if form.is_valid():
+                recalculate_all_progress()
                 form.save()
                 return redirect('task_info')
         else: 
@@ -206,6 +263,7 @@ def task_info(request):
             if 'delete_task' in request.POST and task_id:
                 task = get_object_or_404(Task, pk=task_id)
                 task.delete()
+                recalculate_all_progress()
                 return redirect('task_info')           
     return render(request, 'admin_templates/task_info.html', {'tasks': tasks, 'form': form})
 
@@ -221,3 +279,39 @@ def edit_task(request, task_id):
             form.save()
             return redirect('task_info')
     return render(request, 'admin_templates/edit_task.html', {'topics': topics,'classrooms': classrooms,'form': form, 'task': task})
+
+
+def get_topics_by_classroom(request, classroom_id):
+    topics = Topic.objects.filter(classroom_id=classroom_id).values('id', 'name')
+    return JsonResponse(list(topics), safe=False)
+
+
+def recalculate_all_progress():
+    # Получить всех пользователей
+    users = User.objects.all()
+
+    # Пройти по каждому пользователю
+    for user in users:
+        # Получить все записи ClassroomProgress для этого пользователя
+        classroom_progresses = ClassroomProgress.objects.filter(user=user)
+
+        # Пройти по каждой записи ClassroomProgress для пользователя
+        for progress in classroom_progresses:
+            completed_tasks_count = progress.completed_tasks.count()
+            total_tasks_count = Task.objects.filter(classroom=progress.classroom).count()
+
+            # Проверить, чтобы completed_tasks_count не было больше total_tasks_count
+            if completed_tasks_count > total_tasks_count:
+                completed_tasks_count = total_tasks_count  # Установить completed_tasks_count равным total_tasks_count
+
+            # Обновить прогресс в ClassroomProgress
+            progress.progress_percentage = (completed_tasks_count / total_tasks_count) * 100 if total_tasks_count != 0 else 0
+            progress.completed_tasks_count = completed_tasks_count  # Обновить completed_tasks_count
+            progress.save()
+
+
+def bookshelf_view(request):
+    return render(request, 'bookshelf.html')
+
+def book_view(request):
+    return render(request, 'book.html')

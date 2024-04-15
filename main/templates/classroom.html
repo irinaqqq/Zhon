@@ -1,63 +1,161 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Classrooms</title>
-    {% include 'navbar.html' %}
+    <title>School</title>
     <style>
-        /* Global styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
+
+   
+    .container {
+            background-image: url("{% static 'img/school-back.jpg' %}");
+            /* display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; */
+            background-size: cover;
+            background-position: center;
+            background-color: white;
+        }
+/* 
+        .classroom-name {
+            font-size: 24px;
+            padding-top: 50px;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
+        .arrow-btns {
+            display: flex;
+            justify-content: space-between;
+            width: 270px;
             margin-bottom: 20px;
-            color: #333;
+            bottom: 35%;
+            position: fixed;
         }
 
-        /* Classroom list styles */
-        .classroom-list {
-            list-style-type: none;
-            padding: 0;
+        .arrow-btn {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .classroom-info {
+            margin: auto 50vh;
+            text-align: center;
+            padding-top: 28vh;
+        } */
+
+        .doors {
+            height: 80%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .door {
+            background-color: white;
+            opacity: 0%;
+            width: 28.5vh;
+            height: 47.5vh;
+            clip-path: polygon(0.5% 1%, 100% 0, 94.5% 100%, 2% 100%);
+            margin-top: 4.1vh;
+            border: 0;
+        }
+
+        .door:hover {
+            opacity: 30%;
+            cursor: pointer;
+        }        
+
+        .classes {
+            height: 83vh;
             margin: 0;
+            display: grid;
+            grid-template-rows: 500px 100px;
+            grid-template-columns: 1fr 30px 30px 30px 30px 30px 1fr;
+            margin-top: 15vh;
+            align-items: center;
+            justify-items: center;
+
+
+        .wall {
+            width: 65vh;
+            height: 81.5vh;
+            margin: auto;  
         }
 
-        .classroom-item {
-            background-color: #f9f9f9;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            cursor: pointer; /* Добавлен курсор указывающий на возможность клика */
+        .name-box {
+            height: 20%;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+        }
+        
+        .name {
+            width: auto;
+            height: 33%;
+            background-image: url(img/name.png);
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3vh;
+            box-shadow: 0 4px 1px rgb(0, 0, 0, 0.25);
+        }
+        .name h3 {
+            color: rgba(0, 0, 0, 0.7);
+            margin: 0 1vh 0 1vh;
+            text-decoration: none;
         }
 
-        .classroom-item:hover {
-            background-color: #e9e9e9;
-        }
-    </style>
+    </style>   
 </head>
 <body>
-    <div class="container">
-        <h1>All Classrooms</h1>
+ <div class="container">
+    <!-- <div class="classroom-info">
+      <div class="classroom-name">{{ classrooms.0.name }}</div>
+      <img src="{% static 'img/door-close.png' %}" id="classroomImage" onclick="redirectToClassroom()">
+      <div class="arrow-btns">
+        <div class="arrow-btn" onclick="changeClassroom('previous')">←</div>
+        <div class="arrow-btn" onclick="changeClassroom('next')">→</div>
+      </div>
+    </div> -->
 
-        <!-- Display all classrooms -->
-        <ul class="classroom-list">
-            {% for classroom in classrooms %}
-                <li class="classroom-item" onclick="window.location.href='{% url 'classroom_topics' classroom.id %}'">{{ classroom.name }}</li>
-            {% endfor %}
-        </ul>
+    <div class="wall">
+        <a id="current-class"><div class="name-box">
+            <div class="name"><h3 id="classname" style="font-weight: 500;">Математика</h3></div>
+        </div></a>
+        <div class="doors">
+            <button id="left-class" class="prev nav-btn">
+                <span>◄</span>
+            </button>
+            <button class="door" onclick="window.location.href='classroom.html';">
+            </button>
+            <button id="right-class" class="next nav-btn">
+                <span>►</span>
+            </button>
+        </div>
     </div>
+  </div>
+
+
+
+<script>
+//   const classroomName = document.querySelector('.classroom-name');
+//   let currentClassroomIndex = 0;
+//   const classrooms = [{% for classroom in classrooms %}{ id: {{ classroom.id }}, name: "{{ classroom.name }}" }{% if not forloop.last %},{% endif %}{% endfor %}];
+
+//   function changeClassroom(direction) {
+//       if (direction === 'next') {
+//           currentClassroomIndex = (currentClassroomIndex + 1) % classrooms.length;
+//       } else if (direction === 'previous') {
+//           currentClassroomIndex = (currentClassroomIndex - 1 + classrooms.length) % classrooms.length;
+//       }
+
+//       classroomName.textContent = classrooms[currentClassroomIndex].name;
+//   }
+//   function redirectToClassroom() {
+//     const classroomId = classrooms[currentClassroomIndex].id;
+//     window.location.href = `/classrooms/${classroomId}/topics/`; // Замените на ваш URL-шаблон
+//   }
+</script>
 </body>
 </html>

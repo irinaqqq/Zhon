@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZhonEdu</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,27 +14,37 @@
             padding: 0;
         }
         .navbar {
-            background-color: #333;
-            padding: 10px 0;
-            text-align: center;
-        }
+        background-color: #0095ff;
+        padding: 10px 0;
+        text-align: center;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+
         .navbar a {
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 5px 10px;
+            margin: 0 5px;
             border-radius: 5px;
             transition: background-color 0.3s;
-            width: 100px; /* Fixed width for navbar links */
             display: inline-block;
         }
         .navbar a:hover {
-            background-color: #555;
+            background-color: #085984;
+            cursor: pointer;
         }
         .user-info {
             color: white;
-            margin-left: 20px;
-            width: 120px; /* Fixed width for user info */
             display: inline-block;
         }
         .logout-form {
@@ -41,24 +52,36 @@
             display: inline-block;
         }
         .logout-form button {
-            background-color: #555;
+            background-color: #0095ff;
+            font-size: 16px;
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 8px 15px;
+            padding: 5px 10px;
+            margin: 0 10px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         .logout-form button:hover {
-            background-color: #777;
+            background-color: #085984;
+        }
+        .navbar img {
+            width: 3vh;
+            height: 3vh;
+            vertical-align: middle;
+        }
+        .navbar li {
+            list-style-type: none;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="{% url 'classroom' %}">Classroom</a>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'library' %}">Library</a>
+    <div class="navbar" id="navbar">
+        <a href="{% url 'home' %}">Logo</a>
+        <a href="{% url 'classroom' %}">Мектеп</a>
+        <a href="{% url 'library' %}">Кітапхана</a>
+        <li><a onclick="openIns()" style="margin: 5; padding: 0; transition: none;"><img src="{% static 'img/help (2).png' %}"></a></li>
+        <li><a onclick="openSet()" style="margin: 5; padding: 0; transition: none;"><img src="{% static 'img/settings.png' %}"></a></li>
         {% if user.is_authenticated %}
             {% if user.is_staff %}
                 <a href="{% url 'admin_panel' %}">Admin Panel</a>
@@ -68,12 +91,134 @@
             <div class="user-info">Привет, {{ user.username }}!</div>
             <form class="logout-form" action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Выйти</button>
+                <button type="submit">Шығу</button>
             </form>
         {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'registration' %}">Registration</a>
+            <a href="{% url 'login' %}">Кіру</a>
+            <a href="{% url 'registration' %}">Тіркелу</a>
         {% endif %}
     </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const navbar = document.getElementById('navbar');
+            const children = navbar.children;
+            let totalWidth = 0;
+
+            for (const child of children) {
+                totalWidth += child.offsetWidth + 10;
+            }
+
+            navbar.style.maxWidth = `${totalWidth}px`;
+        });
+    </script>
+        <div id="ins" class="overlay">
+
+            <!-- Overlay content -->
+            <div class="overlay-content">
+                <div class="outer-ins">
+                    <div><a href="javascript:void(0)" class="closebtn" onclick="closeIns()" style="font-family: Chelsea+Market;">&times;</a></div>
+                    <div class="inner-ins">
+                        <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
+                        <div class="bubble">
+                            <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
+                        </div>
+                        <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
+                        <div class="inst-text-box">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
+                                <br>
+                                Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
+                                <br>
+                                Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
+                                Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
+                                <br>
+                                Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
+                                <br>
+                                Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
+                                <br>
+                                Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
+                                <br>
+                                Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- The overlay -->
+        <div id="set" class="overlay">
+    
+            <!-- Overlay content -->
+            <div class="overlay-content">
+                <div class="outer-ins">
+                    <div><a href="javascript:void(0)" class="closebtn" onclick="closeSet()" style="font-family: Chelsea+Market; background-color: #424242;">&times;</a></div>
+                    <div class="inner-ins" style="background-color: #4d4d4d;    border: 1.5vh solid #424242; line-height: 1;">
+                        <h2 style="font-size: 4.5vh; color: white;">Параметрлер</h2>
+    
+                        <div class="box sound-box">
+                            <div class="in-box">
+                            <h3>Дыбыс</h3></div>
+                            <div class="in-box-two">
+                                <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                        <div class="box music-box">
+                            <div class="in-box">
+                            <h3>Ән</h3></div>
+                            <div class="in-box-two">
+                                <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                        <div class="box pen-col-box">
+                            <div class="in-box">
+                            <h3>Қалам түсі</h3></div>
+                            <div class="in-box-two">
+                                <button class="pen red" style="background-color: #FF0000;"></button>
+                                <button class="pen orange" style="background-color: #FF7A00;"></button>
+                                <button class="pen yellow" style="background-color: #FAFF00;"></button>
+                                <button class="pen green" style="background-color: #00FF1A;"></button>
+                                <button class="pen skyblue" style="background-color: #00FFFF;"></button>
+                                <button class="pen blue" style="background-color: #1400FF;"></button>
+                                <button class="pen purple" style="background-color: #9E00FF;"></button>
+                                <button class="pen magenta" style="background-color: #FF008A;"></button>
+                            </div>
+                        </div>
+                        <div class="box pen-line-box">
+                            <div class="in-box">
+                            <h3>Қалам қалыңдығы</h3></div>
+                            <div class="in-box-two">
+                                <button class="pen"><img src="{% static 'img/smalline.jpg' %}" alt="s"></button>
+                                <button class="pen"><img src="{% static 'img/midline.jpg' %}" alt="m"></button>
+                                <button class="pen"><img src="{% static 'img/fatline.jpg' %}" alt="l"></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        /* Open */
+        function openIns() {
+            document.getElementById("ins").style.display = "block";
+        }
+    
+        /* Close */
+        function closeIns() {
+            document.getElementById("ins").style.display = "none";
+        }
+    
+        /* Open */
+        function openSet() {
+            document.getElementById("set").style.display = "block";
+        }
+    
+        /* Close */
+        function closeSet() {
+            document.getElementById("set").style.display = "none";
+        }
+        </script>
 </body>
 </html>

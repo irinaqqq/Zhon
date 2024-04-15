@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кітап сөресі</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #FFF6E5;
+            z-index: -1000;
+            border-bottom: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .container::-webkit-scrollbar {
+            scrollbar-height: 60vh;
+            margin-right: 1vh;
+            width: 2vh;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        /* Styles for scrollbar thumb */
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5vh; 
+            border: 0.2vh #bdbdbd solid;
+        }
+
+        /* Styles for scrollbar buttons (arrows) */
+        .container::-webkit-scrollbar-button {
+            background-color: transparent; /* Change the color of the buttons */
+        }
+
+        /* Styles for scrollbar corner */
+        .container::-webkit-scrollbar-corner {
+            background-color: #f1f1f1; /* Change the color of the scrollbar corner */
+        }
+
+        .container::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 20vh;
+        }
+
+        .navbar {
+            position: fixed;
+            margin-left: 35vh;
+            transform: translateY(50%);
+            z-index: 1;
+        }
+
+        .exit-btn {
+            transform: translateY(50%);
+            margin-top: 134vh;
+            z-index: 1;
+        }
+
+        .label {
+            position: fixed;
+            margin-left: 70vh;
+            margin-top: 8vh;
+            z-index: 1;
+        }
+
+        .back-wood {
+            position: fixed;
+            width: 140vh;
+            height: 19.5vh;
+            background-image: url("{% static 'img/back-wood.jpg' %}");
+            background-size: cover;
+/*            background-position: center;*/
+            border-bottom: 0.33vh solid #826762;
+            box-shadow: 0 0 1.67vh rgb(0, 0, 0, 0.5);
+        }
+
+        .books-table {
+/*            background-color: aquamarine;*/
+            width: 130vh;
+            min-height: 20vh;
+            margin-top: 20vh;
+            padding: 2vh;
+        }
+
+        .books-row {
+            width: 130vh;
+/*            background-color: indigo;*/
+            display: flex;
+        }
+
+        .books-col-name {
+/*            background-color: burlywood;*/
+            width: 26vh;
+            min-height: 10vh;
+            margin-top: 5vh;
+            text-align: right;
+        }
+
+        .books-col {
+/*            background-color: pink;*/
+            width: 104vh;
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+
+        .book {
+            background-color: white;
+            width: 23vh;
+            height: 16vh;
+            margin-left: 2.5vh;
+            margin-bottom: 4vh;
+            box-shadow: -0.2vh 0.2vh 0.5vh rgb(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .book div {
+            background-color: #dcdcdc;
+            width: 21vh;
+            height: 10vh;
+            margin: auto;
+            margin-top: 1vh;
+        }
+
+        .book-name {
+            margin: 1vh;
+            position: absolute;
+            white-space: nowrap;
+            transition: transform 3.7s ease;
+            color: black;
+            text-decoration: none;
+        }
+
+        .book-name:hover {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar-outer">
+            <div class="navbar">
+                <ul>
+                    <li><a href="{% url 'home' %}">Logo</a></li>
+                    <li><a href="{% url 'classroom' %}">МЕКТЕП</a></li>
+                    <li><a href="{% url 'library' %}">КІТАПХАНА</a></li>
+                    <li><a onclick="openIns()"><img src="{% static 'img/help (2).png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
+                    <li><a onclick="openSet()"><img src="{% static 'img/settings.png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
+                    <li><a id="profileButton" href="{% url 'profile' %}">ПРОФИЛЬ</a></li>
+                </ul>
+            </div>
+            <button class="exit-btn">Шығу</button>
+        </div>
+
+        <div class="label"><h2 style="color: white;">Кітап сөресі</h2></div>
+
+        <div class="back-wood"></div>
+
+        <div class="books-table">
+            <div class="books-row">
+                <div class="books-col-name">
+                    <h2>1-сынып</h2>
+                </div>
+                <div class="books-col">
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                </div>
+            </div>
+            <div class="books-row">
+                <div class="books-col-name">
+                    <h2>1-сынып</h2>
+                </div>
+                <div class="books-col">
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                    <a href="{% url 'book' %}"><div class="book">
+                        <div style="background-image: ;"></div>
+                        <h3 class="book-name">Name of the Book</h3>
+                    </div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <!-- The overlay -->
+    <div id="ins" class="overlay">
+
+        <!-- Overlay content -->
+        <div class="overlay-content">
+            <div class="outer-ins">
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeIns()" style="font-family: Chelsea+Market;">&times;</a></div>
+                <div class="inner-ins">
+                    <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
+                    <div class="bubble">
+                        <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
+                    </div>
+                    <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
+                    <div class="inst-text-box">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
+                            <br>
+                            Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
+                            <br>
+                            Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
+                            Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
+                            <br>
+                            Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
+                            <br>
+                            Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
+                            <br>
+                            Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
+                            <br>
+                            Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The overlay -->
+    <div id="set" class="overlay">
+
+        <!-- Overlay content -->
+        <div class="overlay-content">
+            <div class="outer-ins">
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeSet()" style="font-family: Chelsea+Market; background-color: #424242;">&times;</a></div>
+                <div class="inner-ins" style="background-color: #4d4d4d;    border: 1.5vh solid #424242; line-height: 1;">
+                    <h2 style="font-size: 4.5vh; color: white;">Параметрлер</h2>
+
+                    <div class="box sound-box">
+                        <div class="in-box">
+                        <h3>Дыбыс</h3></div>
+                        <div class="in-box-two">
+                            <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                        </div>
+                    </div>
+                    <div class="box music-box">
+                        <div class="in-box">
+                        <h3>Ән</h3></div>
+                        <div class="in-box-two">
+                            <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
+                        </div>
+                    </div>
+                    <div class="box pen-col-box">
+                        <div class="in-box">
+                        <h3>Қалам түсі</h3></div>
+                        <div class="in-box-two">
+                            <button class="pen red" style="background-color: #FF0000;"></button>
+                            <button class="pen orange" style="background-color: #FF7A00;"></button>
+                            <button class="pen yellow" style="background-color: #FAFF00;"></button>
+                            <button class="pen green" style="background-color: #00FF1A;"></button>
+                            <button class="pen skyblue" style="background-color: #00FFFF;"></button>
+                            <button class="pen blue" style="background-color: #1400FF;"></button>
+                            <button class="pen purple" style="background-color: #9E00FF;"></button>
+                            <button class="pen magenta" style="background-color: #FF008A;"></button>
+                        </div>
+                    </div>
+                    <div class="box pen-line-box">
+                        <div class="in-box">
+                        <h3>Қалам қалыңдығы</h3></div>
+                        <div class="in-box-two">
+                            <button class="pen"><img src="{% static 'img/smalline.jpg' %}" alt="s"></button>
+                            <button class="pen"><img src="{% static 'img/midline.jpg' %}" alt="m"></button>
+                            <button class="pen"><img src="{% static 'img/fatline.jpg' %}" alt="l"></button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    /* Open */
+    function openIns() {
+        document.getElementById("ins").style.display = "block";
+    }
+
+    /* Close */
+    function closeIns() {
+        document.getElementById("ins").style.display = "none";
+    }
+
+    /* Open */
+    function openSet() {
+        document.getElementById("set").style.display = "block";
+    }
+
+    /* Close */
+    function closeSet() {
+        document.getElementById("set").style.display = "none";
+    }
+    </script>
+</body>
+</html>

@@ -16,10 +16,6 @@
             overflow-y: auto;
         }
 
-        .exit-btn {
-            color: grey;
-            margin-left: 127vh;
-        }
 
         .b-pages {
             width: 132vh;
@@ -76,22 +72,12 @@
             margin-bottom: 1vh;
         }
     </style>
+            {% include 'navbar.html' %}  
+
 </head>
 <body>
     <div class="container">
-        <div class="navbar-outer">
-            <div class="navbar">
-                <ul>
-                    <li><a href="{% url 'home' %}">Logo</a></li>
-                    <li><a href="{% url 'classroom' %}">МЕКТЕП</a></li>
-                    <li><a href="{% url 'library' %}">КІТАПХАНА</a></li>
-                    <li><a onclick="openIns()"><img src="{% static 'img/help (2).png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
-                    <li><a onclick="openSet()"><img src="{% static 'img/settings.png' %}" style="width: 4vh; height: 4vh; padding-top: 1vh;"></a></li>
-                    <li><a id="profileButton" href="{% url 'profile' %}">ПРОФИЛЬ</a></li>
-                </ul>
-            </div>
-            <button class="exit-btn">Шығу</button>
-        </div>
+
 
         <div id="container" class="b-pages">
             <img class="img" src="{% static 'img/1сынып.1.1.png' %}" alt="1сынып.1.1.">
@@ -106,115 +92,9 @@
     </div>
 
 
-    <!-- The overlay -->
-    <div id="ins" class="overlay">
-
-        <!-- Overlay content -->
-        <div class="overlay-content">
-            <div class="outer-ins">
-                <div><a href="javascript:void(0)" class="closebtn" onclick="closeIns()" style="font-family: Chelsea+Market;">&times;</a></div>
-                <div class="inner-ins">
-                    <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
-                    <div class="bubble">
-                        <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
-                    </div>
-                    <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
-                    <div class="inst-text-box">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
-                            <br>
-                            Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
-                            <br>
-                            Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
-                            Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
-                            <br>
-                            Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
-                            <br>
-                            Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
-                            <br>
-                            Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
-                            <br>
-                            Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- The overlay -->
-    <div id="set" class="overlay">
-
-        <!-- Overlay content -->
-        <div class="overlay-content">
-            <div class="outer-ins">
-                <div><a href="javascript:void(0)" class="closebtn" onclick="closeSet()" style="font-family: Chelsea+Market; background-color: #424242;">&times;</a></div>
-                <div class="inner-ins" style="background-color: #4d4d4d;    border: 1.5vh solid #424242; line-height: 1;">
-                    <h2 style="font-size: 4.5vh; color: white;">Параметрлер</h2>
-
-                    <div class="box sound-box">
-                        <div class="in-box">
-                        <h3>Дыбыс</h3></div>
-                        <div class="in-box-two">
-                            <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
-                        </div>
-                    </div>
-                    <div class="box music-box">
-                        <div class="in-box">
-                        <h3>Ән</h3></div>
-                        <div class="in-box-two">
-                            <input class="xdirection" type="range" min="0" max="3" step="0.1" value="1">
-                        </div>
-                    </div>
-                    <div class="box pen-col-box">
-                        <div class="in-box">
-                        <h3>Қалам түсі</h3></div>
-                        <div class="in-box-two">
-                            <button class="pen red" style="background-color: #FF0000;"></button>
-                            <button class="pen orange" style="background-color: #FF7A00;"></button>
-                            <button class="pen yellow" style="background-color: #FAFF00;"></button>
-                            <button class="pen green" style="background-color: #00FF1A;"></button>
-                            <button class="pen skyblue" style="background-color: #00FFFF;"></button>
-                            <button class="pen blue" style="background-color: #1400FF;"></button>
-                            <button class="pen purple" style="background-color: #9E00FF;"></button>
-                            <button class="pen magenta" style="background-color: #FF008A;"></button>
-                        </div>
-                    </div>
-                    <div class="box pen-line-box">
-                        <div class="in-box">
-                        <h3>Қалам қалыңдығы</h3></div>
-                        <div class="in-box-two">
-                            <button class="pen"><img src="{% static 'img/smalline.jpg' %}" alt="s"></button>
-                            <button class="pen"><img src="{% static 'img/midline.jpg' %}" alt="m"></button>
-                            <button class="pen"><img src="{% static 'img/fatline.jpg' %}" alt="l"></button>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
-    /* Open */
-    function openIns() {
-        document.getElementById("ins").style.display = "block";
-    }
 
-    /* Close */
-    function closeIns() {
-        document.getElementById("ins").style.display = "none";
-    }
-
-    /* Open */
-    function openSet() {
-        document.getElementById("set").style.display = "block";
-    }
-
-    /* Close */
-    function closeSet() {
-        document.getElementById("set").style.display = "none";
-    }
 
     const images = document.querySelectorAll('.img');
 

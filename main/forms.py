@@ -30,7 +30,7 @@ class ClassroomForm(forms.ModelForm):
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ['name', 'description', 'classroom']  # Include the 'classroom' field
+        fields = ['name', 'description', 'classroom', 'images']  # Include the 'classroom' field
 
     def __init__(self, *args, **kwargs):
         super(TopicForm, self).__init__(*args, **kwargs)
@@ -60,3 +60,10 @@ class TaskForm(forms.ModelForm):
                     pass  # Если не удается получить classroom_id, пропускаем
 
  
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image']
+        widgets = {
+            'profile_pic': forms.FileInput(attrs={'placeholder': 'Профиль суреті'}),
+        }

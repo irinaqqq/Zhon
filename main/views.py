@@ -88,11 +88,20 @@ def handle_correct_answer(user, task):
 
 
 def home_view(request):
-    context = {'user': request.user}
+    profile_pic = None  # По умолчанию нет изображения профиля
+    if request.user.is_authenticated:  # Проверка аутентификации пользователя
+        try:
+            # Получаем объект Custom для текущего пользователя
+            custom_profile = Custom.objects.get(user=request.user)
+            profile_pic = custom_profile.profile_pic.url if custom_profile.profile_pic else None
+        except Custom.DoesNotExist:
+            pass  # Профиль Custom отсутствует
+    context = {'user': request.user, 'profile_pic': profile_pic}
     return render(request, 'home.html', context)
 
 def library_view(request):
-    return render(request, 'library.html')
+    classrooms = Classroom.objects.order_by('name')
+    return render(request, 'library.html', {'classrooms': classrooms})
 
 def login_view(request):
     if request.method == 'POST':
@@ -304,7 +313,15 @@ def recalculate_all_progress():
             progress.save()
 
 
+def bookshelf_view(request, classroom_id):
+    classroom = get_object_or_404(Classroom, pk=classroom_id)
+    topics = classroom.topic_set.all()
+    return render(request, 'bookshelf.html', {'classroom': classroom, 'topics': topics})
 
+def book_view(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    images = topic.images.all()
+    return render(request, 'book.html', {'topic': topic, 'images': images})
 
 
 

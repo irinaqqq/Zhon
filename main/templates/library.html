@@ -1,1 +1,170 @@
-{% include 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кітапхана</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: white;
+            min-height: 100vh;
+            overflow: auto;
+        }
+
+        .container::-webkit-scrollbar {
+            scrollbar-height: 60vh;
+            margin-right: 1vh;
+            width: 2vh;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        /* Styles for scrollbar thumb */
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5vh; 
+            border: 0.2vh #bdbdbd solid;
+        }
+
+        /* Styles for scrollbar buttons (arrows) */
+        .container::-webkit-scrollbar-button {
+            background-color: transparent; /* Change the color of the buttons */
+        }
+
+        /* Styles for scrollbar corner */
+        .container::-webkit-scrollbar-corner {
+            background-color: #f1f1f1; 
+        }
+
+        .container::-webkit-scrollbar-track-piece:end {
+            background: transparent;
+            margin-bottom: 10vh; 
+        }
+
+        .container::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 10vh;
+        }
+
+        .label {
+            background: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%) border-box;
+            linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,1) 100%) border-box;
+
+*/        }
+
+
+        .cards {
+/*            background-color: red;*/
+            width: 95vh;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin: auto;
+            margin-top: 10vh;
+        }
+
+        .card {
+            background-color: blue;
+            width: 43vh;
+            height: 19vh;
+            border-radius: 2.7vh;
+            margin-bottom: 4vh;
+            background: linear-gradient(90deg, rgba(82,125,234,1) 0%, rgba(96,196,253,1) 100%);
+            color: white;
+
+            & button {
+                background-color: transparent;
+                border: 0.3vh solid white;
+                border-radius: 1vh;
+                font-size: 3vh;
+                color: white;
+                width: 6vh;
+                height: 6vh;
+                cursor: pointer;
+            }
+
+            & img {
+                width: 18vh;
+                float: right;
+                margin-top: -14vh;
+            }
+
+            & div {
+                display: flex;
+                flex-direction: column;
+                margin: 2vh 0 0 2vh;
+            }
+
+            & span {
+                margin-top: 2vh;
+            }
+
+            & a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+
+        .label {
+        width: 45vh;
+        height: 10.5vh;
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
+        margin-left: 50%; 
+        transform: translateX(-50%);
+        position: relative;
+        border-bottom-left-radius: 6vh;
+        border-bottom-right-radius: 6vh;
+        border-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .label h2 {
+        font-family: Hombre; 
+        font-size: 3.5vh;
+        opacity: 80%;
+        letter-spacing: 0.2vh;
+    }
+
+    </style>
+    {% include 'navbar.html' %}  
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="label"><h2 style="color: black;">Кітапхана</h2></div>
+       
+        <div class="cards">
+            {% for classroom in classrooms %}
+            <div class="card">
+                <div>
+                    <button><a href="{% url 'bookshelf' classroom.id %}">►</a></button>
+                    <span>{{ classroom.level }} деңгей</span>
+                    <h2>{{ classroom.name }}</h2>
+                </div>
+                <img src="{% static 'img/card-back.png' %}">
+            </div>
+            {% endfor %}
+        </div>
+        
+        
+        
+
+    <script>
+
+    </script>
+</body>
+</html>

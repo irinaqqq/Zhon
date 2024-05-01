@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кітап сөресі</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #FFF6E5;
+            z-index: -1000;
+            border-bottom: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .container::-webkit-scrollbar {
+            scrollbar-height: 60vh;
+            margin-right: 1vh;
+            width: 2vh;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        /* Styles for scrollbar thumb */
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5vh; 
+            border: 0.2vh #bdbdbd solid;
+        }
+
+        /* Styles for scrollbar buttons (arrows) */
+        .container::-webkit-scrollbar-button {
+            background-color: transparent; /* Change the color of the buttons */
+        }
+
+        /* Styles for scrollbar corner */
+        .container::-webkit-scrollbar-corner {
+            background-color: #f1f1f1; /* Change the color of the scrollbar corner */
+        }
+
+        .container::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 20vh;
+        }
+
+
+
+        .back-wood {
+            position: fixed;
+            width: 140vh;
+            height: 19.5vh;
+            background-image: url("{% static 'img/back-wood.jpg' %}");
+            background-size: cover;
+/*            background-position: center;*/
+            border-bottom: 0.33vh solid #826762;
+            box-shadow: 0 0 1.67vh rgb(0, 0, 0, 0.5);
+        }
+
+        .books-table {
+/*            background-color: aquamarine;*/
+            width: 130vh;
+            min-height: 20vh;
+            margin-top: 20vh;
+            padding: 2vh;
+        }
+
+        .books-row {
+            width: 130vh;
+/*            background-color: indigo;*/
+            display: flex;
+        }
+
+        .books-col-name {
+/*            background-color: burlywood;*/
+            width: 26vh;
+            min-height: 10vh;
+            margin-top: 5vh;
+            text-align: right;
+        }
+
+        .books-col {
+/*            background-color: pink;*/
+            width: 104vh;
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+
+        .book {
+            background-color: white;
+            width: 23vh;
+            height: 16vh;
+            margin-left: 2.5vh;
+            margin-bottom: 4vh;
+            box-shadow: -0.2vh 0.2vh 0.5vh rgb(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .book div {
+            background-color: #dcdcdc;
+            width: 21vh;
+            height: 10vh;
+            margin: auto;
+            margin-top: 1vh;
+        }
+
+        .book-name {
+            margin: 1vh;
+            position: absolute;
+            white-space: nowrap;
+            transition: transform 3.7s ease;
+            color: black;
+            text-decoration: none;
+        }
+
+        .book-name:hover {
+            transform: translateX(-100%);
+        }
+    </style>
+        {% include 'navbar.html' %}  
+
+</head>
+<body>
+    <div class="container">
+
+
+
+        <div class="back-wood"></div>
+
+        <div class="books-table">
+            <div class="books-row">
+                <div class="books-col-name">
+                    <h2>{{ classroom.name }}</h2>
+                </div>
+                <div class="books-col">
+                    {% for topic in topics %}
+                    <a href="{% url 'book' topic.id %}">
+                        <div class="book">
+                            <div style="background-image: url('{{ topic.images.first.image.url }}');"></div>
+                            <h3 class="book-name">{{ topic.name }}</h3>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    
+
+
+    <script>
+
+    </script>
+</body>
+</html>

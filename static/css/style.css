@@ -15,7 +15,7 @@
 
 * {
 	margin: 0;
-	font-family: Samsung_Sharp_Sans;
+	/* font-family: Samsung_Sharp_Sans; */
 }
 
 
@@ -93,7 +93,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 
 body {
-    /* background-image: url(/static/img/back-home0.jpg); */
+    background-image: url(/static/img/backgroundby.jpg);
     background-size: cover;
 }
 
@@ -102,15 +102,38 @@ button {
 }
 
 .container {
-	display: block;
-	width: 140vh;
+	background-size: cover;
+	background-position: center;
+    position: relative;
+    width: 140vh;
     height: 100vh;
-	margin: auto;
-	border-right: 1vh white solid;
-	border-left: 1vh white solid;
-	outline: 4vh #022B7A solid;
-	box-shadow: 0 0  1vh rgba(0, 0, 0, 0.5) inset;
+    margin: auto;
+    border-right: 1vh white solid;
+    border-left: 1vh white solid;
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.5) inset;
 }
+
+.container::before,
+.container::after {
+    content: '';
+    position: absolute;
+    top: -4vh; /* Сдвигаем вверх на высоту "outline" */
+    bottom: 0; /* Сдвигаем вниз на высоту "outline" */
+    width: 4vh; /* Ширина "outline" */
+    z-index: -1; /* Для установки позади .container */
+}
+
+.container::before {
+    left: -4vh; /* Отступ от левого края */
+    background-color: #1265a9; /* Цвет левого "outline" */
+}
+
+.container::after {
+    right: -4vh; /* Отступ от правого края */
+    background-color: #ffcd2c; /* Цвет правого "outline" */
+}
+
+
 
 
 .exit-btn {	

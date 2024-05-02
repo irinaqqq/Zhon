@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,9 @@
     <title>User Profile</title>
     {% include 'navbar.html' %}
     <style>
+        .container {
+            background-image: url("{% static 'img/school-back.jpg' %}");
+        }
         /* Add your custom styles here */
         .profile-container {
             max-width: 800px;
@@ -28,7 +32,7 @@
     </style>
 </head>
 <body>
-    <div class="profile-container">
+    <div class="container">
         <h1>User Profile</h1>
         <div class="profile-info">
             <img src="{{ profile_info.profile_pic.url }}" alt="Profile Picture" class="profile-pic">

@@ -9,61 +9,36 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: Hombre;
         }
         .navbar {
-        background-color: #0095ff;
+        background-color: #1265a9;
         padding: 10px 0;
         text-align: center;
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
+        /* border-bottom-left-radius: 6px; */
+        /* border-bottom-right-radius: 6px; */
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        /* width: 100%; */
+        width: 140vh;
         position: fixed;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
         z-index: 1000;
+        font-size: 4vh;
     }
 
         .navbar a {
-            color: white;
+            color: #ffcd2c;
             text-decoration: none;
             padding: 5px 10px;
             margin: 0 5px;
             border-radius: 5px;
             transition: background-color 0.3s;
             display: inline-block;
-        }
-        .navbar a:hover {
-            background-color: #085984;
-            cursor: pointer;
-        }
-        .user-info {
-            color: white;
-            display: inline-block;
-        }
-        .logout-form {
-            margin-left: 20px;
-            display: inline-block;
-        }
-        .logout-form button {
-            background-color: #0095ff;
-            font-size: 16px;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin: 0 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .logout-form button:hover {
-            background-color: #085984;
+            
         }
         .navbar img {
             width: 3vh;
@@ -233,47 +208,93 @@
         width: 2vh;
         height: 2vh;
     }
+    .overlay-content{
+        z-index: 9999;
+    }
+    .hover-effect:hover {
+    filter: brightness(1.2); /* Увеличиваем яркость при наведении */
+    transform: scale(1.3);
+    cursor: pointer;
+    }
+    .user-info {
+    color: #ffcd2c;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    }
+    .logout-form button {
+    font-size: 3vh;
+    font-family: Hombre;
+    color: #ffcd2c;
+    cursor: pointer;
+    background-color: #1265a9;
+    border-radius: 0 0 3vh 3vh;
+    box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+    border: none;
+    }
+    
+    .logout-form button:hover {
+        
+    }
+    .logout-form {
+    display: none;
+    position: absolute;
+    padding-top: 9px;
+    left: -10%;
+    }
+
+    .user-info:hover .logout-form {
+        display: block;
+        animation: slide-in 0.3s forwards;
+        
+    }
+
+    @keyframes slide-in {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
     </style>
 </head>
 <body>
     <div class="navbar" id="navbar">
-        <a href="{% url 'home' %}">Logo</a>
-        <a href="{% url 'classroom' %}">Мектеп</a>
-        <a href="{% url 'library' %}">Кітапхана</a>
-        <li><a onclick="openIns()" style="margin: 5; padding: 0; transition: none;"><img src="{% static 'img/help (2).png' %}"></a></li>
-        <li><a onclick="openSet()" style="margin: 5; padding: 0; transition: none;"><img src="{% static 'img/settings.png' %}"></a></li>
+        <a href="{% url 'home' %}" class="hover-effect">Logo</a>
+        <a href="{% url 'classroom' %}" class="hover-effect">Мектеп</a>
+        <a href="{% url 'library' %}" class="hover-effect">Кітапхана</a>
+        <li>
+            <a onclick="openIns()" style="margin: 5px; padding: 0; transition: filter 0.3s;">
+                <img src="{% static 'img/button-help.svg' %}" class="hover-effect">
+            </a>
+        </li>        
+        <li>
+            <a onclick="openSet()" style="margin: 5px; padding: 0; transition: filter 0.3s;">
+                <img src="{% static 'img/button-settings.svg' %}" class="hover-effect">
+            </a>
+        </li>         
         {% if user.is_authenticated %}
             {% if user.is_staff %}
-                <a href="{% url 'admin_panel' %}">Admin Panel</a>
+                <a href="{% url 'admin_panel' %}" class="hover-effect">Admin Panel</a>
             {% else %}
-                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'profile' %}" class="hover-effect">Профиль</a>
             {% endif %}
-            <div class="user-info">Привет, {{ user.username }}!</div>
-            <form class="logout-form" action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Шығу</button>
-            </form>
+            <div class="user-info">
+                {{ user.username }}
+                <form class="logout-form" action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="hover-effect">Шығу</button>
+                </form>
+            </div>            
         {% else %}
-            <a href="{% url 'login' %}">Кіру</a>
-            <a href="{% url 'registration' %}">Тіркелу</a>
+            <a href="{% url 'login' %}" class="hover-effect">Кіру</a>
+            <a href="{% url 'registration' %}" class="hover-effect">Тіркелу</a>
         {% endif %}
     </div>
-
-    <!-- <script>
-        window.addEventListener('load', () => {
-            const navbar = document.getElementById('navbar');
-            const children = navbar.children;
-            let totalWidth = 0;
-
-            for (const child of children) {
-                totalWidth += child.offsetWidth + 10;
-            }
-
-            navbar.style.maxWidth = `${totalWidth}px`;
-        });
-    </script> -->
         <div id="ins" class="overlay">
-
             <!-- Overlay content -->
             <div class="overlay-content">
                 <div class="outer-ins">
@@ -359,6 +380,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
         /* Open */
         function openIns() {

@@ -216,8 +216,24 @@ def edit_class(request, class_id):
 
 @staff_member_required(login_url='/')
 def user_info(request):
-    users = User.objects.all()
-    return render(request, 'admin_templates/user_info.html', {'users': users})
+    users = User.objects.all().order_by('username')
+    users_info = []
+    for user in users:
+        try:
+            custom_profile = Custom.objects.get(user=user)
+            profile_pic = custom_profile.profile_pic.url if custom_profile.profile_pic else None
+            # Получаем объект прогресса для данного пользователя, если он существует
+            progress = ClassroomProgress.objects.get(user=user)
+            completed_tasks_count = progress.completed_tasks_count
+        except Custom.DoesNotExist:
+            profile_pic = None
+        except ClassroomProgress.DoesNotExist:
+            completed_tasks_count = None
+
+        users_info.append({'user': user, 'profile_pic_url': profile_pic, 'completed_tasks_count': completed_tasks_count})
+
+    return render(request, 'admin_templates/user_info.html', {'users_info': users_info})
+
 
 @staff_member_required(login_url='/')
 def topic_info(request):
@@ -236,6 +252,17 @@ def topic_info(request):
                 topic.delete()
                 return redirect('topic_info')
     return render(request, 'admin_templates/topic_info.html', {'topics': topics, 'form': form})
+
+@staff_member_required(login_url='/')
+def add_topic(request):
+    form = TopicForm()
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if 'create_topic' in request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect('topic_info')
+    return render(request, 'admin_templates/add_topic.html', {'form': form})
 
 @staff_member_required(login_url='/')
 def edit_topic(request, topic_id):

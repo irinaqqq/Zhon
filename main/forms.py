@@ -30,7 +30,7 @@ class ClassroomForm(forms.ModelForm):
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ['name', 'description', 'classroom', 'images']  # Include the 'classroom' field
+        fields = ['name', 'description', 'classroom', 'images'] 
 
     def __init__(self, *args, **kwargs):
         super(TopicForm, self).__init__(*args, **kwargs)
@@ -41,7 +41,7 @@ class TopicForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['topic', 'classroom', 'question', 'question_type', 'choice1', 'choice2', 'choice3', 'choice4', 'correct_answer']
+        fields = ['classroom', 'topic', 'question', 'question_type', 'choice1', 'choice2', 'choice3', 'choice4', 'correct_answer']
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)

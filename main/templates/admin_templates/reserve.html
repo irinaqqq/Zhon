@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тапсырма қосу</title>
+    {% include 'navbar.html' %}
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Task list styles */
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .task-item:hover {
+            background-color: #e9e9e9;
+        }
+
+        .task-actions {
+            display: flex;
+        }
+
+        .task-actions button,
+        .task-actions a {
+            margin-right: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none; /* Добавлено для ссылки "Edit" */
+            display: inline-block; /* Добавлено для кнопки "Edit" */
+            font-size: 14px;
+        }
+
+        .task-actions button:hover,
+        .task-actions a:hover {
+            background-color: #555;
+        }
+
+        /* Create task form styles */
+        .create-task-form {
+            margin-top: 20px;
+        }
+
+        .create-task-form input[type="text"], 
+        .create-task-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .create-task-form button {
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-task-form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тапсырма қосу</h1>
+    
+        <!-- Form for adding tasks -->
+        <div class="create-task-form">
+            <h2>Create New Task</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="select">
+                    {{ form.classroom }}
+                </div>
+                <button type="submit" name="create_task">Create Task</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- JavaScript code for updating topics based on selected classroom -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const classroomField = document.getElementById("id_classroom");  // Get the classroom field
+    
+            // Listen for changes in the classroom field
+            classroomField.addEventListener("change", function() {
+                const classroomId = this.value;  // Get the ID of the selected classroom
+                const topicField = document.getElementById("id_topic");  // Get the topic field
+    
+                // Clear the topic field
+                topicField.innerHTML = '';
+    
+                // Send an AJAX request to get topics based on the selected classroom
+                fetch(`/get_topics_by_classroom/${classroomId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate the topic field with the retrieved data
+                        data.forEach(topic => {
+                            const option = document.createElement("option");
+                            option.value = topic.id;
+                            option.text = topic.name;
+                            topicField.add(option);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+    
+
+        <hr>
+
+        <!-- Display all tasks -->
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-item">
+                    {{ task.question }}
+                    <div class="task-actions">
+                        <!-- Links to edit and delete tasks -->
+                        <a href="{% url 'edit_task' task.id %}" class="edit-button">Edit</a>
+                        <form method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <button type="submit" name="delete_task">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

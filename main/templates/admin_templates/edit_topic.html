@@ -65,6 +65,7 @@
         <form class="edit-task-form" method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            
             <button type="submit">Save Changes</button>
         </form>
     </div>

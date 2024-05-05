@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тақырып Қосу</title>
+    {% include 'navbar.html' %}
+    <style>
+        h1 {
+            padding-top: 11vh;
+            text-align: center;
+            color: white;
+            padding-bottom: 1vh;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5vh;
+            z-index: 1;
+        }
+        .container-inner{
+        padding-top: 20vh;
+    }
+        #paper {
+            color: #FFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #text {
+            background-image:url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png), url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+            width: 82vh;
+            height: auto;
+            overflow: hidden;
+            background-color: #FFF;
+            color: #222;
+            font-family: Hombre, monospace;
+            font-weight: normal;
+            font-size: 24px;
+            /* resize: none; */
+            line-height: 40px;
+            padding: 45px 100px 34px;
+            border: 1px solid #FFF;
+            border-radius: 12px;
+            box-shadow: 0px 2px 14px #000;
+            margin: 20px;
+        }
+
+        #title {
+            border-bottom: 3px solid #FFF;
+            color: #000000;
+            font-size: 20px;
+            font-family: Hombre, monospace;
+            height: 28px;
+            font-weight: bold;
+            width: 50vh;
+        }
+        :root {
+            --darkgray: #2c3e50;
+        }
+        select {
+        /* Reset Select */
+        appearance: none;
+        outline: 10px red;
+        border: 0;
+        box-shadow: none;
+        /* Personalize */
+        flex: 1;
+        padding: 0 1em;
+        color: #fff;
+        background-color: var(--darkgray);
+        background-image: none;
+        cursor: pointer;
+        font-size:20px;
+        font-family:Hombre, monospace;
+        }
+        /* Remove IE arrow */
+        select::-ms-expand {
+        display: none;
+        }
+        /* Custom Select wrapper */
+        .select {
+        position: relative;
+        display: flex;
+        width: 20em;
+        /* height: 3em; */
+        border-radius: .25em;
+        overflow: hidden;
+        }
+        /* Arrow */
+        .select::after {
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 1vh;
+        background-color: #34495e;
+        transition: .25s all ease;
+        pointer-events: none;
+        }
+        /* Transition */
+        .select:hover::after {
+        color: #f39c12;
+        }
+        .form-row {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+    }
+    .draw-border {
+    box-shadow: inset 0 0 0 4px #58cdd1;
+    color: #58afd1;
+    -webkit-transition: color 0.25s 0.0833333333s;
+    transition: color 0.25s 0.0833333333s;
+    position: relative;
+    }
+
+    .draw-border::before,
+    .draw-border::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    width: 0rem;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    }
+
+    .draw-border::before {
+    border-bottom-width: 1vh;
+    border-left-width: 1vh;
+    }
+
+    .draw-border::after {
+    border-top-width: 1vh;
+    border-right-width: 1vh;
+    }
+
+    .draw-border:hover {
+    color: #ffcd2c;
+    }
+
+    .draw-border:hover::before,
+    .draw-border:hover::after {
+    border-color: greenyellow;
+    -webkit-transition: border-color 0s, width 0.25s, height 0.25s;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+    }
+
+    .draw-border:hover::before {
+    -webkit-transition-delay: 0s, 0s, 0.25s;
+    transition-delay: 0s, 0s, 0.25s;
+    }
+
+    .draw-border:hover::after {
+    -webkit-transition-delay: 0s, 0.25s, 0s;
+    transition-delay: 0s, 0.25s, 0s;
+    }
+
+    .btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* line-height: 1.5; */
+    font: 700 3vh 'Hombre', sans-serif;
+    padding: 1vh 2vh;
+    /* letter-spacing: 0.05rem; */
+    margin-top: 5vh;
+    background-color:  var(--darkgray);
+    }
+
+    .btn:focus {
+    outline: 2px dotted #55d7dc;
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <h1>Тақырып Қосу</h1>
+        
+        <div class="container-inner">
+            
+            <form method="post" enctype="multipart/form-data" id="paper">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="name">
+                        <input id="title" type="text" name="name" placeholder="Атауы">
+                    </div>
+                    <div class="select">
+                        {{ form.classroom }}
+                    </div>
+                </div>
+                <textarea id="text" name="description" rows="4" style="height: 160px;"></textarea>
+                {{ form.images }}
+                <button type="submit" name="create_topic" class="btn draw-border">Тақырып Қосу</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

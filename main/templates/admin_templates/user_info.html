@@ -4,57 +4,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Info</title>
+    <title>Пайдаланушылар Туралы Ақпарат</title>
     {% include 'navbar.html' %}
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
+    .cards-wrapper {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Выравниваем по верху */
+    padding-top: 20vh; /* Отступ сверху */
+    overflow-y: auto; /* При необходимости добавьте вертикальную прокрутку */
     }
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .cards {
+    display: grid;
+    grid-template-columns: 30vh 30vh 30vh;
+    grid-gap: 10vh;
+    justify-content: center;
+    align-items: center;
+    /* Остальные стили для карточек */
     }
-    h1 {
-        margin-bottom: 20px;
-        color: #333;
+
+    .card {
+    height: 40vh;
+    background-color: #1265a9;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+    color: white;
+    padding: 20px;
+    z-index: 2;
+    &:hover {
+                filter: brightness(1.1); /* Увеличиваем яркость при наведении */
+                transform: scale(1.1);
+                cursor: pointer;
+                /* background-color: #0f4b7d; */
+            }
     }
-    .user-info {
-        list-style-type: none;
-        padding: 0;
+    .card__name {
+    margin-top: 1vh;
+    font-size: 5vh;
     }
-    .user-info li {
-        margin-bottom: 20px;
-        padding: 10px;
-        color: #000000;
-        border-radius: 5px;
+
+    .card__image {
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    border: 1vh solid #ffcd2c;
+    margin-top: 1vh;
+    box-shadow: 0 10px 50px #ffcd2c;
     }
-    .user-info li strong {
-        color: #333; /* Change text color to ensure visibility */
+    h1{
+    padding-top: 11vh;
+    text-align: center; 
+    color: white;
+    padding-bottom: 1vh;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5vh;
+    z-index: 1;
+    }
+    .grid-child{
+    text-align: center;
+    font-size: 2vh;
     }
     </style>
 </head>
 <body>
-    <!-- Include the navbar template -->
-
-
+    
     <div class="container">
-        <h1>User Information</h1>
-        <ul class="user-info">
-            {% for user in users %}
-            <li>
-                <strong>Username:</strong> {{ user.username }}<br>
-                <strong>Email:</strong> {{ user.email }}<br>
-                <!-- Add more user information fields as needed -->
-            </li>
-            {% endfor %}
-        </ul>
+        <h1>Пайдаланушылар Туралы Ақпарат</h1>
+        <div class="cards-wrapper">
+        <div class="cards">
+            {% for info in users_info %}
+            <div class="card">
+                <img src="{{ info.profile_pic_url }}" alt="Person" class="card__image">
+                <p class="card__name">{{ info.user.username }}</p>
+                <div class="grid-container">
+                    <div class="grid-child">
+                        {% if info.user.email %}
+                            {{ info.user.email }}
+                        {% else %}
+                        Пайдаланушының поштасы жоқ
+                        {% endif %}
+                    </div>
+                    <div class="grid-child">
+                    {% if info.completed_tasks_count is not None %}
+                    <p>Орындалған Тапсырмалар Саны:</p>
+                    <p>{{ info.completed_tasks_count }}</p>
+                    {% else %}
+                    <p>Есептер шешілген Жоқ</p>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+    </div>
     </div>
 </body>
 </html>

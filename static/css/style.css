@@ -90,11 +90,23 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 
 
+body, html {
+	/* margin: 0; */
+	/* padding: 0; */
+	height: 100%;
+	}
 
+	/* .container {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	} */
 
 body {
     background-image: url(/static/img/backgroundby.jpg);
     background-size: cover;
+	background-repeat: no-repeat; /* Запрет повторения фонового изображения */
+  	background-position: center; /* Центрирует фоновое изображение */
 }
 
 button {
@@ -111,6 +123,8 @@ button {
     border-right: 1vh white solid;
     border-left: 1vh white solid;
     box-shadow: 0 0 1vh rgba(0, 0, 0, 0.5) inset;
+	background-color: #1265a9bc;
+	/* min-height: 100%; */
 }
 
 .container::before,

@@ -47,6 +47,7 @@ urlpatterns = [
     path('class_info/<int:class_id>/edit/', views.edit_class, name='edit_class'),
     path('user_info/', views.user_info, name='user_info'),
     path('topic_info/', views.topic_info, name='topic_info'),
+    path('add_topic/', views.add_topic, name='add_topic'),
     path('topic_info/<int:topic_id>/edit/', views.edit_topic, name='edit_topic'),
     path('task_info/', views.task_info, name='task_info'),
     path('task_info/<int:task_id>/edit/', views.edit_task, name='edit_task'),

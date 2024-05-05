@@ -219,6 +219,7 @@ def user_info(request):
     users = User.objects.all().order_by('username')
     users_info = []
     for user in users:
+        completed_tasks_count = None
         try:
             custom_profile = Custom.objects.get(user=user)
             profile_pic = custom_profile.profile_pic.url if custom_profile.profile_pic else None

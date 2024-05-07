@@ -45,9 +45,9 @@ class Topic(models.Model):
     
 class Task(models.Model):
     QUESTION_TYPE_CHOICES = [
-        ('MCQ', 'Multiple Choice Question'),
-        ('TF', 'True/False Question'),
-        ('OQ', 'Open Question'),
+        ('MCQ', 'Бірнеше Таңдау Туралы Сұрақ'),
+        ('TF', 'Шын / Жалған Сұрақ'),
+        ('OQ', 'Ашық Сұрақ'),
     ]
 
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True, blank=True)
@@ -58,7 +58,7 @@ class Task(models.Model):
     choice2 = models.CharField(max_length=100, blank=True)
     choice3 = models.CharField(max_length=100, blank=True)
     choice4 = models.CharField(max_length=100, blank=True)
-    correct_answer = models.CharField(max_length=100, choices=[('choice1', 'Choice 1'), ('choice2', 'Choice 2'), ('choice3', 'Choice 3'), ('choice4', 'Choice 4')], null=True, blank=True)
+    correct_answer = models.CharField(max_length=100, choices=[('choice1', 'Таңдау 1'), ('choice2', 'Таңдау 2'), ('choice3', 'Таңдау 3'), ('choice4', 'Таңдау 4')], null=True, blank=True)
 
     def __str__(self):
         return self.question

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тақырып Қосу</title>
+    <title>Тапсырма қосу</title>
     {% include 'navbar.html' %}
     <style>
         h1 {
@@ -40,11 +40,21 @@
             font-size: 24px;
             /* resize: none; */
             line-height: 40px;
-            padding: 45px 100px 34px;
+            padding: 0px 100px 0px;
             border: 1px solid #FFF;
+            /* border-radius: 12px; */
+            /* box-shadow: 0px 2px 14px #000; */
+            /* margin: 20px; */
+        }
+        .text-wrapper{
             border-radius: 12px;
             box-shadow: 0px 2px 14px #000;
             margin: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            /* align-items: center; */
         }
 
         #title {
@@ -84,7 +94,7 @@
         position: relative;
         display: flex;
         width: 20em;
-        /* height: 3em; */
+        height: 5vh;
         border-radius: .25em;
         overflow: hidden;
         }
@@ -105,10 +115,11 @@
         }
         .form-row {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        flex-wrap: wrap;
         width: 80%;
         margin: auto;
-    }
+        }
         .draw-border {
         box-shadow: inset 0 0 0 4px #58cdd1;
         color: #58afd1;
@@ -171,12 +182,46 @@
         font: 700 3vh 'Hombre', sans-serif;
         padding: 1vh 2vh;
         /* letter-spacing: 0.05rem; */
-        margin-top: 5vh;
+        margin: 3vh;
         background-color:  var(--darkgray);
         }
 
         .btn:focus {
         outline: 2px dotted #55d7dc;
+        }
+        .cards-wrapper {
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; 
+        padding-top: 5vh; 
+        overflow-y: auto; 
+        }
+        .cards {
+        display: grid;
+        grid-template-columns: 30vh 30vh 30vh;
+        grid-gap: 10vh;
+        justify-content: center;
+        align-items: center;
+        /* overflow-y: scroll; */
+        }
+        .card {
+        /* height: 40vh; */
+        background-color: #1265a9;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+        color: white;
+        padding: 20px;
+        z-index: 2;
+        &:hover {
+                    filter: brightness(1.1); /* Увеличиваем яркость при наведении */
+                    transform: scale(1.1);
+                    cursor: pointer;
+                    /* background-color: #0f4b7d; */
+                }
         }
     </style>
 </head>
@@ -184,25 +229,61 @@
     
     <div class="container">
         
-        <h1>Тақырып Қосу</h1>
+        <h1>Тапсырма қосу</h1>
         
         <div class="container-inner">
             
-            <form method="post" enctype="multipart/form-data" id="paper">
+            <form method="post" id="paper">
                 {% csrf_token %}
+                <!-- {{ form.as_p }} -->
                 <div class="form-row">
-                    <div class="name">
-                        <input id="title" type="text" name="name" placeholder="Атауы">
-                    </div>
-                    <div class="select">
+                    <div class="select" id="classroomField">
                         {{ form.classroom }}
                     </div>
+                    <div class="select" id="topicField">
+                        {{ form.topic }}
+                    </div>
+                    <div class="select">
+                        {{ form.question_type }}
+                    </div>
+                    <div class="select">
+                        {{ form.correct_answer }}
+                    </div>
                 </div>
-                <textarea id="text" name="description" rows="4" style="height: 160px;"></textarea>
-                {{ form.images }}
-                <button type="submit" name="create_topic" class="btn draw-border">Тақырып Қосу</button>
+                <div class="text-wrapper">
+                    <input id="text" type="text" name="question" placeholder="Сұрақ">
+                    <input id="text" type="text" name="choice1" maxlength="100" id="id_choice1" placeholder="Бірінші жауап нұсқасы">
+                    <input id="text" type="text" name="choice2" maxlength="100" id="id_choice2" placeholder="Екінші жауап нұсқасы">
+                    <input id="text" type="text" name="choice3" maxlength="100" id="id_choice3" placeholder="Үшінші жауап нұсқасы">
+                    <input id="text" type="text" name="choice4" maxlength="100" id="id_choice4" placeholder="Төртінші жауап нұсқасы">
+                </div>
+                <button type="submit" name="create_task" class="btn draw-border">Create Task</button>
             </form>
         </div>
     </div>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const classroomField = document.querySelector(".select#classroomField select");  
+        classroomField.addEventListener("change", function() {
+            const classroomId = this.value; 
+            const topicField = document.querySelector(".select#topicField select");  
+
+            topicField.innerHTML = '';
+            fetch(`/get_topics_by_classroom/${classroomId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(topic => {
+                        const option = document.createElement("option");
+                        option.value = topic.id;
+                        option.text = topic.name;
+                        topicField.add(option);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+    </script>
 </body>
 </html>

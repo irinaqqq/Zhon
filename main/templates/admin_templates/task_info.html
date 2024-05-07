@@ -1,231 +1,246 @@
+<!-- user_info.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тапсырма қосу</title>
+    <title>Барлық Тапсырмалар</title>
     {% include 'navbar.html' %}
     <style>
-        h1 {
-            padding-top: 11vh;
-            text-align: center;
-            color: white;
-            padding-bottom: 1vh;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 5vh;
-            z-index: 1;
-        }
-        .container-inner{
-        padding-top: 20vh;
+    .cards-wrapper {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Выравниваем по верху */
+    padding-top: 20vh; /* Отступ сверху */
+    overflow-y: auto; /* При необходимости добавьте вертикальную прокрутку */
     }
-        #paper {
-            color: #FFF;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
 
-        #text {
-            background-image:url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png), url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
-            width: 82vh;
-            height: auto;
-            overflow: hidden;
-            background-color: #FFF;
-            color: #222;
-            font-family: Hombre, monospace;
-            font-weight: normal;
-            font-size: 24px;
-            /* resize: none; */
-            line-height: 40px;
-            padding: 45px 100px 34px;
-            border: 1px solid #FFF;
-            border-radius: 12px;
-            box-shadow: 0px 2px 14px #000;
-            margin: 20px;
-        }
+    .cards {
+    display: grid;
+    grid-template-columns: 40vh 40vh 40vh;
+    grid-gap: 3vh;
+    justify-content: center;
+    align-items: center;
+    /* Остальные стили для карточек */
+    }
 
-        #title {
-            border-bottom: 3px solid #FFF;
-            color: #000000;
-            font-size: 20px;
-            font-family: Hombre, monospace;
-            height: 28px;
-            font-weight: bold;
-            width: 50vh;
-        }
-        :root {
-            --darkgray: #2c3e50;
-        }
-        select {
-        /* Reset Select */
-        appearance: none;
-        outline: 10px red;
-        border: 0;
-        box-shadow: none;
-        /* Personalize */
-        flex: 1;
-        padding: 0 1em;
-        color: #fff;
-        background-color: var(--darkgray);
-        background-image: none;
-        cursor: pointer;
-        font-size:20px;
-        font-family:Hombre, monospace;
-        }
-        /* Remove IE arrow */
-        select::-ms-expand {
-        display: none;
-        }
-        /* Custom Select wrapper */
-        .select {
-        position: relative;
-        display: flex;
-        width: 20em;
-        height: 5vh;
-        border-radius: .25em;
-        overflow: hidden;
-        }
-        /* Arrow */
-        .select::after {
-        content: '\25BC';
+    h1{
+    padding-top: 11vh;
+    text-align: center; 
+    color: white;
+    padding-bottom: 1vh;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5vh;
+    z-index: 1;
+    }
+    .btn {
+    /* background: none; */
+    border: none;
+    cursor: pointer;
+    font: 700 3vh 'Hombre', sans-serif;
+    padding: 1vh 2vh;
+    width: 100%;
+    }
+    .btn:focus {
+    outline: 2px dotted #55d7dc;
+    }
+    .form-control {
+    padding: 10px;
+    font: 700 2vh 'Hombre', sans-serif;
+    border-radius: 30%;
+    border: none;
+    }
+    .card_item {
+    -ms-flex-preferred-size: calc(33.33333% - 30px);
+    flex-basis: calc(33.33333% - 30px);
+    margin: 0 15px 30px;
+    overflow: hidden;
+    border-radius: 28px;
+    
+    }
+    .card-item_link {
+    display: block;
+    padding: 30px 20px;
+    background-color: #1265a9;
+    box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    height: 20vh;
+    }
+    .card-item_link:hover,
+    .card-item_link:hover .card-item_date {
+    text-decoration: none;
+    color: #FFF;
+    }
+    .card-item_link:hover .card-item_bg {
+    -webkit-transform: scale(10);
+    -ms-transform: scale(10);
+    transform: scale(10);
+    }
+    .card-item_title {
+    /* height: 10 vh; */
+    margin: 0 0 25px;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 4vh;
+    color: #FFF;
+    z-index: 2;
+    position: relative;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Максимальное количество строк */
+    -webkit-box-orient: vertical;
+    }
+    .card-item_date-box, .card-item_classroom{ 
+    font-size: 18px;
+    color: #FFF;
+    z-index: 2;
+    position: relative;
+    /* margin-top: 2vh; */
+    }
+    .card-item_date {
+    font-weight: bold;
+    color: #f9b234;
+
+    -webkit-transition: color .5s ease;
+    -o-transition: color .5s ease;
+    transition: color .5s ease
+    }
+    .card-item_classroom{ 
+    position: absolute;
+    bottom: 10vh;
+    top: 14.5vh;
+    font-size: 4vh;
+    left: 30%;
+    color: #ffde5a;
+    }
+    .card-item_date-box{
         position: absolute;
-        top: 0;
-        right: 0;
-        padding: 1vh;
-        background-color: #34495e;
-        transition: .25s all ease;
-        pointer-events: none;
-        }
-        /* Transition */
-        .select:hover::after {
-        color: #f39c12;
-        }
-        .form-row {
-        display: flex;
-        justify-content: space-between;
-        width: 80%;
-        margin: auto;
-        }
-        .draw-border {
-        box-shadow: inset 0 0 0 4px #58cdd1;
-        color: #58afd1;
-        -webkit-transition: color 0.25s 0.0833333333s;
-        transition: color 0.25s 0.0833333333s;
-        position: relative;
-        }
+        bottom: 2vh;
+    }
+    .card-item_bg {
+    height: 128px;
+    width: 128px;
+    background-color: #f9b234;
 
-        .draw-border::before,
-        .draw-border::after {
-        border: 0 solid transparent;
-        box-sizing: border-box;
-        content: '';
-        pointer-events: none;
-        position: absolute;
-        width: 0rem;
-        height: 0;
-        bottom: 0;
-        right: 0;
-        }
+    z-index: 1;
+    position: absolute;
+    top: -75px;
+    right: -75px;
 
-        .draw-border::before {
-        border-bottom-width: 1vh;
-        border-left-width: 1vh;
-        }
+    border-radius: 50%;
 
-        .draw-border::after {
-        border-top-width: 1vh;
-        border-right-width: 1vh;
-        }
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    }
+    .card_item:nth-child(2n) .card-item_bg {
+    background-color: #3ecd5e;
+    }
+    .card_item:nth-child(3n) .card-item_bg {
+    background-color: #e44002;
+    }
+    .card_item:nth-child(4n) .card-item_bg {
+    background-color: #952aff;
+    }
+    .card_item:nth-child(5n) .card-item_bg {
+    background-color: #cd3e94;
+    }
+    .card_item:nth-child(6n) .card-item_bg {
+    background-color: #4c49ea;
+    }
 
-        .draw-border:hover {
-        color: #ffcd2c;
-        }
 
-        .draw-border:hover::before,
-        .draw-border:hover::after {
-        border-color: greenyellow;
-        -webkit-transition: border-color 0s, width 0.25s, height 0.25s;
-        transition: border-color 0s, width 0.25s, height 0.25s;
-        width: 100%;
-        height: 100%;
-        }
 
-        .draw-border:hover::before {
-        -webkit-transition-delay: 0s, 0s, 0.25s;
-        transition-delay: 0s, 0s, 0.25s;
-        }
+    @media only screen and (max-width: 979px) {
+    .card_item {
+        -ms-flex-preferred-size: calc(50% - 30px);
+        flex-basis: calc(50% - 30px);
+    }
+    .card-item_title {
+        font-size: 24px;
+    }
+    }
 
-        .draw-border:hover::after {
-        -webkit-transition-delay: 0s, 0.25s, 0s;
-        transition-delay: 0s, 0.25s, 0s;
-        }
+    @media only screen and (max-width: 767px) {
+    .ag-format-container {
+        width: 96%;
+    }
 
-        .btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        /* line-height: 1.5; */
-        font: 700 3vh 'Hombre', sans-serif;
-        padding: 1vh 2vh;
-        /* letter-spacing: 0.05rem; */
-        margin-top: 5vh;
-        background-color:  var(--darkgray);
-        }
+    }
+    @media only screen and (max-width: 639px) {
+    .card_item {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    }
+    .card-item_title {
+        min-height: 72px;
+        line-height: 1;
 
-        .btn:focus {
-        outline: 2px dotted #55d7dc;
-        }
+        font-size: 24px;
+    }
+    .card-item_link {
+        padding: 22px 40px;
+    }
+    .card-item_date-box, .card-item_classroom{
+        font-size: 16px;
+    }
+    }
+
     </style>
 </head>
 <body>
     
     <div class="container">
+        <h1>Барлық Тапсырмалар</h1>
+        <div class="cards-wrapper">
+        <div class="cards">
         
-        <h1>Тапсырма қосу</h1>
-        
-        <div class="container-inner">
-            
-            <form method="post" id="paper">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class="form-row">
-                <div class="select" id="id_classroom">
-                    {{ form.classroom }}
+        <div class="card_item">
+            <a href="{% url 'add_task' %}" class="card-item_link">
+                <div class="card-item_bg"></div>
+                <div class="card-item_title">
+                Тапсырма Қосу
                 </div>
-                <div class="select" id="id_topic">
-                    {{ form.topic }}
+                <div class="card-item_date-box">
+
+                <span class="card-item_date">
+
+                </span>
                 </div>
-                
+            </a>
             </div>
-                <button type="submit" name="create_task" class="btn draw-border">Create Task</button>
+        
+        {% for task in tasks %}
+        <div class="card_item">
+            <a href="{% url 'edit_task' task.id %}" class="card-item_link">
+              <div class="card-item_bg"></div>
+              <div class="card-item_title">
+                {{ task.question }}
+              </div>
+              <div class="card-item_classroom">
+                {{ task.classroom }}
+              </div>
+              <div class="card-item_date-box">
+                Тапсырма Тақырыбы:
+                <br>
+                <span class="card-item_date">
+                    {{ task.topic }}
+                </span>
+              </div>
+            </a>
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <button type="submit" name="delete_task" class="btn draw-border">Delete</button>
             </form>
-            
-        </div>
+          </div>
+          {% endfor %}
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const classroomField = document.getElementById("id_classroom");  
-            classroomField.addEventListener("change", function() {
-                const classroomId = this.value; 
-                const topicField = document.getElementById("id_topic");  
-    
-                topicField.innerHTML = '';
-                fetch(`/get_topics_by_classroom/${classroomId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(topic => {
-                            const option = document.createElement("option");
-                            option.value = topic.id;
-                            option.text = topic.name;
-                            topicField.add(option);
-                        });
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
-        });
-    </script>
+    </div>
+    </div>
 </body>
 </html>

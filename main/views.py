@@ -272,10 +272,14 @@ def edit_topic(request, topic_id):
     form = TopicForm(instance=topic)
     if request.method == 'POST':
         form = TopicForm(request.POST, instance=topic)
-        if form.is_valid():
-            form.save()
+        if 'save_topic' in request.POST:
+            if form.is_valid():
+                form.save()
+                return redirect('topic_info')
+        elif 'delete_topic' in request.POST:
+            topic.delete()
             return redirect('topic_info')
-    return render(request, 'admin_templates/edit_topic.html', {'classrooms': classrooms, 'form': form, 'topic': topic})
+    return render(request, 'admin_templates/edit_topic.html', {'classrooms': classrooms, 'form': form, 'topic': topic, 'topic_id': topic_id})
 
 @staff_member_required(login_url='/')
 def task_info(request):
@@ -289,21 +293,36 @@ def task_info(request):
                 recalculate_all_progress()
                 form.save()
                 return redirect('task_info')
-        else: 
-            task_id = request.POST.get('task_id')
-            if 'delete_task' in request.POST and task_id:
+        elif 'delete_task' in request.POST:
+                task_id = request.POST.get('task_id')
                 task = get_object_or_404(Task, pk=task_id)
                 task.delete()
                 recalculate_all_progress()
-                return redirect('task_info')           
+                return redirect('task_info')  
     return render(request, 'admin_templates/task_info.html', {'tasks': tasks, 'form': form})
+
+@staff_member_required(login_url='/')
+def add_task(request):
+    form = TaskForm()
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if 'create_task' in request.POST:
+            if form.is_valid():
+                recalculate_all_progress()
+                form.save()
+                return redirect('task_info')
+            else:
+                print("form invalid")
+    return render(request, 'admin_templates/add_task.html', {'form': form})
 
 @staff_member_required(login_url='/')
 def edit_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+    print(task.topic)
     classrooms = Classroom.objects.all()
     topics = Topic.objects.all()
     form = TaskForm(instance=task)
+    
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():

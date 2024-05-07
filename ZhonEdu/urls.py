@@ -50,6 +50,7 @@ urlpatterns = [
     path('add_topic/', views.add_topic, name='add_topic'),
     path('topic_info/<int:topic_id>/edit/', views.edit_topic, name='edit_topic'),
     path('task_info/', views.task_info, name='task_info'),
+    path('add_task/', views.add_task, name='add_task'),
     path('task_info/<int:task_id>/edit/', views.edit_task, name='edit_task'),
     path('get_topics_by_classroom/<int:classroom_id>/', views.get_topics_by_classroom, name='get_topics_by_classroom'),
     path('bookshelf/<int:classroom_id>/', views.bookshelf_view, name='bookshelf'),    

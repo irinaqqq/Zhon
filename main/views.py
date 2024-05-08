@@ -28,7 +28,8 @@ def classroom_topics(request, classroom_id):
 
 def topic_tasks(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
-    tasks = topic.task_set.all()
+    
+    tasks = list(topic.task_set.all().values())
     return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
 
 def task_text(request, task_id):
@@ -36,10 +37,10 @@ def task_text(request, task_id):
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
         raise Http404("Task does not exist")
-
     result = None
 
     if request.method == 'POST':
+        print("post started")
         if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
             user_answer = request.POST.get('user_answer')
             if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
@@ -61,7 +62,7 @@ def task_text(request, task_id):
             else:
                 result = 'Incorrect!'
 
-    return render(request, 'task_text.html', {'task': task, 'result': result})
+    return render(request, 'topic_tasks.html', {'task': task, 'result': result})
 
 def handle_correct_answer(user, task):
     # Get or create the Custom object for the user

@@ -4,441 +4,258 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/topic_tasks.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task</title>
-    <style>
-        body {
-            overflow: hidden;
-        }
-        .container {
-            background-image: url("{% static 'img/class-back.jpg' %}");
-        }
-
-        .tools {
-            width: 6.25vh;
-            height: 15vh;
-            background-color: pink;
-            float: left;
-            margin-top: 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            border-radius: 0 2vh 2vh 0;
-            box-shadow: 0.8vh 0.8vh 0.1vh rgb(0, 0, 0, 0.4);
-        }
-
-        .tools button {
-            background-color: transparent;
-            border: none;
-        }
-
-        .tools img {
-            width: 3.5vh;
-            height: 3.5vh;
-        }
-
-        .board {
-            width: 114vh;
-            height: 60vh;
-            background-color: white;
-            margin-left: 9vh;
-            margin-top: 9vh;
-            position: fixed;
-            overflow-y: scroll;
-            padding: 4vh;
-        }
-
-        .cls-ins-btn button {
-            height: 8vh;
-            font-size: 3.5vh;
-            border-radius: 50vh;
-            border-color: #d69b8e;
-            background-color: #FFF6E5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 5vh;
-        }
-
-        .cls-ins-btn {
-            width: 100vh;
-            height: 66vh;
-            position: fixed;
-            display: flex;
-            margin-top: 59vh;
-            margin-left: 50%;
-            transform: translateX(-25%);
-        }
-
-        .cls-ins-btn img {
-            width: 4vh;
-        }
-
-        .label img {
-            width: 4vh;
-        }
-
-        .label a {
-            background-color: transparent;
-            border: 0;
-            color: white;
-            cursor: pointer;
-            font-size: 5vh;
-            opacity: 0.8;   
-            padding: 0;
-            text-decoration: none;
-        }
-
-        .lbl-nums {
-            position: fixed;
-            display: flex;
-            width: 25vh;
-            justify-content: space-evenly;
-            margin-top: 10vh;
-        }
-
-        .lbl-nums div{
-            width: 3.5vh;
-            height: 3.5vh;
-            border-radius: 3.5vh;
-            background-color: #bdbdbd;
-            box-shadow: 0 0.4vh 0.4vh rgb(0, 0, 0, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lbl-nums div.active {
-            background-color: #24a4ff;
-        }
-
-        .lbl-nums a {
-            font-size: 3vh;
-        }
-
-        .brd-task {
-            width: 111vh;
-            height: auto;
-            background-color: red;
-            margin: auto;
-            margin-top: 3vh;
-        }
-
-        .brd-tools {
-            position: fixed;
-            display: flex;
-            align-items: center;
-            margin-top: 57vh;
-        }
-
-        .brd-tools button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 5vh;
-            height: 5vh;
-            font-size: 4vh;
-            font-weight: 1000;
-            background-color: #24a4ff;
-            border-radius: 20vh;
-            margin-left: 2vh;
-        }
-
-        #submit {
-            background-color: #FFF6E5;
-            width: 25vh;
-            height: 8vh;
-            margin-left: 8vh;
-            border-color: #D69B8E;
-        }
-
-        .ins-open {
-            width: 6.25vh;
-            height: 6.95vh;
-            background-color: pink;
-            float: right;
-            margin-top: 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            border-radius: 2vh 0 0 2vh;
-            box-shadow: -0.8vh 0.8vh 0.1vh rgb(0, 0, 0, 0.4);
-        }
-
-        .ins-open button {
-            border: 0;
-            background-color: transparent;
-        }
-
-        canvas {
-            width: 122vh;
-            height: 63vh;
-            position: fixed;
-            margin-top: -7vh;
-            margin-left: -4vh;
-        }
-
-
-        
-        .overlay {
-        width: 140.1vh;
-        height: 100vh;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        display: none;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.5);
-    }
-
-    #ins.overlay {
-        background-color: rgba(0,0,0, 0.0);
-    }
-
-    .overlay-content {
-        position: relative;
-        top: 25%;
-        width: 100%;
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .overlay a {
-        padding: 8px;
-        text-decoration: none;
-        font-size: 36px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    .overlay a:hover, .overlay a:focus {
-        color: #f1f1f1;
-    }
-
-    .overlay .closebtn {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 6vh;
-        height: 6vh;
-        padding: 0;
-        right: 0;
-        font-size: 7vh;
-        background-color: #d9d9d9;
-    }
-
-    .outer-ins {
-        width: 104vh;
-        height: 66vh;
-        position: fixed;
-        display: flex;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        top: 17vh;
-    }
-
-    .inner-ins {
-        background-color: #fff;
-        width: 99vh;
-        height: 60vh;
-        margin-left: 2vh;
-        align-self: center;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        border: 1.5vh solid #d9d9d9;
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
-    .inner-ins p ,.inner-ins h2  {
-        font-family: Hombre;
-        font-size: 3vh;
-    }
-
-    .inner-ins h3 {
-        font-size: 3vh;
-        color: white;
-    }
-
-    .bubble {
-        width: 20vh;
-        height: 20vh;
-        background-image: url(/static/img/bubble.jpg);
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .inst-text-box {
-        width: 65vh;
-        height: 45vh;
-        overflow-y: scroll;
-        text-align: start;
-        margin: 2vh;
-    }
-
-    .box {
-        width: 75vh;
-        height: 5vh;
-        display: flex;
-        align-items: center;
-    }
-
-    .in-box {
-        width: 40%;
-        text-align: end;
-    }
-
-    .in-box-two {
-        display:flex;
-        width: 60%;
-        align-items: center;
-    }
-
-    .xdirection {
-        width: 50%;
-        margin-left: 10%;
-        color: #BDBDBD;
-        --thumb-height: 1.125em;
-        --track-height: 0.25em;
-        --track-color: rgba(0, 0, 0, 0.2);
-        --brightness-hover: 180%;
-        --brightness-down: 80%;
-        --clip-edges: 0.125em;
-        background: #fff0;
-        overflow: hidden;
-        border-radius: 10vh;
-
-        &:active {
-            cursor: grabbing;
-        }
-    }
-
-    .label {
-        width: 45vh;
-        height: 10.5vh;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        position: relative;
-        border-bottom-left-radius: 6vh;
-        border-bottom-right-radius: 6vh;
-        border-top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .label h2 {
-        font-family: Hombre; 
-        font-size: 3.5vh;
-        opacity: 80%;
-        letter-spacing: 0.2vh;
-    }
-    </style>
 
 </head>
 <body>
+     
     <div class="container">
-
-
+        {% include 'navbar.html' %}
+        <div class="fixedImages">
+            <div class="background"><img src="{% static 'images/vecteezy_blueprint-background-for-architect-drawing-building-plans-on_28697278-1.jpg' %}" alt=""></div>
+            <img class="bgbottom" src="{% static 'images/bgbottom.svg' %}" alt="">
+            <img class="blOver" src="{% static 'images/play-bl-over.svg' %}" alt="">
+            <img class="brOver" src="{% static 'images/play-br-over.svg' %}" alt="">
+            <img class="bmrUnder" src="{% static 'images/play-bmr-under.svg' %}" alt="">
+            <img class="lmbUnder" src="{% static 'images/play-lmb-under.svg' %}" alt="">
+            
+        </div>
         <div class="label">
-            <a href="{% url 'classroom' %}" style="margin-left: -10vh;">↩</a>
-            <a href="{% url 'library' %}" style="margin-left: 2vh;"><img src="{% static 'img/mini-lib.svg' %}"></a>
-            <h2 style="color: white; margin-left: 3vh;">Сабақ</h2>
+            <a href="{% url 'classroom' %}" class="btn"><img src="{% static 'images/icons/button-back.svg' %}"></a>
             <div class="lbl-nums">
-                <div class="active"><a href="#">1</a></div>
-                <div><a href="#">2</a></div>
-                <div><a href="#">3</a></div>
-                <div><a href="#">4</a></div>
-                <div><a href="#">5</a></div>
+                <h2 style="color: white; margin-left: 3vh;">{{ topic.name }}</h2>
+                <div class="nums">
+                    
+                </div>
+            </div>
+            <a class="btn" href="{% url 'library' %}"><img src="{% static 'images/icons/button-bookmark-white.svg' %}"></a>
+            
+            <div class="lbl-nums">
             </div>
         </div>
-
-        <div class="tools">
-            <button id="pencil" onclick="init()"><img src="{% static 'img/pencil.png' %}"></button>
-            <button value="erase" id="clr" onclick="erase()"><img src="{% static 'img/eraser.png' %}"></button>
-
-        </div>
-        <div class="board">
-            <p class="brd-task-text"></p>
-            <div class="brd-task">
+        <div class="mainBlocksCenter">
+            <div class="tools">
+                <button id="pencil" onclick="init()"><img src="{% static 'images/icons/button-pencil.svg' %}"></button>
+                <button value="erase" id="clr" onclick="erase()"><img src="{% static 'images/icons/button-eraser.svg' %}"></button>
             </div>
-            <canvas id="can" width="870" height="450"></canvas>
-
-            <div class="brd-tools">
-                <button style="margin-left: 17vh;">↺</button>
-                <button>↶</button>
-                <button>↷</button>
-                <button id="submit">Тапсыру</button>
+            <div class="board">
+            
+                <div class="brd-task">
+                        
+                        <!-- Отображение формы с вариантами ответов -->
+                        <form method="post" >
+                            {% csrf_token %}
+                            <div class="task-text">
+                               <p class="brd-task-text"></p>
+                                    <input type="radio" id="choice1" name="choice" value="{{ task.choice1 }}">
+                                    <label for="choice1"></label><br>
+                                    <input type="radio" id="choice2" name="choice" value="{{ task.choice2 }}">
+                                    <label for="choice2"></label><br>
+                                    
+                                        <input type="radio" id="choice3" name="choice" value="{{ task.choice3 }}">
+                                        <label for="choice3"></label><br>
+                                    
+                                        <input type="radio" id="choice4" name="choice" value="{{ task.choice4 }}">
+                                        <label for="choice4"></label><br>
+                                   
+                                    <!-- <label for="user_answer">Your Answer:</label>
+                                    <input type="text" id="user_answer" name="user_answer" required> -->
+                                
+                                    <!-- Отображение других типов вопросов -->
+                                    <!-- Добавьте логику для других типов вопросов -->
+                              
+                            </div>
+                            
+                
+                            <!-- Кнопка для отправки ответа -->
+                            <button type="button" onclick="checkAnswer()">Submit</button>
+                            
+                        </form>
+                
+                        <!-- Отображение результата проверки ответа -->
+                        
+                    
+                        
+                    <p class="result"></p>
+                </div>
+                <div class="brd-tools">
+                    <button style="margin-left: 17vh;">↺</button>
+                    <button>↶</button>
+                    <button>↷</button>
+                    <button id="submit">Тапсыру</button>
+                </div>
             </div>
-        </div>
-
-        <div class="ins-open">
-            <button style="font-family: Hombre; font-size: 5.5vh;" onclick="openClsIns()">i</button>
-        </div>
-
-        <div id="cls-ins" class=" overlay">
-            <div class="overlay-content">
-                <div class="outer-ins">
-                    <div><a href="javascript:void(0)" class="closebtn" onclick="closeClsIns()" style="font-family: Chelsea+Market;">&times;</a></div>
-                    <div class="inner-ins">
-                        <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
-                        <div class="bubble">
-                            <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
+            <div class="ins-open">
+                <button style="font-family: Hombre; font-size: 5.5vh;" onclick="openClsIns()"><img src="{% static 'images/icons/button-info.svg' %}" alt=""></button>
+            </div>
+    
+            <div id="cls-ins" class=" overlay">
+                <div class="overlay-content">
+                    <div class="outer-ins">
+                        <div><a href="javascript:void(0)" class="closebtn" onclick="closeClsIns()" style="font-family: Chelsea+Market;">&times;</a></div>
+                        <div class="inner-ins">
+                            <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
+                            <div class="bubble">
+                                <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
+                            </div>
+                            <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
+                            <div class="inst-text-box">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
+                                    <br>
+                                    Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
+                                    <br>
+                                    Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
+                                    Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
+                                    <br>
+                                    Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
+                                    <br>
+                                    Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
+                                    <br>
+                                    Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
+                                    <br>
+                                    Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
+                                </p>
+                            </div>
                         </div>
-                        <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
-                        <div class="inst-text-box">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
-                                <br>
-                                Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
-                                <br>
-                                Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
-                                Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
-                                <br>
-                                Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
-                                <br>
-                                Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
-                                <br>
-                                Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
-                                <br>
-                                Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
-                            </p>
-                        </div>
+                            <div class="cls-ins-btn">
+                                <button type="button" onclick="location.href='{% url 'library' %}'" style="width: 7vh; height: 7vh;"><img src="{% static 'img/mini-lib.png' %}"></button>
+                                <button class="cls-start" onclick="closeClsIns()">Бастау</button>
+                            </div>
                     </div>
-                        <div class="cls-ins-btn">
-                            <button type="button" onclick="location.href='{% url 'library' %}'" style="width: 7vh; height: 7vh;"><img src="{% static 'img/mini-lib.png' %}"></button>
-                            <button class="cls-start" onclick="closeClsIns()">Бастау</button>
-                        </div>
                 </div>
             </div>
         </div>
-        <h1>Tasks for Topic: {{ topic.name }}</h1>
+        
 
-        <ul>
-            {% for task in tasks %}
-                <li>{{ task.name }} - {{ task.description }}</li>
-            {% endfor %}
-        </ul>
+        
+            <!-- <canvas id="can" width="870" height="450"></canvas> -->
+
+           
+
+        
+        <!-- <h1>Tasks for Topic: {{ topic.name }}</h1> -->
+
+        
       
     </div>
+    <script type="application/json" id="tasks">
+        {{ tasks|safe }}
+        
+    </script>
+    
 
     <script>
+    var currentId=0
+    var currentTask
+    function showTasksNums(tasks){
+        var numsDiv = document.querySelector('.nums');
+        // Loop through each task and add a number from 1 to the length of tasks
+        for (var i = 0; i < tasks.length; i++) {
+            // Create a new span element for each number
+            var numberSpan = document.createElement('div');
+            numsDiv.innerHTM=""
+            // Set the text content of the span to the current number
+            numberSpan.textContent = i+1;
 
+            // If i is equal to currentId, add the 'active' class to the span
+            if (i === currentId) {
+                numberSpan.classList.add('active');
+            }
+            numsDiv.addEventListener('click', function(event) {
+                currentId = parseInt(event.target.textContent) - 1;
+            
+            // Set currentTask to the task corresponding to the currentId
+            currentTask = tasks[currentId];
+            
+            // Update the UI to show the current task
+            showCurrentTask(currentTask);
+            
+            // Remove the 'active' class from all spans
+            var allSpans = document.querySelectorAll('.nums div');
+            allSpans.forEach(function(span) {
+                span.classList.remove('active');
+            });
+            
+            // Add the 'active' class to the clicked span
+            event.target.classList.add('active');
+            });
+            // Append the span element to the numsDiv
+            numsDiv.appendChild(numberSpan);
+        }
+    }
+    function checkAnswer() {
+    // Find all radio buttons with the name 'choice'
+        var choices = document.getElementsByName('choice');
+        var result = document.getElementsByClassName('result');
+        // Loop through each radio button to check if it's checked
+        for (var i = 0; i < choices.length; i++) {
+            if (choices[i].checked && choices[i].id== currentTask.correct_answer) {
+                // If checked, alert the ID of the checked choice
+                document.querySelector('.result').textContent = "Correct";
+                return; // Exit the function after finding the checked choice
+            }else{
+                document.querySelector('.result').textContent = "Incorrect";
+                return
+            }
+        }
+
+        // If none of the choices are checked
+        alert("Please select an option.");
+    }
+    function getTaskById(tasks, targetId) {
+        
+            for(var i = 0; i < tasks.length; i++){
+                // console.log(targetId,i)
+                if(i==targetId){
+                    return tasks[i]
+                }
+            }
+        }
+    function showCurrentTask(currentTask){
+        
+        // Update the HTML content with the properties of the currentTask object
+        document.querySelector('.brd-task-text').textContent = currentTask.question;
+
+        if (currentTask.question_type === 'MCQ' || currentTask.question_type === 'TF') {
+            // Update radio button labels
+            document.getElementById('choice1').value = currentTask.choice1;
+            document.getElementById('choice1').nextElementSibling.textContent = currentTask.choice1;
+
+            document.getElementById('choice2').value = currentTask.choice2;
+            document.getElementById('choice2').nextElementSibling.textContent = currentTask.choice2;
+
+            if (currentTask.choice3) {
+                document.getElementById('choice3').value = currentTask.choice3;
+                document.getElementById('choice3').nextElementSibling.textContent = currentTask.choice3;
+            }
+
+            if (currentTask.choice4) {
+                document.getElementById('choice4').value = currentTask.choice4;
+                document.getElementById('choice4').nextElementSibling.textContent = currentTask.choice4;
+            }
+        } else if (currentTask.question_type === 'OQ') {
+            // Update the text input label
+            document.querySelector('label[for="user_answer"]').textContent = "Your Answer:";
+        }
+
+       
+    }
+        
     document.addEventListener("DOMContentLoaded", function() {
+        var tasksData=document.getElementById('tasks').textContent
+        var tasks = tasksData.replace(/&#x27;/g, "'");
+        tasks = tasksData.replace(/'/g, '"');
+        tasks = JSON.parse(tasks);
+        currentTask=getTaskById(tasks,currentId)
+        showCurrentTask(currentTask)
+       
+        showTasksNums(tasks)
+        
+
+
         var links = document.querySelectorAll('.lbl-nums a');
         links.forEach(function(link, index) {
             link.addEventListener('click', function(event) {

@@ -4,23 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <title>User Profile</title>
     {% include 'navbar.html' %}
     <style>
-        .container {
-            background-image: url("{% static 'img/school-back.jpg' %}");
-        }
         /* Add your custom styles here */
         .profile-container {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
-        }
-        .profile-pic {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin-bottom: 20px;
         }
         .profile-info {
             font-size: 18px;
@@ -29,33 +21,1211 @@
         .progress-info {
             font-size: 16px;
         }
+        .container {
+            background-color: #ead09a;
+        }
+        h1 {
+            font-family: Hombre;
+        }
+        h2 {
+            font-family: Hombre;
+        }
+        h3 {
+            font-family: Hombre;
+        }
+        .tabcontent {
+            display: none;
+            width: 140vh;
+            height: 90vh;
+            background-color: #FFF1CD;
+            background-image: url('/static/img/profile-back.jpg');
+            background-position: center;
+            background-size: cover;
+            box-shadow: 0 0.5vh 0.05vh rgb(0, 0, 0, 0.3), inset 0 0 3vh 0 rgba(0, 0, 0, 0.4);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            overflow-y: scroll;
+        }
+        .tabcontent::-webkit-scrollbar {
+            scrollbar-height: 60vh;
+            margin-right: 1vh;
+            width: 2vh;
+        }
+        .tabcontent::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        .tabcontent::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5vh;
+            border: 0.2vh rgba(0, 0, 0, 0.3) solid;
+        }
+        .tabcontent::-webkit-scrollbar-button {
+            background-color: transparent;
+        }
+        .tabcontent::-webkit-scrollbar-corner {
+            background-color: #f1f1f1;
+        }
+        .tabcontent::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 8vh;
+        }
+        .main-1 {
+            width: 40vh;
+            height: 80vh;
+            margin-top: 10vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .user-inf {
+                background-color: #0659A6;
+                width: 35vh;
+                text-align: center;
+                font-size: 3vh;
+                margin-top: 1.5vh;
+                padding: 0.5vh 0vh;
+                color: white;
+                box-shadow: 0.4vh 0.5vh 0.05vh rgb(0, 0, 0, 0.3);
+            }
+
+
+
+            .user-activity {
+                background-color: white;
+                width: 35vh;
+                height: 30vh;
+                margin-top: 2vh;
+                box-shadow: 0.4vh 0.5vh 0.05vh rgb(0, 0, 0, 0.3);
+
+                h3 {
+                    color: white;
+                    background-color: #0659A6;
+                    padding: 0.5vh 2vh;
+                }
+
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        padding: 1.7vh 1vh;
+                        color: #0659A6;
+                        display: flex;
+                        justify-content:space-between;
+                        align-items: end;
+                    }
+
+                    span {
+                        font-size: 2vh;
+                        color: dimgrey;
+                    }
+                }
+            }
+
+        }
+        .main-2 {
+            width: 100vh;
+            height: 80vh;
+            margin-top: 10vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .user-progress {
+                width: 90vh;
+                height: 60vh;
+                background-color: white;
+                margin: auto;
+                box-shadow: 0.4vh 0.5vh 0.05vh rgb(0, 0, 0, 0.3);
+
+                .prog-card-in {
+                    background-color: #0659A6;
+                    width: 90vh;
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .prog-nums {
+                    height: 8vh;
+                    background-color: transparent;
+
+                    .cl-num {
+                        color: white;
+                    }
+                }
+
+                h2 {
+                    width: 15vh;
+                    padding: 2vh 1vh;
+                    color: white;
+                    font-size: 3vh;
+                    margin-left: 1vh;
+                }
+            }
+
+            .main-2-out {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 86%;
+
+                .main-2-in {
+                    margin-left: 5vh;
+                    display: flex;
+                    flex-direction: column;
+                    width: 20%;
+                    height: 50%;
+
+                    button {
+                        background-color: transparent;
+                        font-size: 5vh;
+                        border: none;
+                        cursor: pointer;
+                        color: #0659A6;
+
+                        :hover {
+                            color: #408FCC;
+                        }
+                    }
+
+                    .main-2-cl-name {
+                        width: 90%;
+                        margin: auto;
+                        overflow: hidden;
+                        position: relative;
+                        text-align: center;
+
+                        h3 {
+                            white-space: nowrap;
+                            transition: transform 3.5s ease;
+                            left: 100%;
+                        }
+                    }
+                    .main-2-cl-name:hover h3 {transform: translateX(-100%);}
+                }
+
+                .card-in {
+                    margin-right: 5vh;
+                    width: 80vh;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    box-shadow: none;
+                    flex-wrap: wrap;
+
+                    .ind {
+                        width: 5.5vh;
+                        height: 23vh;
+                        text-align: center;
+
+                        .ind-prog {
+                            background-color: #DDDDDD;
+                            width: 5.5vh;
+                            height: 18vh;
+                            margin-top: 1.5vh;
+                            display: flex;
+                            align-items: end;
+
+                            div {
+                                width: 100%;
+                                background-color: #F52338;
+                            }
+                        }
+
+                        p {
+                            margin-top: 0.8vh;
+                        }
+                    }
+                }
+            }
+        }
+        .pfp {
+            width: 30vh;
+            height: 30vh;
+            position:relative;
+
+            div {
+                clip-path: polygon(51% 0, 87% 13%, 100% 45%, 93% 86%, 54% 100%, 13% 90%, 0 53%, 15% 13%);
+                background-color: #FFCE41;
+                width: 30vh;
+                height: 30vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+            }
+
+            .profile-pic {
+                width: 27vh;
+                height: 27vh;
+                border-radius: 28vh;
+                position: absolute;
+                background-color: white;
+                margin: 0;
+            }
+
+            button {
+                width: 4vh;
+                height: 4vh;
+                background-color: #0659A6;
+                position: absolute;
+                right: 1vh;
+                bottom: 1vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                box-shadow: 0.4vh 0.5vh 0.05vh rgb(0, 0, 0, 0.3);
+                cursor: pointer;
+
+                img {
+                    height: 80%;
+                }
+            }
+            button:hover {
+                background-color: #58baff;
+            }
+        }
+        .prog-nums {
+            width: 90%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            margin-left: 10%;
+
+            .pr-name {
+                width: 20vh;
+                height: 4vh;
+                position: relative;
+                overflow: hidden;
+
+                h2 {
+                    position: absolute;
+                    white-space: nowrap;
+                    transition: transform 3.5s ease;
+                    text-decoration: none;
+                    color: #F52338;
+                }
+            }
+
+            .pr-name:hover h2 {transform: translateX(-100%);}
+
+            p {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: gold;
+                font-size: 2.5vh;
+                img {
+                    display: inline;
+                    vertical-align: middle;
+                    width: 4vh;
+                    height: 4vh;
+                    margin-left: 0.5vh;
+                }
+
+                span {
+                    font-size: 4vh;
+                    margin-left: 0.5vh;
+                }
+            }
+
+            .rating {
+                width: 36vh;
+                height: 4vh;
+                display: flex;
+
+                div {
+                    width: 9vh;
+                    height: 100%;
+                    text-align: center;
+                    color: gold;
+                    font-size: 3vh;
+                }
+            }
+            .cl-num {
+                color: gray;
+            }
+        }
+        #progress {
+            overflow-y: scroll;
+
+            .prog {
+                margin-top: 20vh;
+                width: 130vh;
+            }
+
+            .prog-card {
+                width: 100%;
+                min-height: 8vh;
+                margin-top: 5vh;
+
+                .prog-card-in {
+                    background-color: white;
+                    width: 100%;
+                    height: 8vh;
+                    border: #fceccd 0.3vh solid;
+                    outline: white 0.8vh solid;
+                    z-index: 1;
+                    position: relative;
+
+                    button {
+                        width: 10vh;
+                        height: 8vh;
+                        border: none;
+                        background-color: transparent;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        position: absolute;
+
+                        div {
+                            width: 4vh;
+                            height: 4vh;
+                            background-color: #ffce41;
+                            clip-path: polygon(35% 0, 37% 28%, 0 23%, 0 76%, 37% 72%, 35% 100%, 100% 50%);
+                            transition: 0.5s ease;
+                        }
+
+                        #shadow {
+                            background-color: rgba(0,0,0,0.3);
+                            margin: 0.5vh 0 0 0.4vh;
+                            position: absolute;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .card-in {
+            background-color: white;
+            width: 90.9%;
+            height: 20vh;
+            margin-left: 10%;
+            display: none;
+            z-index: 5;
+            justify-content: space-evenly;
+
+            .ind {
+                width: 5.5vh;
+                height: 100%;
+                text-align: center;
+
+                p {
+                    margin-top: 0.8vh;
+                }
+            }
+
+            .ind-prog {
+                background-color: lightgrey;
+                width: 5.5vh;
+                height: 14vh;
+                margin-top: 1.5vh;
+                display: flex;
+                align-items: end;
+
+                div {
+                width: 100%;
+                background-color: #F52338;
+                }
+            }
+        }
+        .activity-container {
+            background-color: white;
+            width: 94%;
+            padding-bottom: 5vh;
+            margin: auto;
+            margin-top: 10vh;
+            position: absolute;
+            border: #fceccd 0.3vh solid;
+            outline: white 0.8vh solid;
+
+            .calendar-out {
+                width: 97%;
+                height: 50vh;
+                padding: 2vh;
+                display: flex;
+            }
+        }
+        .calendar{
+          display:inline-grid;
+          justify-content:center;
+          align-items:center;
+
+          .month{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:3vh;
+            color: #0659A6;
+
+            .year{
+              margin-left:1vh;
+            }
+
+            .nav{
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              text-decoration:none;
+              color:#0659A6;
+              width:5vh;
+              height:5vh;
+              transition-duration:.2s;
+              position:relative;
+
+              &:hover{
+                color:#58baff;
+              }
+            }
+          }
+
+          .days{
+              display: grid;
+              justify-content:center;
+              align-items:center;
+              grid-template-columns: repeat(7, 1fr);
+              color:#fff;
+              font-size: 2.5vh;
+
+            span{
+              margin: 0.1vh;
+              width: 10vh;
+                height: 6vh;
+              background-color: #0659A6;
+                display: flex;
+              justify-content:center;
+              align-items:center;
+            }
+          }
+
+          .dates{
+              margin-top: -3.8vh;
+            display:grid;
+            grid-template-columns: repeat(7, 1fr);
+
+            button{
+                cursor:pointer;
+                outline:0;
+                border:0;
+                background:#E6E6E6;
+                font-family: 'Montserrat', sans-serif;
+                font-size:2.5vh;
+                justify-self:center;
+                align-self:center;
+                width: 10vh;
+                height: 6vh;
+                margin:0.1vh;
+                transition-duration:.2s;
+
+              &.today{
+                background-color: #fbc71e;
+                box-shadow:inset 0 0 0 0.3vh #16ACF3;
+              }
+
+              &:hover{
+                background:#eee;
+              }
+
+              &:focus{
+                box-shadow:inset 0 0 0 0.3vh #16ACF3;
+                font-weight:600;
+              }
+            }
+          }
+        }
+        .calendar-details {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            color: #0659A6;
+            align-items: center;
+            img {
+                width: 3.5vh;
+                position: absolute;
+                margin-left: -7vh;
+                align-self: flex-start;
+            }
+
+            h5 {
+                font-size: 2.8vh;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .calendar-details-text {
+            align-self: flex-start;
+            font-size: 3vh;
+            margin-left: 3vh;
+        }
+        .activity-time {
+            width: 62%;
+            margin: 11vh 0 0 10vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+
+            p {
+                width: 27vh;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .activity-star {
+            width: 62%;
+            margin: 4vh 0 0 10vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .activity-card {
+            color: #0659A6;
+            width: 100%;
+            padding-bottom: 5vh;
+
+            img {
+                width: 3.5vh;
+                height: 3.5vh;
+            }
+
+            h2 {
+                font-size: 4vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 2vh;
+            }
+
+            .title-img {
+                width: 4vh;
+                height: 4vh;
+                margin-right: 1vh;
+            }
+
+            p {
+                width: 90%;
+                height: 4.3vh;
+                border-bottom: 0.24vh rgba(0,0,0,0.05) solid;
+                display: flex;
+                align-items: center;
+                position: relative;
+                margin: auto;
+                color: #949494;
+            }
+        }
+        .btns {
+            width: 140vh;
+            display: flex;
+            justify-content: space-around;
+        }
+        .tablink {
+            width: 42vh;
+            height: 8vh;
+            border: none;
+            font-size: 3vh;
+            border: 1vh solid;
+            border-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+
+            .mini-pfp {
+                margin-right: 1vh;
+                width: 5.5vh;
+                height: 5.5vh;
+
+                div {
+                    clip-path: polygon(51% 0, 87% 13%, 100% 45%, 93% 86%, 54% 100%, 13% 90%, 0 53%, 15% 13%);
+                    background-color: #FFCE41;
+                    width: 5.5vh;
+                    height: 5.5vh;
+                }
+                .profile-pic {
+                    width: 5vh;
+                    height: 5vh;
+                    border-radius: 5vh;
+                }
+            }
+
+            span {
+                font-size: 6.5vh;
+                color: #ffce41;
+            }
+
+            img {
+                width: 4.4vh;
+                margin-right: 1vh;
+            }
+        }
+        .second-prog-card {.card-in {.ind {.ind-prog {div {background-color: #Fa7e37;}}}}}
+        .second-prog-card{.prog-card-in{.prog-nums{.pr-name{h2{color: #Fa7e37;}}}}}
+        .third-prog-card {.card-in {.ind {.ind-prog {div {background-color: #267F26;}}}}}
+        .third-prog-card{.prog-card-in{.prog-nums{.pr-name{h2{color: #267F26;}}}}}
+        .forth-prog-card {.card-in {.ind {.ind-prog {div {background-color: #3299cc;}}}}}
+        .forth-prog-card{.prog-card-in{.prog-nums{.pr-name{h2{color: #3299cc;}}}}}
+        .fifth-prog-card {.card-in {.ind {.ind-prog {div {background-color: #84318c;}}}}}
+        .fifth-prog-card{.prog-card-in{.prog-nums{.pr-name{h2{color: #84318c;}}}}}
+
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+
+        .transition {
+            transition: transform 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>User Profile</h1>
-        <div class="profile-info">
-            <img src="{{ profile_info.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
-            <p>Name: {{ profile_info.get_name }}</p>
-            <p>User ID: {{ profile_info.get_id }}</p>
-            <!-- You can add more user information here -->
+        <div class="tabcontent" id="main">
+            <div class="main-1">
+                <div class="pfp">
+                    <div style="background-color: rgb(0,0,0,0.3);"></div>
+                    <div style="margin: -30.5vh 0 0 -0.4vh;">
+                        <img class="profile-pic" src="{% if profile_pic %}
+                            {{ profile_pic }}
+                        {% else %}
+                            {% static 'img/pfp.png' %}
+                        {% endif %}">
+                    </div>
+                    <button><img src="{% static 'img/edit.svg' %}"></button>
+                </div>
+                <h2 class="user-inf">{{ profile_info.get_name }}</h2>
+                <h2 class="user-inf">ID: {{ profile_info.get_id }}</h2>
+                <div class="user-activity">
+                    <h3>Белсенділік</h3>
+                    <ul>
+                        <li>Тоқтамай: <span>3 күн</span></li>
+                        <li>Рекорд: <span>47 күн</span></li>
+                        <li>Оқылған беттер: <span>0 бет</span></li>
+                        <li>Барлығы: <span>777 сағат 88 минут</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main-2">
+                <div class="user-progress">
+                    <div class="prog-card-in">
+                        <h2>Жетістіктер</h2>
+                        <div class="prog-nums">
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+
+                    <div class="main-2-out">
+                        <div class="main-2-in">
+                            <button id="up-main-2" class="prev nav-btn" onclick="changeClassroom('previous')">
+                                <span>&#9650</span>
+                            </button>
+                            <div class="main-2-cl-name"><h3 class="cl-name-h2">Class name</h3></div>
+                            </button>
+                            <button id="up-main-2" class="next nav-btn" onclick="changeClassroom('next')">
+                                <span>&#x25BC;</span>
+                            </button>
+                        </div>
+                        <div class="card-in">
+                            <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>1</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>2</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>3</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>4</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>5</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>6</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>7</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>8</p>
+                            </div>
+                            <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                <div class="ind-prog"><div style="height: 80%;"></div></div>
+                                <p>9</p>
+                            </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <!-- Progress-related information -->
-        <div class="progress-info">
-            {% for classroom_progress in classroom_progress %}
-            <h3>{{ classroom_progress.classroom.name }}</h3>
-            <p>Progress Percentage: {{ classroom_progress.progress_percentage }}%</p>
-            <p>Completed Tasks: {{ classroom_progress.completed_tasks_count }}</p>
-        {% endfor %}
-        
-            <!-- Display tasks count data -->
-            <h2>Tasks Completed</h2>
-            <ul>
-                {% for item in tasks_count_by_date %}
-                    <li>{{ item.completion_date|date:'j F Y' }}: Solved {{ item.count }} task{% if item.count != 1 %}s{% endif %}</li>
-                {% endfor %}
-            </ul>
+
+        <div class="tabcontent" id="progress">
+            <div class="prog">
+                <div class="prog-card first-prog-card">
+                    <div class="prog-card-in">
+                        <button><div id="shadow"></div><div></div></button>
+                        <div class="prog-nums">
+                            <div class="pr-name"><h2>Grade name</h2></div>
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <div class="rating">
+                                <div style="background-color: #F52338;">&#9733;&#9733;&#9733;</div>
+                                <div style="background-color: #FF6661;">&#9733;&#9733;</div>
+                                <div style="background-color: #FF9492;">&#9733;</div>
+                                <div style="background-color: #FFc2c2; color: rgba(0,0,0,0.3);">&#9733;</div>
+                            </div>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+                    <div class="card-in">
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="prog-card second-prog-card">
+                    <div class="prog-card-in">
+                        <button><div id="shadow"></div><div></div></button>
+                        <div class="prog-nums">
+                            <div class="pr-name"><h2>Grade name</h2></div>
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <div class="rating">
+                                <div style="background-color: #Fa7e37">&#9733;&#9733;&#9733;</div>
+                                <div style="background-color: #FB975E">&#9733;&#9733;</div>
+                                <div style="background-color: #FCB187">&#9733;</div>
+                                <div style="background-color: #FDCBAF; color: rgba(0,0,0,0.3)">&#9733;</div>
+                            </div>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+                    <div class="card-in">
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="prog-card third-prog-card">
+                    <div class="prog-card-in">
+                        <button><div id="shadow"></div><div></div></button>
+                        <div class="prog-nums">
+                            <div class="pr-name"><h2>Grade name</h2></div>
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <div class="rating">
+                                <div style="background-color: #267F26">&#9733;&#9733;&#9733;</div>
+                                <div style="background-color: #3D993D">&#9733;&#9733;</div>
+                                <div style="background-color: #6BB26B">&#9733;</div>
+                                <div style="background-color: #A3CCA3; color: rgba(0,0,0,0.3)">&#9733;</div>
+                            </div>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+                    <div class="card-in">
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="prog-card forth-prog-card">
+                    <div class="prog-card-in">
+                        <button><div id="shadow"></div><div></div></button>
+                        <div class="prog-nums">
+                            <div class="pr-name"><h2>Grade name</h2></div>
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <div class="rating">
+                                <div class="3-star" style="background-color: #3299cc">&#9733;&#9733;&#9733;</div>
+                                <div class="2-star" style="background-color: #5AADD6">&#9733;&#9733;</div>
+                                <div class="1-star" style="background-color: #84C1E0">&#9733;</div>
+                                <div class="0-star" style="background-color: #ADD6EA; color: rgba(0,0,0,0.3)">&#9733;</div>
+                            </div>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+                    <div class="card-in">
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="prog-card fifth-prog-card">
+                    <div class="prog-card-in">
+                        <button><div id="shadow"></div><div></div></button>
+                        <div class="prog-nums">
+                            <div class="pr-name"><h2>Grade name</h2></div>
+                            <p>777 <img src="/static/img/star.svg"></p>
+                            <p>888 <img src="/static/img/cup.svg"></p>
+                            <p>444,000  <span>XP</span></p>
+                            <div class="rating">
+                                <div class="3-star" style="background-color: #84318C">&#9733;&#9733;&#9733;</div>
+                                <div class="2-star" style="background-color: #9C5AA3">&#9733;&#9733;</div>
+                                <div class="1-star" style="background-color: #B583BA">&#9733;</div>
+                                <div class="0-star" style="background-color: #C198C5; color: rgba(0,0,0,0.3)">&#9733;</div>
+                            </div>
+                            <p class="cl-num">222/555 Сабақ</p>
+                        </div>
+                    </div>
+                    <div class="card-in">
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                        <div class="ind" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                            <div class="ind-prog"><div style="height: 80%;"></div></div>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+
+        <div class="tabcontent" id="activity">
+            <div class="activity-container">
+                <div class="calendar-out">
+                    <div class="calendar">
+                        <div class="month"><a href="#" class="nav">◀</a><div> <span class="year"></span></div><a href="#" class="nav">▶</a></div>
+                        <div class="days">
+                            <span>Дүй</span>
+                            <span>Сей</span>
+                            <span>Сәр</span>
+                            <span>Бей</span>
+                            <span>Жұм</span>
+                            <span>Сен</span>
+                            <span>Жек</span>
+                        </div>
+                        <div class="dates"></div>
+                    </div>
+                    <div class="calendar-details">
+                        <p class="calendar-details-text"></p>
+                        <div class="activity-time">
+                            <img src="/static/img/clock.svg">
+                            <h5>Барлығы <span>555 минут</span></h5>
+                            <p>Өтілді <span>22 минут</span></p>
+                            <p>Оқылды <span>22 минут</span></p>
+                        </div>
+                        <div class="activity-star">
+                            <img src="/static/img/star.svg">
+                            <h5>Алынды <span>555 жұлдыз</span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <h2><img class="title-img" src="/static/img/school.svg"> Өтілген Сабақтар</h2>
+                    <p><span style="color: #84318C">Class name</span><img src="/static/img/star.svg" style="position: absolute; right: 50vh"><span style="position: absolute; right: 20vh">7 есеп</span><span style="position:absolute;right: 0">9 мин</span></p>
+                    <p><span style="color: #84318C">Claffffffffffffffffffffffffss name</span><img src="/static/img/star.svg" style="position: absolute; right: 50vh"><span style="position: absolute; right: 20vh">7hj есеп</span><span style="position:absolute;right: 0">999 мин</span></p>
+                </div>
+                <div class="activity-card">
+                    <h2><img class="title-img" src="/static/img/school.svg"> Оқылған Бөлімдер</h2>
+                    <p><span style="color: #84318C">Class name</span><span style="position:absolute;right: 0">9 мин</span></p>
+                    <p><span style="color: #84318C">Claffffffffffffffffffffffffss name</span><span style="position:absolute;right: 0">999 мин</span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="width: 140vh; height: 5vh; background: #FFF1CD; background: linear-gradient(0deg, rgba(255,241,205,1) 24%, rgba(255,241,205,0) 100%); position: fixed; bottom: 10vh"></div>
+
+        <div class="btns">
+            <button class="tablink" onclick="openProf('main', this)">
+                <div class="pfp mini-pfp">
+                    <div>
+                        <img class="profile-pic" src="{% if profile_pic %}
+                            {{ profile_pic }}
+                        {% else %}
+                            {% static 'img/pfp.png' %}
+                        {% endif %}">
+                    </div>
+                </div>
+                <h4>Профайл</h4>
+            </button>
+            <button class="tablink" onclick="openProf('progress', this)">
+                <img src="/static/img/star.svg">
+                <h4>Жетістіктер</h4>
+            </button>
+            <button class="tablink" onclick="openProf('activity', this)">
+                <img src="/static/img/calendar.svg">
+                <h4>Белсенділік</h4>
+            </button>
         </div>
     </div>
+{#    <div class="profile-container">#}
+{#        <h1>User Profile</h1>#}
+{#        <div class="profile-info">#}
+{#            <img src="{{ profile_info.profile_pic.url }}" alt="Profile Picture" class="profile-pic">#}
+{#            <p>Name: {{ profile_info.get_name }}</p>#}
+{#            <p>User ID: {{ profile_info.get_id }}</p>#}
+{#            <!-- You can add more user information here -->#}
+{#        </div>#}
+{#        <!-- Progress-related information -->#}
+{#        <div class="progress-info">#}
+{#            {% for classroom_progress in classroom_progress %}#}
+{#            <h3>{{ classroom_progress.classroom.name }}</h3>#}
+{#            <p>Progress Percentage: {{ classroom_progress.progress_percentage }}%</p>#}
+{#            <p>Completed Tasks: {{ classroom_progress.completed_tasks_count }}</p>#}
+{#        {% endfor %}#}
+{#        #}
+{#            <!-- Display tasks count data -->#}
+{#            <h2>Tasks Completed</h2>#}
+{#            <ul>#}
+{#                {% for item in tasks_count_by_date %}#}
+{#                    <li>{{ item.completion_date|date:'j F Y' }}: Solved {{ item.count }} task{% if item.count != 1 %}s{% endif %}</li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
+<script>
+        function openProf(profName, elmnt) {
+            // Hide all tabcontent elements
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none"; // Hide all
+                tabcontent[i].classList.remove("active"); // Remove 'active' class
+            }
+
+            // Display the specific tabcontent and mark as active
+            var activeTab = document.getElementById(profName);
+            activeTab.style.display = "flex"; // Show active tab
+            activeTab.classList.add("active"); // Add 'active' class
+
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "#0659A6";
+                tablinks[i].style.borderColor = '#408FCC';
+            }
+
+            elmnt.style.backgroundColor = '#16ACF3';
+            elmnt.style.borderColor = '#fff6e5';
+        }
+
+        document.getElementsByClassName("tablink")[0].click();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.prog-card-in button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const progCard = this.closest('.prog-card');
+                    const shadow = this.querySelector('#shadow');  // Target the #shadow element
+                    const innerDiv = this.querySelector('div:nth-child(2)');  // Second child div inside button
+
+                     if (progCard) {
+                        const cardIn = progCard.querySelector('.card-in');
+
+                        if (cardIn.style.display == 'flex') {
+                            cardIn.style.display = 'none';
+                            shadow.classList.remove('rotate-90');  // Rotate back to initial state
+                            innerDiv.classList.remove('rotate-90');
+                        } else {
+                            cardIn.style.display = 'flex';
+                            shadow.classList.add('rotate-90');  // Rotate to 90 degrees
+                            innerDiv.classList.add('rotate-90');
+                        }
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const calendar = document.querySelector('.calendar');
+    const datesContainer = calendar.querySelector('.dates');
+    const monthDisplay = calendar.querySelector('.month div');
+    const calendarDetails = document.querySelector('.calendar-details-text');
+    const prevButton = calendar.querySelector('.nav:nth-child(1)');
+    const nextButton = calendar.querySelector('.nav:nth-child(3)');
+
+    const months = [
+        'Қаңтар', 'Ақпан', 'Наурыз', 'Сәуір', 'Мамыр', 'Маусым',
+        'Шілде', 'Тамыз', 'Қыркүйек', 'Қазан', 'Қараша', 'Желтоқсан'
+    ];
+    const weekdays = ['Жексенбі', 'Дүйсенбі', 'Сейсенбі', 'Сәрсенбі', 'Бейсенбі', 'Жұма', 'Сенбі'];
+
+    const today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    function updateCalendar(month, year) {
+        datesContainer.innerHTML = '';
+        monthDisplay.innerHTML = `${months[month]} <span class="year">${year}</span>`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const offset = (firstDay === 0) ? 6 : firstDay - 1;
+
+        for (let i = 0; i < offset; i++) {
+            const emptySlot = document.createElement('div');
+            emptySlot.style.backgroundColor = '#CCCCCC';
+            datesContainer.appendChild(emptySlot);
+        }
+
+        const totalDays = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 1; i <= totalDays; i++) {
+            const button = document.createElement('button');
+            button.innerText = i.toString();
+            button.style.backgroundColor = '#E6E6E6';
+
+            if (new Date(year, month, i) < today) {
+                button.style.backgroundColor = '#FDE477';
+            }
+
+            if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                button.classList.add('today');
+            }
+
+            button.addEventListener('click', function() {
+                const selectedDate = new Date(year, month, i);
+                const fullDate = `${weekdays[selectedDate.getDay()]}, ${months[month]} ${i}, ${year}`;
+                calendarDetails.innerText = `${fullDate}`;
+            });
+
+            datesContainer.appendChild(button);
+        }
+
+        const remainingCells = 7 - ((totalDays + offset) % 7);
+        if (remainingCells < 7) {
+            for (let i = 0; i < remainingCells; i++) {
+                const emptySlot = document.createElement('div');
+                emptySlot.style.backgroundColor = '#CCCCCC';
+                datesContainer.appendChild(emptySlot);
+            }
+        }
+    }
+
+    prevButton.addEventListener('click', function() {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        updateCalendar(currentMonth, currentYear);
+    });
+
+    nextButton.addEventListener('click', function() {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        updateCalendar(currentMonth, currentYear);
+    });
+
+    updateCalendar(currentMonth, currentYear);
+
+    // Display today's date and weekday by default in calendar-details
+    const todayFullDate = `${weekdays[today.getDay()]}, ${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+    calendarDetails.innerText = `${todayFullDate}`;
+});
+
+
+    </script>
 </body>
 </html>

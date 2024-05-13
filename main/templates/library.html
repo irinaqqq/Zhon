@@ -8,11 +8,18 @@
     <title>Кітапхана</title>
     <style>
         body {
+            background-image: url(../../static/img/back-home0.jpg);
+            background-position: center;
+            background-size: cover;
             overflow: hidden;
         }
 
         .container {
-            background-image: url("{% static 'img/school-back.jpg' %}");
+            background-image: url("../../static/img/profile-back.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            overflow: auto;
         }
 
         .container::-webkit-scrollbar {
@@ -28,7 +35,7 @@
         /* Styles for scrollbar thumb */
         .container::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 5vh; 
+            border-radius: 5vh;
             border: 0.2vh #bdbdbd solid;
         }
 
@@ -39,12 +46,12 @@
 
         /* Styles for scrollbar corner */
         .container::-webkit-scrollbar-corner {
-            background-color: #f1f1f1; 
+            background-color: #f1f1f1;
         }
 
         .container::-webkit-scrollbar-track-piece:end {
             background: transparent;
-            margin-bottom: 10vh; 
+            margin-bottom: 10vh;
         }
 
         .container::-webkit-scrollbar-track-piece:start {
@@ -52,15 +59,9 @@
             margin-top: 10vh;
         }
 
-        .label {
-            background: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%) border-box;
-            linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,1) 100%) border-box;
-
-*/        }
-
 
         .cards {
-/*            background-color: red;*/
+            {#background-color: red;#}
             width: 95vh;
             height: auto;
             display: flex;
@@ -69,98 +70,87 @@
             flex-wrap: wrap;
             flex-direction: row;
             margin: auto;
-            margin-top: 10vh;
+            margin-top: 20vh;
         }
 
         .card {
-            background-color: blue;
-            width: 43vh;
-            height: 19vh;
-            border-radius: 2.7vh;
-            margin-bottom: 4vh;
-            background: linear-gradient(90deg, rgba(82,125,234,1) 0%, rgba(96,196,253,1) 100%);
-            color: white;
-
-            & button {
-                background-color: transparent;
-                border: 0.3vh solid white;
-                border-radius: 1vh;
-                font-size: 3vh;
-                color: white;
-                width: 6vh;
-                height: 6vh;
-                cursor: pointer;
-            }
-
-            & img {
-                width: 18vh;
-                float: right;
-                margin-top: -14vh;
-            }
-
-            & div {
-                display: flex;
-                flex-direction: column;
-                margin: 2vh 0 0 2vh;
-            }
-
-            & span {
-                margin-top: 2vh;
-            }
-
-            & a {
-                color: white;
-                text-decoration: none;
-            }
+            width: 45vh;
+            height: 19.2vh;
+            background-color: rgba(0,0,0,0.3);
+            margin: 1vh;
         }
 
-        .label {
-        width: 45vh;
-        height: 10.5vh;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        position: relative;
-        border-bottom-left-radius: 6vh;
-        border-bottom-right-radius: 6vh;
-        border-top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .card-in {
+            background-color: white;
+            border: #FFF6E5 0.3vh solid;
+            outline: white 1vh solid;
+            box-shadow: 0.4vh 0.5vh 0 rgba(0,0,0,0.3) ;
+            width: 43vh;
+            height: 17vh;
+            z-index: 2;
 
-    .label h2 {
-        font-family: Hombre; 
-        font-size: 3.5vh;
-        opacity: 80%;
-        letter-spacing: 0.2vh;
-    }
+            button {
+                background-color: #84318c;
+                border: 0;
+                font-size: 5vh;
+                color: white;
+                width: 8vh;
+                height: 8vh;
+                cursor: pointer;
+                clip-path: polygon(0 0, 100% 5%, 100% 100%, 5% 100%);
 
+                a {
+                    color: #FFCE41;
+                    text-decoration: none;
+                }
+            }
+
+            button:hover {
+                background-color: #3299cc;
+            }
+
+        }
+
+        .card-in-in {
+            display: flex;
+            flex-direction: column;
+            margin: 2vh 0 0 2vh;
+            position: relative;
+
+            span {
+                margin-top: 3vh;
+                color: rgba(0,0,0,0.6);
+            }
+
+            h2 {
+                position: absolute;
+                align-self: end;
+                font-size: 6vh;
+                font-family: Hombre;
+                color: #84318c;
+                margin-right: 1vh;
+            }
+        }
     </style>
-    {% include 'navbar.html' %}  
+    {% include 'navbar.html' %}
 
 </head>
 <body>
     <div class="container">
 
-        <div class="label"><h2 style="color: black;">Кітапхана</h2></div>
-       
         <div class="cards">
             {% for classroom in classrooms %}
             <div class="card">
-                <div>
-                    <button><a href="{% url 'bookshelf' classroom.id %}">►</a></button>
-                    <span>{{ classroom.level }} деңгей</span>
-                    <h2>{{ classroom.name }}</h2>
+                <div class="card-in">
+                    <div class="card-in-in">
+                        <button><a href="{% url 'bookshelf' classroom.id %}">►</a></button>
+                        <h2>{{ classroom.name }}</h2>
+                        <span>{{ classroom.level }} деңгей</span>
+                    </div>
                 </div>
-                <img src="{% static 'img/card-back.png' %}">
             </div>
             {% endfor %}
         </div>
-        
-        
-        
-
     <script>
 
     </script>

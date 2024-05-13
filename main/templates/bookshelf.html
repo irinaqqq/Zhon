@@ -8,11 +8,16 @@
     <title>Кітап сөресі</title>
     <style>
         body {
+            background-image: url(../../static/img/back-home0.jpg);
+            background-position: center;
+            background-size: cover;
             overflow: hidden;
         }
 
         .container {
-            background-color: #FFF6E5;
+            background-image: url(../../static/img/profile-back-dark.jpg);
+            background-position: center;
+            background-size: cover;
             z-index: -1000;
             border-bottom: 0;
             overflow-y: auto;
@@ -32,7 +37,7 @@
         /* Styles for scrollbar thumb */
         .container::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 5vh; 
+            border-radius: 5vh;
             border: 0.2vh #bdbdbd solid;
         }
 
@@ -57,16 +62,23 @@
             position: fixed;
             width: 140vh;
             height: 19.5vh;
-            background-image: url("{% static 'img/back-wood.jpg' %}");
-            background-size: cover;
-/*            background-position: center;*/
-            border-bottom: 0.33vh solid #826762;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            background-color: #077B7B;
+            border-bottom: 0.33vh solid #066565;
             box-shadow: 0 0 1.67vh rgb(0, 0, 0, 0.5);
+            color: rgba(0,0,0,0.5);
+            font-size: 5vh;
+
+            span {
+                font-family: Hombre;
+                margin-bottom: 2vh;
+            }
         }
 
         .books-table {
-/*            background-color: aquamarine;*/
-            width: 130vh;
+            width: 135vh;
             min-height: 20vh;
             margin-top: 20vh;
             padding: 2vh;
@@ -74,20 +86,18 @@
 
         .books-row {
             width: 130vh;
-/*            background-color: indigo;*/
             display: flex;
         }
 
         .books-col-name {
-/*            background-color: burlywood;*/
             width: 26vh;
             min-height: 10vh;
             margin-top: 5vh;
             text-align: right;
+            color: white;
         }
 
         .books-col {
-/*            background-color: pink;*/
             width: 104vh;
             display: flex;
             justify-content: start;
@@ -126,7 +136,7 @@
             transform: translateX(-100%);
         }
     </style>
-        {% include 'navbar.html' %}  
+        {% include 'navbar.html' %}
 
 </head>
 <body>
@@ -134,7 +144,7 @@
 
 
 
-        <div class="back-wood"></div>
+        <div class="back-wood"><span>Кітапхана</span></div>
 
         <div class="books-table">
             <div class="books-row">
@@ -152,10 +162,11 @@
                     {% endfor %}
                 </div>
             </div>
+            <hr style="margin: auto;border-color: rgba(255,255,255,0.3); width: 110vh;">
         </div>
-    </div>  
+    </div>
 
-    
+
 
 
     <script>

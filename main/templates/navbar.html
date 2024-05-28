@@ -12,24 +12,20 @@
             font-family: Hombre;
         }
         .navbar {
-        background-color: #1265a9;
-        padding: 10px 0;
-        text-align: center;
-        /* border-bottom-left-radius: 6px; */
-        /* border-bottom-right-radius: 6px; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* width: 100%; */
-        width: 140vh;
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        font-size: 4vh;
-    }
-
+            background-color: #1265a9;
+            padding: 5px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 140vh;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            font-size: 4vh;
+        }
         .navbar a {
             color: #ffcd2c;
             text-decoration: none;
@@ -37,233 +33,74 @@
             margin: 0 5px;
             border-radius: 5px;
             transition: background-color 0.3s;
-            display: inline-block;
-            
+            display: inline-block;        
         }
         .navbar img {
             width: 3vh;
-            height: 3vh;
+            height: auto;
             vertical-align: middle;
         }
         .navbar li {
             list-style-type: none;
         }
 
-        .overlay {
-        width: 140.1vh;
-        height: 100vh;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        display: none;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.5);
-    }
-
-    #ins.overlay {
-        background-color: rgba(0,0,0, 0.0);
-    }
-
-    .overlay-content {
-        position: relative;
-        top: 25%;
-        width: 100%;
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .overlay a {
-        padding: 8px;
-        text-decoration: none;
-        font-size: 36px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    .overlay a:hover, .overlay a:focus {
-        color: #f1f1f1;
-    }
-
-    .overlay .closebtn {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 6vh;
-        height: 6vh;
-        padding: 0;
-        right: 0;
-        font-size: 7vh;
-        background-color: #d9d9d9;
-    }
-
-    .outer-ins {
-        width: 104vh;
-        height: 66vh;
-        position: fixed;
-        display: flex;
-        margin-left: 50%; 
-        transform: translateX(-50%);
-        top: 17vh;
-    }
-
-    .inner-ins {
-        background-color: #fff;
-        width: 99vh;
-        height: 60vh;
-        margin-left: 2vh;
-        align-self: center;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        border: 1.5vh solid #d9d9d9;
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
-    .inner-ins p ,.inner-ins h2  {
-        font-family: Hombre;
-        font-size: 3vh;
-    }
-
-    .inner-ins h3 {
-        font-size: 3vh;
-        color: white;
-    }
-
-    .bubble {
-        width: 20vh;
-        height: 20vh;
-        background-image: url(/static/img/bubble.jpg);
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .inst-text-box {
-        width: 65vh;
-        height: 45vh;
-        overflow-y: scroll;
-        text-align: start;
-        margin: 2vh;
-    }
-
-    .box {
-        width: 75vh;
-        height: 5vh;
-        display: flex;
-        align-items: center;
-    }
-
-    .in-box {
-        width: 40%;
-        text-align: end;
-    }
-
-    .in-box-two {
-        display:flex;
-        width: 60%;
-        align-items: center;
-    }
-
-    .xdirection {
-        width: 50%;
-        margin-left: 10%;
-        color: #BDBDBD;
-        --thumb-height: 1.125em;
-        --track-height: 0.25em;
-        --track-color: rgba(0, 0, 0, 0.2);
-        --brightness-hover: 180%;
-        --brightness-down: 80%;
-        --clip-edges: 0.125em;
-        background: #fff0;
-        overflow: hidden;
-        border-radius: 10vh;
-
-        &:active {
-            cursor: grabbing;
+        .hover-effect:hover {
+            filter: brightness(1.2); 
+            transform: scale(1.3);
+            cursor: pointer;
         }
-    }
-
-    .pen {
-        width: 2vh;
-        height: 2vh;
-        outline: 1vh solid white;
-        border: none;
-        background-color: white;
-        margin-left: 3.25vh;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .pen img {
-        width: 2vh;
-        height: 2vh;
-    }
-    .overlay-content{
-        z-index: 9999;
-    }
-    .hover-effect:hover {
-    filter: brightness(1.2); /* Увеличиваем яркость при наведении */
-    transform: scale(1.3);
-    cursor: pointer;
-    }
-    .user-info {
-    color: #ffcd2c;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    }
-    .logout-form button {
-    font-size: 3vh;
-    font-family: Hombre;
-    color: #ffcd2c;
-    cursor: pointer;
-    background-color: #1265a9;
-    border-radius: 0 0 3vh 3vh;
-    box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
-    border: none;
-    }
-    
-    .logout-form button:hover {
-        
-    }
-    .logout-form {
-    display: none;
-    position: absolute;
-    padding-top: 9px;
-    left: -10%;
-    }
-
-    .user-info:hover .logout-form {
-        display: block;
-        animation: slide-in 0.3s forwards;
-        
-    }
-
-    @keyframes slide-in {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
+        .user-info {
+            color: #ffcd2c;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        .logout-form button {
+            font-size: 3vh;
+            font-family: Hombre;
+            color: #ffcd2c;
+            cursor: pointer;
+            background-color: #1265a9;
+            border-radius: 0 0 3vh 3vh;
+            box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+            border: none;
+        }    
+        .logout-form {
+            display: none;
+            position: absolute;
+            padding-top: 9px;
+            left: -10%;
         }
-    }
+        .user-info:hover .logout-form {
+            display: block;
+            animation: slide-in 0.3s forwards;            
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-image {
+            width: auto !important;
+            height: 5vh !important; 
+        }
+
+
     </style>
 </head>
 <body>
     <div class="navbar" id="navbar">
-        <a href="{% url 'home' %}" class="hover-effect">Logo</a>
+        <!-- <a href="{% url 'home' %}" class="hover-effect">Logo</a> -->
+        <a href="{% url 'home' %}" class="hover-effect">
+            <img src="{% static 'img/logo-white.png' %}" alt="Logo" class="logo-image">
+        </a>        
         <a href="{% url 'classroom' %}" class="hover-effect">Мектеп</a>
         <a href="{% url 'library' %}" class="hover-effect">Кітапхана</a>
         <li>
@@ -295,7 +132,6 @@
         {% endif %}
     </div>
         <div id="ins" class="overlay">
-            <!-- Overlay content -->
             <div class="overlay-content">
                 <div class="outer-ins">
                     <div><a href="javascript:void(0)" class="closebtn" onclick="closeIns()" style="font-family: Chelsea+Market;">&times;</a></div>
@@ -328,10 +164,8 @@
             </div>
         </div>
     
-        <!-- The overlay -->
         <div id="set" class="overlay">
     
-            <!-- Overlay content -->
             <div class="overlay-content">
                 <div class="outer-ins">
                     <div><a href="javascript:void(0)" class="closebtn" onclick="closeSet()" style="font-family: Chelsea+Market; background-color: #424242;">&times;</a></div>
@@ -382,23 +216,16 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-        /* Open */
         function openIns() {
             document.getElementById("ins").style.display = "block";
         }
-    
-        /* Close */
-        function closeIns() {
+            function closeIns() {
             document.getElementById("ins").style.display = "none";
         }
-    
-        /* Open */
-        function openSet() {
+            function openSet() {
             document.getElementById("set").style.display = "block";
         }
-    
-        /* Close */
-        function closeSet() {
+            function closeSet() {
             document.getElementById("set").style.display = "none";
         }
         </script>

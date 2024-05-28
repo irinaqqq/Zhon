@@ -9,10 +9,8 @@
     <style>
         .container {
             background-image: url("{% static 'img/school-back.jpg' %}");
-            /* overflow: hidden; */
         }
         .container2 {
-            /* background-image: url("{% static 'img/school-back.jpg' %}"); */
             overflow: hidden;
             max-height: 100vh;
         }
@@ -27,8 +25,6 @@
             align-items: center;
             justify-items: center;
         }
-
-
         .wall {
             width: 65vh;
             height: 159vh;
@@ -101,6 +97,16 @@
             color: #FED9D1;
             text-shadow: 0 0.3vh 0.01vh rgb(0, 0, 0, 0.4), 0 0 2vh rgb(255, 255, 255, 0.5);
         }
+
+        .nav-btn span {
+            transition: transform 0.3s; 
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.2); 
+        }
+
+
     </style>   
             {% include 'navbar.html' %}  
 
@@ -113,15 +119,13 @@
                 <div class="classroom-box">
                     <div class="classroom-name"><h3 id="classname" style="font-weight: 500;">{{ classrooms.0.name }}</h3></div>
                 </div>
-            </a>
-            
+            </a>            
             
             <div class="doors">
                 <button id="left-class" class="prev nav-btn" onclick="changeClassroom('previous')">
                     <span>◄</span>
                 </button>
-                <button id="classLink" class="door" onclick="redirectToClassroom()">
-                    
+                <button id="classLink" class="door" onclick="redirectToClassroom()">                    
                 </button>
                 <button id="right-class" class="next nav-btn" onclick="changeClassroom('next')">
                     <span>►</span>
@@ -132,7 +136,7 @@
     </div>
    
 <script>
-    const classroomName = document.querySelector('#classname'); // Используем идентификатор для выбора элемента
+    const classroomName = document.querySelector('#classname'); 
     let currentClassroomIndex = 0;
     const classrooms = [{% for classroom in classrooms %}{ id: {{ classroom.id }}, name: "{{ classroom.name }}" }{% if not forloop.last %},{% endif %}{% endfor %}];
 
@@ -151,7 +155,7 @@
         } else if (direction === 'previous') {
             currentClassroomIndex = (currentClassroomIndex - 1 + classrooms.length) % classrooms.length;
         }
-        updateClassroomName(); // Вызываем функцию для обновления имени класса
+        updateClassroomName(); 
     }
 </script>
 

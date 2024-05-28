@@ -5,6 +5,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ classroom.name }} Topics</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+        * {
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #2C1C6A;
+            overflow-y: scroll;
+            z-index: 1;
+        }
+
+        .container::-webkit-scrollbar {
+            scrollbar-height: 60vh;
+            margin-right: 1vh;
+            width: 2vh;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5vh;
+            border: 0.2vh rgba(0, 0, 0, 0.3) solid;
+        }
+
+        .container::-webkit-scrollbar-button {
+            background-color: transparent;
+        }
+
+        .container::-webkit-scrollbar-corner {
+            background-color: #f1f1f1;
+        }
+
+        .container::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 8vh;
+        }
+
+        .exit-btn {
+            color: grey;
+        }
+
+        .label {
+            padding-top: 7vh;
+        }
+
+        .path {
+            width: 120vh;
+            margin-top: 5vh;
+            display: flex;
+            flex-direction: column;
+            padding: 5vh 10vh;
+            align-items: center;
+            background-image: url(/static/img/cl-back.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .cl-class-out {
+            width: 112vh;
+            min-height: 30vh;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+
+            & a {
+                text-decoration: none;
+            }
+        }
+
+        .cl-card {
+            width: 15vh;
+            height: 23vh;
+            background-image: url(/static/img/cl-point.png);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+
+            & span {
+                position: relative;
+                font-family: Hombre;
+                font-size: 5vh;
+                margin-top: 21%;
+            }
+        }
+
+        .active {
+            background-image: url(/static/img/cl-point-done.png);
+        }
+    </style>
+    {% include 'navbar.html' %}
+</head>
+<body>
+    <div class="container">
+
+
+        <div class="label"><h2 style="color: black;">{{ classroom.name }}</h2></div>
+
+        <div class="path">
+            <div class="cl-class-out" style="background-image: url(/static/img/path-1.png);">
+                <a href="class.html">
+                    <div class="cl-card active"><span>1</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card active"><span>2</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card"><span>3</span></div>
+                </a>
+
+                <div style="
+                        width: 15vh;
+                        height: 15vh;
+                        background-image: url('/static/img/cl-top-gabc.png');
+                        background-position: center;
+                        background-size: cover;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    "></div>
+            </div>
+            <div class="cl-class-out" style="background-image: url(/static/img/path-2.png); flex-direction: row-reverse;">
+                <a href="class.html">
+                    <div class="cl-card"><span>1</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card"><span>2</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card"><span>3</span></div>
+                </a>
+
+                <div style="
+                        width: 15vh;
+                        height: 15vh;
+                        background-image: url('/static/img/cl-top-note.png');
+                        background-position: center;
+                        background-size: cover;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    "></div>
+            </div>
+
+            
+            <div class="cl-class-out" style="background-image: url(/static/img/path-3.png);">
+                <a href="class.html">
+                    <div class="cl-card"><span>1</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card"><span>2</span></div>
+                </a>
+                <a href="class.html">
+                    <div class="cl-card"><span>3</span></div>
+                </a>
+
+                <div style="
+                        width: 15vh;
+                        height: 15vh;
+                        background-image: url('/static/img/cl-top-boy.png');
+                        background-position: center;
+                        background-size: cover;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    "></div>
+            </div>
+            <div class="cl-class-out" style="background-image: url(/static/img/path-4.png);">
+                <div style="
+                        width: 15vh;
+                        height: 15vh;
+                        background-image: url('/static/img/cl-top-bbok.png');
+                        background-position: center;
+                        background-size: cover;
+                        position: absolute;
+                        left: 15vh;
+                    "></div>
+                <a href="class.html" style="margin-left: 25vh;">
+                    <div class="cl-card" style="background-image: url(/static/img/cl-test.png);"></div>
+                </a>
+                <div style="width: 20vh;height: 25vh;background-image: url(/static/img/cl-sign.png);background-size: cover; background-position: center; "></div>
+            </div>
+        </div>
+        
+
+
+
+    </div>
+
+    
+
+</body>
+</html>
+
+
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ classroom.name }} Topics</title>
     <style>
         .container {
             background: linear-gradient(0deg, rgba(152,179,148,1) 0%, rgba(212,251,207,1) 100%);
@@ -140,11 +354,11 @@
         }
 
         .cl-test-out {
-        width: calc(100% - 60px); /* Вычтите отступ слева из ширины блока */
+        width: calc(100% - 60px); 
         display: flex;
         justify-content: center;
         margin-top: 10vh;
-        padding-left: 60px; /* Оставьте отступ слева */
+        padding-left: 60px;
     }
 
 
@@ -179,49 +393,6 @@
 
         <div class="label"><h2 style="color: black;">{{ classroom.name }}</h2></div>
 
-        <!-- <div class="transparent"></div> -->
-
-        <!-- <div class="big-path">
-            {% for topic in topics %}
-
-
-            <div class="path">
-
-
-                <div class="cl-class-out">
-                    <div class="cl-card">
-                        <div class="card">
-                            <a href="{% url 'topic_tasks' topic.id %}"><h3>{{ topic.name }}</h3></a>
-                        </div>
-                    </div>
-                    <div class="card-btn"></div>
-                </div>
-
-
-                <div class="cl-class-out" style="margin-top: 35vh;">
-                    <div class="card-btn"></div>
-                    <div class="cl-card">
-                        <div class="card">
-                            <a href="{% url 'topic_tasks' topic.id %}"><h3>{{ topic.name }}</h3></a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="cl-test-out">
-                    <div class="card-btn"></div>
-                    <div class="cl-test">
-                        <div class="test"></div>
-                    </div>
-                </div>
-
-                
-            </div>   
-                         {% endfor %}
-
-        </div> -->
-
-
         <div class="big-path">
             <div class="path">
                 <div class="cl-class-out" style="display: flex; flex-wrap: wrap;">
@@ -247,18 +418,10 @@
                 
                 </div>
             </div>
-        </div>
-        
+        </div>  
 
-
-        <!-- <ul class="topic-list">
-            {% for topic in topics %}
-                <li class="topic-item"><a href="{% url 'topic_tasks' topic.id %}">{{ topic.name }}</a></li>
-            {% endfor %}
-        </ul>  -->
-    </div>
-
-    
+    </div>   
 
 </body>
-</html>
+</html> -->
+

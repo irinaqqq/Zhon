@@ -5,7 +5,7 @@ from .models import *
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']  # Include 'username' and 'email' from default User model
+        fields = ['first_name', 'last_name', 'username', 'email', 'password']  
         widgets = {
             'password': forms.PasswordInput(attrs={'placeholder': 'Құпия сөз'}),
             'first_name': forms.TextInput(attrs={'placeholder': 'Аты'}),
@@ -45,7 +45,6 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
-        # Установка начального queryset для topic
         self.fields['topic'].queryset = Topic.objects.all()  
 
  

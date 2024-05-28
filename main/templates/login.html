@@ -491,6 +491,7 @@
   }, 100));
 
   showPasswordButton.addEventListener('click', event => {
+    event.preventDefault();
     if (passwordInput.type === 'text') {
       passwordInput.type = 'password';
       document.querySelectorAll('.hand').forEach(hand => {

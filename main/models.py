@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+# from django.utils import timezone
+
 
 def generate_filename(instance, filename):
     extension = filename.split('.')[-1]
@@ -106,3 +108,14 @@ class Image(models.Model):
     def __str__(self):
         return self.image.name
 
+
+# class UserSession(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     start_time = models.DateTimeField(default=timezone.now)
+#     end_time = models.DateTimeField(null=True, blank=True)
+
+#     @property
+#     def session_duration(self):
+#         if self.end_time:
+#             return self.end_time - self.start_time
+#         return None

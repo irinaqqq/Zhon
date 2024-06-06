@@ -14,6 +14,11 @@ from django.db.models import F
 import logging
 from .serializers import *
 from rest_framework import viewsets
+# from django.contrib.auth.decorators import login_required
+# from .models import UserSession
+# import datetime
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -168,6 +173,23 @@ def get_tasks_count_by_date(user, start_date, end_date):
     ).values('completion_date').annotate(count=Count('id'))
 
     return tasks_count_by_date
+
+# @login_required
+# def start_session(request):
+#     UserSession.objects.create(user=request.user, start_time=datetime.datetime.now())
+#     return render(request, 'start_session.html')
+
+
+
+# @login_required
+# def user_time_spent(request):
+#     user_sessions = UserSession.objects.filter(user=request.user)
+#     total_duration = sum(session.duration for session in user_sessions)
+#     total_minutes = total_duration / 60  # Переводим секунды в минуты
+#     return render(request, 'profile.html', {'total_minutes': total_minutes})
+
+
+
 
 @staff_member_required(login_url='/')
 def admin_panel(request):

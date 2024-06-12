@@ -108,14 +108,15 @@ class Image(models.Model):
     def __str__(self):
         return self.image.name
 
+from django.db import models
+from django.contrib.auth.models import User
 
-# class UserSession(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     start_time = models.DateTimeField(default=timezone.now)
-#     end_time = models.DateTimeField(null=True, blank=True)
-
-#     @property
-#     def session_duration(self):
-#         if self.end_time:
-#             return self.end_time - self.start_time
-#         return None
+class UserSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    login_time = models.DateTimeField(auto_now_add=True)
+    logout_time = models.DateTimeField(null=True, blank=True)
+    
+    def get_session_duration(self):
+        if self.logout_time:
+            return (self.logout_time - self.login_time).total_seconds() / 60  # duration in minutes
+        return 0

@@ -34,7 +34,6 @@ class TopicForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TopicForm, self).__init__(*args, **kwargs)
-        # Customize the classroom field
         self.fields['classroom'].queryset = Classroom.objects.all()
 
 

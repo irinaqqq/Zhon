@@ -14,10 +14,6 @@ from django.db.models import F
 import logging
 from .serializers import *
 from rest_framework import viewsets
-# from django.contrib.auth.decorators import login_required
-# from .models import UserSession
-# import datetime
-
 
 
 logger = logging.getLogger(__name__)
@@ -31,42 +27,88 @@ def classroom_topics(request, classroom_id):
     topics = classroom.topic_set.all()
     return render(request, 'classroom_topics.html', {'classroom': classroom, 'topics': topics})
 
+
 def topic_tasks(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     tasks = topic.task_set.all()
-    return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
-
-def task_text(request, task_id):
-    try:
-        task = Task.objects.get(pk=task_id)
-    except Task.DoesNotExist:
-        raise Http404("Task does not exist")
-
     result = None
+    selected_task = None
 
     if request.method == 'POST':
-        if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
+        task_id = request.POST.get('task_id')
+        selected_task = get_object_or_404(Task, pk=task_id)
+        
+        if selected_task.question_type == 'OQ':
             user_answer = request.POST.get('user_answer')
-            if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
+            if user_answer == selected_task.correct_answer:
                 result = 'Correct!'
-                # print('Correct answer submitted')
                 if request.user.is_authenticated:
-                    # print('Calling handle_correct_answer')
-                    handle_correct_answer(request.user, task)
+                    handle_correct_answer(request.user, selected_task)
             else:
                 result = 'Incorrect!'
         else:
             selected_choice = request.POST.get('choice')
-            if selected_choice == getattr(task, task.correct_answer):  # Используем getattr для получения значения поля
+            if selected_choice == selected_task.correct_answer:
                 result = 'Correct!'
-                # print('Correct choice selected')
                 if request.user.is_authenticated:
-                    # print('Calling handle_correct_answer')
-                    handle_correct_answer(request.user, task)
+                    handle_correct_answer(request.user, selected_task)
             else:
                 result = 'Incorrect!'
 
-    return render(request, 'task_text.html', {'task': task, 'result': result})
+    return render(request, 'topic_tasks.html', {
+        'topic': topic,
+        'tasks': tasks,
+        'result': result,
+        'selected_task': selected_task
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+# def topic_tasks(request, topic_id):
+#     topic = get_object_or_404(Topic, pk=topic_id)
+#     tasks = topic.task_set.all()
+#     return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
+
+# def task_text(request, task_id):
+#     try:
+#         task = Task.objects.get(pk=task_id)
+#     except Task.DoesNotExist:
+#         raise Http404("Task does not exist")
+
+#     result = None
+
+#     if request.method == 'POST':
+#         if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
+#             user_answer = request.POST.get('user_answer')
+#             if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
+#                 result = 'Correct!'
+#                 # print('Correct answer submitted')
+#                 if request.user.is_authenticated:
+#                     # print('Calling handle_correct_answer')
+#                     handle_correct_answer(request.user, task)
+#             else:
+#                 result = 'Incorrect!'
+#         else:
+#             selected_choice = request.POST.get('choice')
+#             if selected_choice == getattr(task, task.correct_answer):  # Используем getattr для получения значения поля
+#                 result = 'Correct!'
+#                 # print('Correct choice selected')
+#                 if request.user.is_authenticated:
+#                     # print('Calling handle_correct_answer')
+#                     handle_correct_answer(request.user, task)
+#             else:
+#                 result = 'Incorrect!'
+
+#     return render(request, 'task_text.html', {'task': task, 'result': result})
 
 def handle_correct_answer(user, task):
     # Get or create the Custom object for the user
@@ -174,19 +216,16 @@ def get_tasks_count_by_date(user, start_date, end_date):
 
     return tasks_count_by_date
 
-# @login_required
-# def start_session(request):
-#     UserSession.objects.create(user=request.user, start_time=datetime.datetime.now())
-#     return render(request, 'start_session.html')
+
+from django.shortcuts import render
+from .utils import get_total_time_spent
+
+def profile_view(request):
+    total_time_spent = get_total_time_spent(request.user)
+    return render(request, 'profile.html', {'total_time_spent': total_time_spent})
 
 
 
-# @login_required
-# def user_time_spent(request):
-#     user_sessions = UserSession.objects.filter(user=request.user)
-#     total_duration = sum(session.duration for session in user_sessions)
-#     total_minutes = total_duration / 60  # Переводим секунды в минуты
-#     return render(request, 'profile.html', {'total_minutes': total_minutes})
 
 
 

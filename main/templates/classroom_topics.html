@@ -113,92 +113,95 @@
         <div class="label"><h2 style="color: black;">{{ classroom.name }}</h2></div>
 
         <div class="path">
-            <div class="cl-class-out" style="background-image: url(/static/img/path-1.png);">
-                <a href="class.html">
-                    <div class="cl-card active"><span>1</span></div>
-                </a>
-                <a href="class.html">
-                    <div class="cl-card active"><span>2</span></div>
-                </a>
-                <a href="class.html">
-                    <div class="cl-card"><span>3</span></div>
-                </a>
 
-                <div style="
-                        width: 15vh;
-                        height: 15vh;
-                        background-image: url('/static/img/cl-top-gabc.png');
-                        background-position: center;
-                        background-size: cover;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                    "></div>
-            </div>
-            
-            <div class="cl-class-out" style="background-image: url(/static/img/path-2.png); flex-direction: row-reverse;">
-                <a href="class.html">
+            <!-- {% for topic in topics %}
+
+
+            <div class="cl-class-out">
+                <a href="{% url 'topic_tasks' topic.id %}">
                     <div class="cl-card"><span>1</span></div>
                 </a>
-                <a href="class.html">
+                <a href="{% url 'topic_tasks' topic.id %}">
                     <div class="cl-card"><span>2</span></div>
                 </a>
-                <a href="class.html">
+                <a href="{% url 'topic_tasks' topic.id %}">
                     <div class="cl-card"><span>3</span></div>
                 </a>
-
-                <div style="
-                        width: 15vh;
-                        height: 15vh;
-                        background-image: url('/static/img/cl-top-note.png');
-                        background-position: center;
-                        background-size: cover;
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                    "></div>
             </div>
-
             
-            <div class="cl-class-out" style="background-image: url(/static/img/path-3.png);">
-                <a href="class.html">
-                    <div class="cl-card"><span>1</span></div>
+            <div class="cl-class-out" style=" flex-direction: row-reverse;">                
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>4</span></div>
                 </a>
-                <a href="class.html">
-                    <div class="cl-card"><span>2</span></div>
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>5</span></div>
                 </a>
-                <a href="class.html">
-                    <div class="cl-card"><span>3</span></div>
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>6</span></div>
                 </a>
-
-                <div style="
-                        width: 15vh;
-                        height: 15vh;
-                        background-image: url('/static/img/cl-top-boy.png');
-                        background-position: center;
-                        background-size: cover;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                    "></div>
             </div>
 
-            <div class="cl-class-out" style="background-image: url(/static/img/path-4.png);">
-                <div style="
-                        width: 15vh;
-                        height: 15vh;
-                        background-image: url('/static/img/cl-top-bbok.png');
-                        background-position: center;
-                        background-size: cover;
-                        position: absolute;
-                        left: 15vh;
-                    "></div>
-                <a href="class.html" style="margin-left: 25vh;">
+            <div class="cl-class-out" >
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>7</span></div>
+                </a>
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>8</span></div>
+                </a>
+                <a href="{% url 'topic_tasks' topic.id %}">
+                    <div class="cl-card"><span>9</span></div>
+                </a>
+            </div>
+
+            <div class="cl-class-out">
+                <a href="{% url 'topic_tasks' topic.id %}" style="margin-left: 25vh;">
                     <div class="cl-card" style="background-image: url(/static/img/cl-test.png);"></div>
                 </a>
                 <div style="width: 20vh;height: 25vh;background-image: url(/static/img/cl-sign.png);background-size: cover; background-position: center; "></div>
             </div>
             
+
+
+
+
+            {% endfor %} -->
+
+            
+            {% for topic in topics %}
+
+                    {% if forloop.first %}
+                <div class="cl-class-out">
+                {% endif %}
+                    <a href="{% url 'topic_tasks' topic.id %}">
+                        <div class="cl-card"><span>{{ forloop.counter }}</span></div>
+                    </a>
+                    
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                </div>
+                <div class="cl-class-out">
+                {% endif %}
+                {% if forloop.last %}
+                </div>
+                <div class="cl-class-out">
+                    <a href="{% url 'topic_tasks' topic.id %}" style="margin-left: 25vh;">
+                        <div class="cl-card" style="background-image: url(/static/img/cl-test.png);"></div>
+                    </a>
+                    <div style="width: 20vh; height: 25vh; background-image: url(/static/img/cl-sign.png); background-size: cover; background-position: center;"></div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        
+        
+        
+
+
+
+
+
+
+
+
+
         </div>
         
 
@@ -206,7 +209,6 @@
 
     </div>
 
-    
 
 </body>
 </html>

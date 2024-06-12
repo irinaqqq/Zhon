@@ -53,7 +53,6 @@
     <div class="container">
         <h1>{{ topic.name }} Tasks</h1>
 
-        <!-- Display tasks for the selected topic -->
         <ul class="task-list">
             {% for task in tasks %}
                 <li class="task-item"><a href="{% url 'task_text' task.id %}">{{ task.question }}</a></li>

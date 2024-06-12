@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task</title>
     <style>
+        *{
+            position: relative;
+
+        }
         body {
             overflow: hidden;
         }
@@ -43,7 +47,7 @@
             height: 60vh;
             background-color: white;
             margin-left: 9vh;
-            margin-top: 9vh;
+            margin-top: 3vh;
             position: fixed;
             overflow-y: scroll;
             padding: 4vh;
@@ -327,6 +331,7 @@
     }
 
     .label {
+        margin-top: 8vh;
         width: 45vh;
         height: 10.5vh;
         background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
@@ -347,23 +352,24 @@
         opacity: 80%;
         letter-spacing: 0.2vh;
     }
+    .correct { background-color: green; }
+    .incorrect { background-color: red; }
+    .task-container { margin: 2vh 0; }
     </style>
+    {% include 'navbar.html' %}  
 
 </head>
 <body>
     <div class="container">
-
 
         <div class="label">
             <a href="{% url 'classroom' %}" style="margin-left: -10vh;">↩</a>
             <a href="{% url 'library' %}" style="margin-left: 2vh;"><img src="{% static 'img/mini-lib.svg' %}"></a>
             <h2 style="color: white; margin-left: 3vh;">Сабақ</h2>
             <div class="lbl-nums">
-                <div class="active"><a href="#">1</a></div>
-                <div><a href="#">2</a></div>
-                <div><a href="#">3</a></div>
-                <div><a href="#">4</a></div>
-                <div><a href="#">5</a></div>
+                {% for task in tasks %}
+                <div class="{% if forloop.first %}active{% endif %}"><a href="#">{{ forloop.counter }}</a></div>
+                {% endfor %}
             </div>
         </div>
 
@@ -374,9 +380,55 @@
         </div>
         <div class="board">
             <p class="brd-task-text"></p>
-            <div class="brd-task">
-            </div>
+            <div class="brd-task"></div>
             <canvas id="can" width="870" height="450"></canvas>
+
+            <!-- <h1>{{ topic.name }}</h1> -->
+            <ul>
+                {% for task in tasks %}
+                    <li>
+                        <h2>{{ task.question }}</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            {% if task.question_type == 'OQ' %}
+                                <label for="user_answer_{{ task.id }}">Your answer:</label>
+                                <input type="text" name="user_answer" id="user_answer_{{ task.id }}">
+                            {% elif task.question_type == 'MCQ' or task.question_type == 'TF' %}
+                                {% if task.choice1 %}
+                                    <input type="radio" name="choice" value="{{ task.choice1 }}" id="choice1_{{ task.id }}">
+                                    <label for="choice1_{{ task.id }}">{{ task.choice1 }}</label><br>
+                                {% endif %}
+                                {% if task.choice2 %}
+                                    <input type="radio" name="choice" value="{{ task.choice2 }}" id="choice2_{{ task.id }}">
+                                    <label for="choice2_{{ task.id }}">{{ task.choice2 }}</label><br>
+                                {% endif %}
+                                {% if task.choice3 %}
+                                    <input type="radio" name="choice" value="{{ task.choice3 }}" id="choice3_{{ task.id }}">
+                                    <label for="choice3_{{ task.id }}">{{ task.choice3 }}</label><br>
+                                {% endif %}
+                                {% if task.choice4 %}
+                                    <input type="radio" name="choice" value="{{ task.choice4 }}" id="choice4_{{ task.id }}">
+                                    <label for="choice4_{{ task.id }}">{{ task.choice4 }}</label><br>
+                                {% endif %}
+                            {% else %}
+                                <!-- Отображение других типов вопросов -->
+                                <!-- Добавьте логику для других типов вопросов -->    
+                            {% endif %}
+                            <button type="submit">Submit</button>
+                        </form>
+                        {% if selected_task and selected_task.id == task.id and result %}
+                            <p>{{ result }}</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+
+
+
+
+
 
             <div class="brd-tools">
                 <button style="margin-left: 17vh;">↺</button>
@@ -411,10 +463,6 @@
                                 <br>
                                 Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
                                 <br>
-                                Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
-                                <br>
-                                Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
-                                <br>
                                 Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
                             </p>
                         </div>
@@ -426,17 +474,28 @@
                 </div>
             </div>
         </div>
-        <h1>Tasks for Topic: {{ topic.name }}</h1>
+        <!-- <h1>Tasks for Topic: {{ topic.name }}</h1>
 
         <ul>
             {% for task in tasks %}
                 <li>{{ task.name }} - {{ task.description }}</li>
             {% endfor %}
-        </ul>
+        </ul> -->
       
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <script>
+    // window.onload = openClsIns;
 
     document.addEventListener("DOMContentLoaded", function() {
         var links = document.querySelectorAll('.lbl-nums a');

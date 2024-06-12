@@ -36,9 +36,7 @@ def task_text(request, task_id):
         task = Task.objects.get(pk=task_id)
     except Task.DoesNotExist:
         raise Http404("Task does not exist")
-
     result = None
-
     if request.method == 'POST':
         if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
             user_answer = request.POST.get('user_answer')

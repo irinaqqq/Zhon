@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'main.middleware.UserSessionMiddleware',
 ]
 
 ROOT_URLCONF = 'ZhonEdu.urls'
@@ -129,7 +130,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticf'
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 

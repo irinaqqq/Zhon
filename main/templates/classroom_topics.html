@@ -1,116 +1,14 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ classroom.name }} Topics</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <style>
-        * {
-            overflow: hidden;
-        }
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{ classroom.name }} Topics{% endblock %} 
+ 
+{% block content %}  
+<div class="container">
 
-        .container {
-            background-color: #2C1C6A;
-            overflow-y: scroll;
-            z-index: 1;
-        }
-
-        .container::-webkit-scrollbar {
-            scrollbar-height: 60vh;
-            margin-right: 1vh;
-            width: 2vh;
-        }
-
-        .container::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
-
-        .container::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 5vh;
-            border: 0.2vh rgba(0, 0, 0, 0.3) solid;
-        }
-
-        .container::-webkit-scrollbar-button {
-            background-color: transparent;
-        }
-
-        .container::-webkit-scrollbar-corner {
-            background-color: #f1f1f1;
-        }
-
-        .container::-webkit-scrollbar-track-piece:start {
-            background: transparent;
-            margin-top: 8vh;
-        }
-
-        .exit-btn {
-            color: grey;
-        }
-
-        .label {
-            padding-top: 7vh;
-        }
-
-        .path {
-            width: 120vh;
-            margin-top: -9vh;
-            display: flex;
-            flex-direction: column;
-            padding: 5vh 10vh;
-            align-items: center;
-            background-image: url(/static/img/cl-back.png);
-            background-size: contain;
-            background-position: center;
-            background-repeat: repeat;
-        }
-
-        .cl-class-out {
-            width: 112vh;
-            min-height: 30vh;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-evenly;
-            background-position: center;
-            background-size: cover;
-            position: relative;
-
-            & a {
-                text-decoration: none;
-            }
-        }
-
-        .cl-card {
-            width: 15vh;
-            height: 23vh;
-            background-image: url(/static/img/cl-point.png);
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-
-            & span {
-                position: relative;
-                font-family: Hombre;
-                font-size: 5vh;
-                margin-top: 21%;
-            }
-        }
-
-        .active {
-            background-image: url(/static/img/cl-point-done.png);
-        }
-    </style>
-    {% include 'navbar.html' %}
-</head>
-<body>
-    <div class="container">
+    <div class="container3">
 
 
-        <div class="label"><h2 style="color: black;">{{ classroom.name }}</h2></div>
+        <div class="label" style="padding-top: 7vh;"><h2 style="color: black;">{{ classroom.name }}</h2></div>
 
         <div class="path">
 
@@ -208,10 +106,9 @@
 
 
     </div>
+</div>
 
-
-</body>
-</html>
+{% endblock %}
 
 
 

@@ -1,142 +1,9 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кітапхана</title>
-    <style>
-        body {
-            background-image: url(../../static/img/back-home0.jpg);
-            background-position: center;
-            background-size: cover;
-            overflow: hidden;
-        }
-
-        .container {
-            background-image: url("../../static/img/profile-back.jpg");
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            overflow: auto;
-        }
-
-        .container::-webkit-scrollbar {
-            scrollbar-height: 60vh;
-            margin-right: 1vh;
-            width: 2vh;
-        }
-
-        .container::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
-
-        /* Styles for scrollbar thumb */
-        .container::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 5vh;
-            border: 0.2vh #bdbdbd solid;
-        }
-
-        /* Styles for scrollbar buttons (arrows) */
-        .container::-webkit-scrollbar-button {
-            background-color: transparent; /* Change the color of the buttons */
-        }
-
-        /* Styles for scrollbar corner */
-        .container::-webkit-scrollbar-corner {
-            background-color: #f1f1f1;
-        }
-
-        .container::-webkit-scrollbar-track-piece:end {
-            background: transparent;
-            margin-bottom: 10vh;
-        }
-
-        .container::-webkit-scrollbar-track-piece:start {
-            background: transparent;
-            margin-top: 10vh;
-        }
-
-
-        .cards {
-            {#background-color: red;#}
-            width: 95vh;
-            height: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            flex-direction: row;
-            margin: auto;
-            margin-top: 20vh;
-        }
-
-        .card {
-            width: 45vh;
-            height: 19.2vh;
-            background-color: rgba(0,0,0,0.3);
-            margin: 1vh;
-        }
-
-        .card-in {
-            background-color: white;
-            border: #FFF6E5 0.3vh solid;
-            outline: white 1vh solid;
-            box-shadow: 0.4vh 0.5vh 0 rgba(0,0,0,0.3) ;
-            width: 43vh;
-            height: 17vh;
-            z-index: 2;
-
-            button {
-                background-color: #84318c;
-                border: 0;
-                font-size: 5vh;
-                color: white;
-                width: 8vh;
-                height: 8vh;
-                cursor: pointer;
-                clip-path: polygon(0 0, 100% 5%, 100% 100%, 5% 100%);
-
-                a {
-                    color: #FFCE41;
-                    text-decoration: none;
-                }
-            }
-
-            button:hover {
-                background-color: #3299cc;
-            }
-
-        }
-
-        .card-in-in {
-            display: flex;
-            flex-direction: column;
-            margin: 2vh 0 0 2vh;
-            position: relative;
-
-            span {
-                margin-top: 3vh;
-                color: rgba(0,0,0,0.6);
-            }
-
-            h2 {
-                position: absolute;
-                align-self: end;
-                font-size: 6vh;
-                font-family: Hombre;
-                color: #84318c;
-                margin-right: 1vh;
-            }
-        }
-    </style>
-    {% include 'navbar.html' %}
-
-</head>
-<body>
-    <div class="container">
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Кітапхана{% endblock %} 
+ 
+{% block content %}   
+    <div class="container" style="background-image: url(/static/img/profile-back.jpg); overflow: auto;">
 
         <div class="cards">
             {% for classroom in classrooms %}
@@ -151,8 +18,6 @@
             </div>
             {% endfor %}
         </div>
-    <script>
+    </div>
 
-    </script>
-</body>
-</html>
+{% endblock %} 

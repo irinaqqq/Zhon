@@ -1,89 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кітап</title>
-    <style>
-        body {
-            overflow: hidden;
-        }
-
-        .container {
-            background-color: #FFF6E5;
-            overflow-y: auto;
-        }
-
-
-        .b-pages {
-            width: 132vh;
-            height: auto;
-            margin: auto;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .b-pages img {
-            width: 100%;
-            transition: transform 0.5s ease;
-        }
-
-        .tools {
-            position: fixed;
-            display: flex;
-            flex-direction: column;
-            margin: 35vh 0 0 -123vh;
-        }
-
-        .tools img {
-            width: 3vh;
-        }
-
-        .tools button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            color: white;
-            width: 5vh;
-            height: 5vh;
-            border-radius: 5vh;
-            background-color: #FC7A96;
-            border: 0;
-            margin-bottom: 1vh;
-        }
-
-        .tools a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            color: white;
-            width: 5vh;
-            height: 5vh;
-            border-radius: 5vh;
-            background-color: #FC7A96;
-            border: 0;
-            margin-bottom: 1vh;
-        }
-    </style>
-            {% include 'navbar.html' %}  
-
-</head>
-<body>
-    <div class="container">
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Home{% endblock %} 
+ 
+{% block content %}   
+    <div class="container" style="background-color: #FFF6E5;">
 
 
         <div id="container" class="b-pages">
             {% for image in images %}
             <img class="img" src="{{ image.image.url }}" alt="{{ image.title }}">
             {% endfor %}
-            <div class="tools">
+            <div class="tools1">
                 <a href="{% url 'library' %}"><img src="{% static 'img/mini-lib.svg' %}"></a>
                 <button onclick="enableZoom()"><img src="{% static 'img/zoom-in.svg' %}"></button>
                 <button onclick="disableZoom()"><img src="{% static 'img/zoom-out.svg' %}"></button>
@@ -91,50 +18,4 @@
         </div>
     </div>
 
-
-
-    <script>
-
-
-    const images = document.querySelectorAll('.img');
-
-    let zoomEnabled = false;
-
-    function enableZoom() {
-        zoomEnabled = true;
-    }
-
-    function disableZoom() {
-        zoomEnabled = false;
-        images.forEach(img => {
-            img.removeEventListener("mousemove", onMouseMove);
-            img.removeEventListener("mouseleave", onMouseLeave);
-            img.style.transformOrigin = "center";
-            img.style.transform = "scale(1)";
-        });
-    }
-
-    images.forEach(img => {
-        img.addEventListener('mouseenter', () => {
-            if (zoomEnabled) {
-                img.addEventListener("mousemove", onMouseMove);
-                img.addEventListener("mouseleave", onMouseLeave);
-            }
-        });
-    });
-
-    function onMouseMove(e) {
-        const x = e.clientX - e.target.offsetLeft;
-        const y = e.clientY - e.target.offsetTop;
-
-        e.target.style.transformOrigin = `${x}px ${y}px`;
-        e.target.style.transform = "scale(2)";
-    }
-
-    function onMouseLeave(e) {
-        e.target.style.transformOrigin = "center";
-        e.target.style.transform = "scale(1)";
-    }
-    </script>
-</body>
-</html>
+{% endblock %}

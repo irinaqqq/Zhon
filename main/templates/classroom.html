@@ -1,118 +1,10 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School</title>
-    <style>
-        .container {
-            background-image: url("{% static 'img/school-back.jpg' %}");
-        }
-        .container2 {
-            overflow: hidden;
-            max-height: 100vh;
-        }
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}School{% endblock %} 
+ 
+{% block content %}  
 
-        .classes {
-            height: 83vh;
-            margin: 0;
-            display: grid;
-            grid-template-rows: 500px 100px;
-            grid-template-columns: 1fr 30px 30px 30px 30px 30px 1fr;
-            margin-top: 15vh;
-            align-items: center;
-            justify-items: center;
-        }
-        .wall {
-            width: 65vh;
-            height: 159vh;
-            margin: auto;
-        }
-
-        .classroom-box {
-            height: 22%;
-            display: flex;
-            align-items: end;
-            justify-content: center;
-        }
-
-        .classroom-name {
-            width: auto;
-            height: 15%;
-            background-image: url("{% static 'img/name.png' %}");
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3vh;
-            box-shadow: 0 4px 1px rgb(0, 0, 0, 0.25);
-        }
-
-        .classroom-name h3 {
-            color: rgba(0, 0, 0, 0.7);
-            margin: 0 1vh 0 1vh;
-            text-decoration: none;
-        }
-
-        .doors {
-            height: 80%;
-            display: flex;
-            justify-content: space-evenly;
-        }
-
-
-        .door {
-            background-color: white;
-            opacity: 0%;
-            width: 28.5vh;
-            height: 47.5vh;
-            clip-path: polygon(0.5% 1%, 100% 0, 94.5% 100%, 2% 100%);
-            margin-top: 3.8vh;
-            border: 0;
-        }
-
-        .door:hover {
-            opacity: 30%;
-            cursor: pointer;
-        }
-
-        .nav-btn {
-            width: 6vh;
-            height: 6vh;
-            margin-top: 23vh;
-            text-align: center;
-            padding: 0;
-            background-color: transparent;
-            border: 0;
-            cursor: pointer;
-            position: relative;
-            right: 7px;
-        }
-
-        .nav-btn span {
-            font-size: 7.5vh;
-            margin-top: -5vh;
-            color: #FED9D1;
-            text-shadow: 0 0.3vh 0.01vh rgb(0, 0, 0, 0.4), 0 0 2vh rgb(255, 255, 255, 0.5);
-        }
-
-        .nav-btn span {
-            transition: transform 0.3s; 
-        }
-
-        .nav-btn:hover {
-            transform: scale(1.2); 
-        }
-
-
-    </style>   
-            {% include 'navbar.html' %}  
-
-</head>
-<body>
-    <div class="container">
+    <div class="container" style="background-image: url({% static 'img/school-back.jpg' %});">
         <div class="container2">
             <div class="wall">
             <a id="current-class" onclick="updateClassAndURL()">
@@ -122,43 +14,24 @@
             </a>            
             
             <div class="doors">
-                <button id="left-class" class="prev nav-btn" onclick="changeClassroom('previous')">
+                <button id="left-class" class="prev nav-btn" style="width: 6vh;height: 6vh;margin-top: 23vh;" onclick="changeClassroom('previous')">
                     <span>◄</span>
                 </button>
                 <button id="classLink" class="door" onclick="redirectToClassroom()">                    
                 </button>
-                <button id="right-class" class="next nav-btn" onclick="changeClassroom('next')">
+                <button id="right-class" class="next nav-btn" style="width: 6vh;height: 6vh;margin-top: 23vh;" onclick="changeClassroom('next')">
                     <span>►</span>
                 </button>
             </div>
         </div>
         </div>
     </div>
-   
+
+{% endblock %}
+{% block extra_scripts %}
 <script>
-    const classroomName = document.querySelector('#classname'); 
-    let currentClassroomIndex = 0;
-    const classrooms = [{% for classroom in classrooms %}{ id: {{ classroom.id }}, name: "{{ classroom.name }}" }{% if not forloop.last %},{% endif %}{% endfor %}];
-
-    function updateClassroomName() {
-        classroomName.textContent = classrooms[currentClassroomIndex].name;
-    }
-
-    function redirectToClassroom() {
-        const classroomId = classrooms[currentClassroomIndex].id;
-        window.location.href = `/classrooms/${classroomId}/topics/`;
-    }
-
-    function changeClassroom(direction) {
-        if (direction === 'next') {
-            currentClassroomIndex = (currentClassroomIndex + 1) % classrooms.length;
-        } else if (direction === 'previous') {
-            currentClassroomIndex = (currentClassroomIndex - 1 + classrooms.length) % classrooms.length;
-        }
-        updateClassroomName(); 
-    }
-</script>
-
-
-</body>
-</html>
+const classroomName = document.querySelector('#classname'); 
+let currentClassroomIndex = 0;
+const classrooms = [{% for classroom in classrooms %}{ id: {{ classroom.id }}, name: "{{ classroom.name }}" }{% if not forloop.last %},{% endif %}{% endfor %}];
+</script> 
+{% endblock %} 

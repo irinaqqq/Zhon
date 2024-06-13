@@ -1,0 +1,28 @@
+{% load static %} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>{% block title %}QMath{% endblock %}</title> 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    {% block extra_head %}{% endblock %} 
+</head> 
+<body> 
+    <header> 
+        {% include 'navbar.html' %} 
+    </header> 
+     
+    <main> 
+        {% block content %} 
+        <!-- Content will be injected here --> 
+        {% endblock %} 
+    </main> 
+ 
+    <script src="{% static 'js/main.js' %}"></script> 
+    <script  src="{% static 'TweenMax.min.js' %}"></script> 
+    <script src="{% static 'MorphSVGPlugin.js' %}"></script> 
+    <script  src="{% static '/scripts/script.js' %}"></script> 
+    {% block extra_scripts %}{% endblock %} 
+</body> 
+</html>

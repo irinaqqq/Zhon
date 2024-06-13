@@ -6,18 +6,20 @@ from django.conf import settings
 
 def generate_filename(instance, filename):
     extension = filename.split('.')[-1]
-    # Generate a unique filename using UUID
     new_filename = f"{uuid.uuid4().hex}.{extension}"
     return os.path.join('profile_pic', new_filename) 
 
 
 def generate_filename2(instance, filename):
     extension = filename.split('.')[-1]
-    # Generate a unique filename using UUID
     new_filename = f"{uuid.uuid4().hex}.{extension}"
     return os.path.join('topic_images', new_filename)
 
 
+def generate_video_filename(instance, filename):
+    extension = filename.split('.')[-1]
+    new_filename = f"{uuid.uuid4().hex}.{extension}"
+    return os.path.join('topic_videos', new_filename)
 
 # class Task(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -33,6 +35,11 @@ class Classroom(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def total_tasks(self):
+        return self.task_set.count()
+
     
 class Topic(models.Model):
     name = models.CharField(max_length=100)
@@ -40,6 +47,8 @@ class Topic(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     images = models.ManyToManyField('Image', blank=True)
+    videos = models.ManyToManyField('Video', blank=True)
+
     def __str__(self):
         return self.name
     
@@ -105,4 +114,26 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image.name
+
+class UserSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    login_time = models.DateTimeField(auto_now_add=True)
+    logout_time = models.DateTimeField(null=True, blank=True)
+    
+    def get_session_duration(self):
+        if self.logout_time:
+            return (self.logout_time - self.login_time).total_seconds() / 60  # duration in minutes
+        return 0
+    
+
+
+class Video(models.Model):
+    video = models.FileField(upload_to=generate_video_filename, null=True, blank=True)
+
+    def __str__(self):
+        return self.video.name
+
+
+
+
 

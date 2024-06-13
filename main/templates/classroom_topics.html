@@ -1,179 +1,206 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ classroom.name }} Topics</title>
+{% block title %}{{ classroom.name }}{% endblock %}
+
+{% block content %}
     <style>
-        .container {
-            background: linear-gradient(0deg, rgba(152,179,148,1) 0%, rgba(212,251,207,1) 100%);
-            z-index: 1;        
-        }
-
-        .label {
-            position: fixed;
-            margin-left: 70vh;
-            margin-top: 8vh;
-            z-index: 1;
-            background: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.3) 100%) border-box;
-        }
-
-        .big-path {
-            width: 140vh;
-            height: 80vh;
-            margin: auto;
-        }
-
-        .path {
-            width: auto;
-            height: 65vh;
-            display: flex;
-            border: 2vh solid #E5BB8B;
-            border-right: 5.5vh solid #E5BB8B;
-            border-left: 5.5vh solid #E5BB8B;
-            background-color: #423A52;
-            padding: 5vh 10vh;
-            box-shadow: 1vh 1vh 0.1vh rgb(0, 0, 0, 0.3);
-            overflow-x: scroll;
-        }
-
-        .path::-webkit-scrollbar {
-            scrollbar-height: 60vh;
-            margin-right: 1vh;
-            width: 2vh;
-        }
-
-        .path::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
-
-        .path::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 5vh; 
-            border: 0.2vh rgba(0, 0, 0, 0.3) solid;
-        }
-
-        .path::-webkit-scrollbar-button {
-            background-color: transparent; 
-        }
-
-        .path::-webkit-scrollbar-corner {
-            background-color: #f1f1f1; 
-        }
-
-        .path::-webkit-scrollbar-track-piece:start {
-            background: transparent;
-            margin-top: 20vh;
-        }
-
-        .cl-card {
-            height: 21vh;
-            min-width: 21vh;
-            background-color: white;
-            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cl-card a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .card {
-            height: 19.4vh;
-            width: 19.4vh;
-            background-color: grey;
-            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
-        }
-
-        .card-btn {
-            background-color: #187AF6;
-            height: 5.7vh;
-            width: 5.7vh;
-            border-radius: 5vh;
-            border: 0.6vh solid white;
-        }
-
-        .cl-class-out {
-            height: 30.5vh;
-            min-width: 21vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .test {
-            width: 21.9vh;
-            height: 37.9vh;
-            background-color: grey;
-            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-        }
-
-        .cl-test {
-            width: 23.5vh;
-            height: 39.5vh;
-            background-color: white;
-            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cl-test-out {
-            min-width: 35.5vh;
-            height: 39.5vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-left: 10vh;
-            margin-top: 13vh;
-        }
-
-
-
-        .hidden {
-            display: none;
-        }
-
-        .cl-test-out {
-        width: calc(100% - 60px); /* Вычтите отступ слева из ширины блока */
-        display: flex;
-        justify-content: center;
-        margin-top: 10vh;
-        padding-left: 60px; /* Оставьте отступ слева */
-    }
-
-
     .label {
-        width: 45vh;
-        height: 10.5vh;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
-        margin-left: 50%; 
+        background: #ffcd2c;
+        height: 7vh;
+        width: 30vh;
+        margin-left: 70vh;
         transform: translateX(-50%);
-        position: relative;
         border-bottom-left-radius: 6vh;
         border-bottom-right-radius: 6vh;
-        border-top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: absolute;
+        top: 7vh;
     }
 
     .label h2 {
         font-family: Hombre; 
         font-size: 3.5vh;
-        opacity: 80%;
-        letter-spacing: 0.2vh;
+        padding: 1rem;
+        color: #1265a9;
+        text-align: center;
+    }
+    .container-inner {
+            flex: 1;
+            padding-top: 16vh;
+            display: flex;
+            justify-content: center;
+            overflow-y: scroll;
+    }
+    .mycard{
+        width: 200px;
+        height: 200px;
+        margin: 2rem;
+        background-image: url('{% static 'images/class2.png' %}'); 
+        background-size: cover; 
+        background-position: center;
+        
+    }
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    .cards-wrapper {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Выравниваем по верху */
+    padding-top: 20vh; /* Отступ сверху */
+    overflow-y: auto; /* При необходимости добавьте вертикальную прокрутку */
+    }
+
+    .cards {
+    display: grid;
+    grid-template-columns: 15rem 15rem; /* Два столбца по 40vh */
+    grid-auto-rows: 15vh; /* Высота строки 40vh, можно менять по необходимости */
+    grid-gap: 55vh;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8vh;
+}
+    .card_item:nth-child(even) {
+        transform: translateY(30vh);
+    }
+    .card_item {
+    -ms-flex-preferred-size: calc(33.33333% - 30px);
+    flex-basis: calc(33.33333% - 30px);
+    margin: 0 15px 30px;
+    overflow: hidden;
+    border-radius: 28px;
+    clip-path: polygon(14% 8%, 96% 11%, 97% 89%, 13% 91%);
+    
+    }
+    .card-item_link {
+    display: block;
+    padding: 30px 20px;
+    box-shadow: 0 5px 1px rgb(0, 0, 0, 0.4), inset 3px 5px 1px rgb(255, 255, 255, 0.4);
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    height: 20vh;
+    
+    }
+    .card-item_link:hover,
+    .card-item_link:hover .card-item_date {
+    text-decoration: none;
+    color: #FFF;
+    }
+    .card-item_link:hover .card-item_bg {
+    -webkit-transform: scale(10);
+    -ms-transform: scale(10);
+    transform: scale(10);
+    }
+    .card-item_title {
+    /* height: 10 vh; */
+    margin: -15px -20px 0 0;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 3vh;
+    color: #1265a9;
+    z-index: 2;
+    position: relative;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Максимальное количество строк */
+    -webkit-box-orient: vertical;
+    padding: 1rem;
+    }
+    .card-item_date-box, .card-item_classroom{ 
+    font-size: 18px;
+    color: #FFF;
+    z-index: 2;
+    position: relative;
+    /* margin-top: 2vh; */
+    }
+    .card-item_date {
+    font-weight: bold;
+    color: #f9b234;
+
+    -webkit-transition: color .5s ease;
+    -o-transition: color .5s ease;
+    transition: color .5s ease
+    }
+    .card-item_classroom{ 
+    position: absolute;
+    bottom: 10vh;
+    top: 14.5vh;
+    font-size: 4vh;
+    left: 30%;
+    color: #ffde5a;
+    }
+    .card-item_date-box{
+        position: absolute;
+        bottom: 2vh;
+    }
+    .card-item_bg {
+    height: 128px;
+    width: 128px;
+    background-color: #f9b234;
+
+    z-index: 1;
+    position: absolute;
+    top: -75px;
+    right: -75px;
+
+    border-radius: 50%;
+
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    }
+    .card_item:nth-child(2n) .card-item_bg {
+    background-color: #3ecd5e;
+    }
+    .card_item:nth-child(3n) .card-item_bg {
+    background-color: #e44002;
+    }
+    .card_item:nth-child(4n) .card-item_bg {
+    background-color: #952aff;
+    }
+    .card_item:nth-child(5n) .card-item_bg {
+    background-color: #cd3e94;
+    }
+    .card_item:nth-child(6n) .card-item_bg {
+    background-color: #4c49ea;
+    }
+    .card-item_title {
+    text-align: center; /* Центрируем текст по горизонтали */
+    display: flex;
+    justify-content: center; /* Центрируем по горизонтали внутри flex-контейнера */
+    align-items: center; /* Центрируем по вертикали внутри flex-контейнера */
+    height: 100%; /* Устанавливаем высоту элемента, чтобы выравнять по высоте с родительским блоком */
+}
+    .card_item:nth-child(2n){
+        clip-path: polygon(3% 12%, 88% 10%, 87% 93%, 3% 89%);
+    }
+    .card_item:nth-child(2n) .card-item_title{
+        margin: -15px 15px 0 0;
     }
 
     </style>
-    {% include 'navbar.html' %}
-</head>
-<body>
-
-</body>
-</html>
+    <div class="container" style="display: flex; ">
+        <div class="label"><h2>{{ classroom.name }}</h2></div>
+        <div class="container-inner" style="background-position: right; background-image: url({% static 'images/path2.png' %}); background-size:cover;">
+            
+                <div class="cards">
+                {% for topic in topics %}
+                {% if forloop.counter0|divisibleby:2 %}
+                <div class="card_item" style="background-image: url({% static 'images/class3.png' %}); background-size:cover; background-position: center;">
+                    {% else %}
+                <div class="card_item" style="background-image: url({% static 'images/class4.png' %}); background-size:cover; background-position: center;">
+                    {% endif %}
+                    <a href="{% url 'topic_tasks' topic.id %}" class="card-item_link">
+                      <div class="card-item_bg"></div>
+                      <div class="card-item_title">
+                        {{ topic.name }}
+                      </div>
+                    </a>
+                  </div>
+                  {% endfor %}
+                </div>
+            </div>
+            
+    </div>
+{% endblock %}

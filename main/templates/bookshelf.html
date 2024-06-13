@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кітап сөресі</title>
     <style>
-        body {
+        /* body {
+            background-position: center;
+            background-size: cover;
             overflow: hidden;
-        }
+        } */
 
         .container {
-            background-color: #FFF6E5;
-            z-index: -1000;
+            background-image: url(/static/img/profile-back-dark.jpg);
+            /* background-position: center;
+            background-size: cover;
+            z-index: -10000;
             border-bottom: 0;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow-y: auto; */
+            /* overflow-x: hidden; */
         }
 
         .container::-webkit-scrollbar {
@@ -32,7 +36,7 @@
         /* Styles for scrollbar thumb */
         .container::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 5vh; 
+            border-radius: 5vh;
             border: 0.2vh #bdbdbd solid;
         }
 
@@ -57,41 +61,53 @@
             position: fixed;
             width: 140vh;
             height: 19.5vh;
-            background-image: url("{% static 'img/back-wood.jpg' %}");
-            background-size: cover;
-/*            background-position: center;*/
-            border-bottom: 0.33vh solid #826762;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            background-color: #077B7B;
+            border-bottom: 0.33vh solid #066565;
             box-shadow: 0 0 1.67vh rgb(0, 0, 0, 0.5);
+            color: rgba(0,0,0,0.5);
+            font-size: 5vh;
+
+            span {
+                font-family: Hombre;
+                margin-bottom: 2vh;
+            }
         }
 
         .books-table {
-/*            background-color: aquamarine;*/
-            width: 130vh;
+            width: 135vh;
             min-height: 20vh;
-            margin-top: 20vh;
-            padding: 2vh;
+            padding: 2vh
         }
+        .container-inner {
+            flex: 1;
+            padding-top: 10vh;
+            display: flex;
+            justify-content: center;
+            overflow-y: scroll;
+    }
 
         .books-row {
             width: 130vh;
-/*            background-color: indigo;*/
             display: flex;
         }
 
         .books-col-name {
-/*            background-color: burlywood;*/
             width: 26vh;
             min-height: 10vh;
             margin-top: 5vh;
             text-align: right;
+            color: white;
         }
 
         .books-col {
-/*            background-color: pink;*/
             width: 104vh;
             display: flex;
             justify-content: start;
             flex-wrap: wrap;
+            /* display: block; */
         }
 
         .book {
@@ -126,36 +142,49 @@
             transform: translateX(-100%);
         }
     </style>
-        {% include 'navbar.html' %}  
+        {% include 'navbar.html' %}
 
 </head>
 <body>
-    <div class="container">
-
-
-
-        <div class="back-wood"></div>
-
-        <div class="books-table">
-            <div class="books-row">
-                <div class="books-col-name">
-                    <h2>{{ classroom.name }}</h2>
-                </div>
-                <div class="books-col">
-                    {% for topic in topics %}
-                    <a href="{% url 'book' topic.id %}">
-                        <div class="book">
-                            <div style="background-image: url('{{ topic.images.first.image.url }}');"></div>
-                            <h3 class="book-name">{{ topic.name }}</h3>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
+    <div class="container" style="display: flex;">
+    <div class="container-inner">
+    <div class="books-table">
+        <div class="books-row">
+            <div class="books-col-name">
+                <h2>Комикстер</h2>
+            </div>
+            <div class="books-col">
+                {% for topic in topics %}
+                <a href="{% url 'book' topic.id %}">
+                    <div class="book">
+                        <div style="background-image: url('{{ topic.images.first.image.url }}'); background-size: cover;
+                        background-position: center;"></div>
+                        <h3 class="book-name">{{ topic.name }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
         </div>
-    </div>  
 
-    
+        <div class="books-row">
+            <div class="books-col-name">
+                <h2>Бейнелер</h2>
+            </div>
+            <div class="books-col">
+                {% for topic in topics %}
+                <a href="{% url 'video' topic.id %}">
+                    <div class="book">
+                        <!-- <div style="background-image: url('{{ topic.videos.first.video.url }}');"></div> -->
+                        <h3 class="book-name">{{ topic.name }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
 
 
     <script>

@@ -29,37 +29,63 @@ def classroom_topics(request, classroom_id):
 def topic_tasks(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     tasks = topic.task_set.all()
-    return render(request, 'topic_tasks.html', {'topic': topic, 'tasks': tasks})
-
-def task_text(request, task_id):
-    try:
-        task = Task.objects.get(pk=task_id)
-    except Task.DoesNotExist:
-        raise Http404("Task does not exist")
     result = None
+    selected_task = None
+
     if request.method == 'POST':
-        if task.question_type == 'OQ':  # Проверяем, что вопрос открытый
+        task_id = request.POST.get('task_id')
+        selected_task = get_object_or_404(Task, pk=task_id)
+        
+        if selected_task.question_type == 'OQ':
             user_answer = request.POST.get('user_answer')
-            if user_answer == getattr(task, task.correct_answer):  # Проверяем ответ пользователя
+            if user_answer == selected_task.correct_answer:
                 result = 'Correct!'
-                # print('Correct answer submitted')
                 if request.user.is_authenticated:
-                    # print('Calling handle_correct_answer')
-                    handle_correct_answer(request.user, task)
+                    handle_correct_answer(request.user, selected_task)
             else:
                 result = 'Incorrect!'
         else:
             selected_choice = request.POST.get('choice')
-            if selected_choice == getattr(task, task.correct_answer):  # Используем getattr для получения значения поля
+            if selected_choice == selected_task.correct_answer:
                 result = 'Correct!'
-                # print('Correct choice selected')
                 if request.user.is_authenticated:
-                    # print('Calling handle_correct_answer')
-                    handle_correct_answer(request.user, task)
+                    handle_correct_answer(request.user, selected_task)
             else:
                 result = 'Incorrect!'
 
-    return render(request, 'task_text.html', {'task': task, 'result': result})
+    return render(request, 'topic_tasks.html', {
+        'topic': topic,
+        'tasks': tasks,
+        'result': result,
+        'selected_task': selected_task
+    })
+
+def submit_answer(request):
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        selected_task = get_object_or_404(Task, pk=task_id)
+        result = None
+        
+        if selected_task.question_type == 'OQ':
+            user_answer = request.POST.get('user_answer')
+            if user_answer.strip().lower() == selected_task.correct_answer.strip().lower():
+                result = 'Дұрыс!'
+                if request.user.is_authenticated:
+                    handle_correct_answer(request.user, selected_task)
+            else:
+                result = 'Қате!'
+        elif selected_task.question_type == 'MCQ':
+            selected_choice = request.POST.get('choice')
+            if selected_choice == selected_task.correct_answer:
+                result = 'Дұрыс!'
+                if request.user.is_authenticated:
+                    handle_correct_answer(request.user, selected_task)
+            else:
+                result = 'Қате!'
+        
+        return JsonResponse({'result': result})
+
+    return JsonResponse({'result': 'Error'}, status=400)
 
 def handle_correct_answer(user, task):
     # Get or create the Custom object for the user
@@ -149,9 +175,10 @@ def profile_view(request):
     # Get the user's profile information
     recalculate_all_progress()
     profile_info = Custom.objects.get(user=request.user)
-    # print(profile_info)
+    print("123")
+    print(profile_info)
     classroom_progress = ClassroomProgress.objects.filter(user=request.user)
-    # print(classroom_progress)
+    print(classroom_progress)
 
     start_date = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end_date = start_date.replace(day=1, month=start_date.month+1) - timedelta(days=1)
@@ -166,6 +193,13 @@ def get_tasks_count_by_date(user, start_date, end_date):
     ).values('completion_date').annotate(count=Count('id'))
 
     return tasks_count_by_date
+
+
+
+
+from django.shortcuts import render
+from .utils import get_total_time_spent
+
 
 @staff_member_required(login_url='/')
 def admin_panel(request):
@@ -366,7 +400,14 @@ def bookshelf_view(request, classroom_id):
 def book_view(request, topic_id):
     topic = get_object_or_404(Topic, pk=topic_id)
     images = topic.images.all()
+
     return render(request, 'book.html', {'topic': topic, 'images': images})
+
+def video_view(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    videos = topic.videos.all()
+    return render(request, 'video.html', {'topic': topic, 'videos': videos})
+
 
 
 

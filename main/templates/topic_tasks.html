@@ -1,11 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
+{% block title %}{{ classroom.name }}{% endblock %}
+
+{% block content %}
     <style>
         body {
             overflow: hidden;
@@ -15,17 +12,21 @@
         }
 
         .tools {
-            width: 6.25vh;
-            height: 15vh;
-            background-color: pink;
+            position:absolute;
+            width: 37px;
+            height: 12vh;
+            background-color: #ffcd2c;
+;
             float: left;
-            margin-top: 10%;
+            margin-top: 9%;
+            margin-left: -98%;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
             border-radius: 0 2vh 2vh 0;
             box-shadow: 0.8vh 0.8vh 0.1vh rgb(0, 0, 0, 0.4);
+            z-index: 3;
         }
 
         .tools button {
@@ -39,14 +40,17 @@
         }
 
         .board {
-            width: 114vh;
-            height: 60vh;
-            background-color: white;
-            margin-left: 9vh;
-            margin-top: 9vh;
+            width: 55vh;
+            height: 29vh;
+            background-color: #0f4343;
+            margin-left: -9vh;
+            margin-top: 13vh;
             position: fixed;
-            overflow-y: scroll;
-            padding: 4vh;
+            /* clip-path: polygon(0% 3%, 100% 3%, 98% 99%, 1% 100%); */
+            clip-path: polygon(0 0, 0 0, 0 3%, 100% 3%, 100% 5%, 100% 0%, 98% 100%, 49% 100%, 94% 100%, 5% 100%, 3% 94%, 1% 93%);
+            z-index: 1;
+        }
+        .board:hover{
         }
 
         .cls-ins-btn button {
@@ -91,7 +95,6 @@
         }
 
         .lbl-nums {
-            position: fixed;
             display: flex;
             width: 25vh;
             justify-content: space-evenly;
@@ -173,11 +176,9 @@
         }
 
         canvas {
-            width: 122vh;
-            height: 63vh;
-            position: fixed;
-            margin-top: -7vh;
-            margin-left: -4vh;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
         }
 
 
@@ -327,238 +328,432 @@
     }
 
     .label {
-        width: 45vh;
-        height: 10.5vh;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%) border-box;
-        margin-left: 50%; 
+        background: #ffcd2c;
+        height: 11vh;
+        width: 30vh;
+        margin-left: 70vh;
         transform: translateX(-50%);
-        position: relative;
         border-bottom-left-radius: 6vh;
         border-bottom-right-radius: 6vh;
-        border-top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: absolute;
+        top: 9vh;
+        z-index: 12;
     }
 
     .label h2 {
         font-family: Hombre; 
         font-size: 3.5vh;
-        opacity: 80%;
-        letter-spacing: 0.2vh;
+        padding: 0.5rem;
+        color: #1265a9;
+        text-align: center;
+        z-index: 13;
+    }
+    .container-inner {
+            flex: 1;
+            padding-top: 20vh;
+            display: flex;
+            justify-content: center;
+    }
+    .b {
+        color: white;
+        padding-top: 32%;
+        z-index: 6;
+        position: fixed;
+        font-size: 4vh;
+        /* align-content: center; */
+    }
+    .c{
+        color: white;
+        font-size: 5.5vh;
+        height: 13vh;
+        position: fixed;
+        align-content: center;
+    }
+    .task {
+        display: none;
+    }
+
+    .task.active {
+        display: block;
+    }
+    .quiz-card{
+        background-color: #1265a9bc;
+        width: 100%;
+        height: 10vh;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+    }
+    .task-form{
+    margin-top: 35vh;
+    background-color: transparent;
+    height: auto;
+    font-size: 2rem;
+    }
+    label{
+        padding: 1rem;
+    }
+    .choices{
+        display: flex;
+        align-items: center;
+        background-color: #1265a9;
+        justify-content: center;
+        border: 5px solid #ffffff;
+        border-radius: 1rem;
+    }
+    .choices.red {
+        background-color: #f66464; /* Красный цвет */
+    }
+
+    .choices.blue {
+        background-color: #7095b7; /* Синий цвет */
+    }
+
+    .choices.green {
+        background-color: #55b355; /* Зеленый цвет */
+    }
+    .col-md-6{
+        margin: 1rem;
+    }
+    .row{
+        width: 50%;
+        
+    }
+    .rows{
+        display: flex;
+        width: 100%;
+    }
+    .btn{
+        background-color: #ffcd2c;
+        padding: 1rem;
+        border: none;
+        font-size: 2rem;
+        border-radius: 1rem;
+    }
+    .selected {
+        border: 5px solid #ffcd2c; /* Пример стиля рамки */
+    }
+    input{
+        display: none;
+    }
+    label{
+        color: #ffcd2c;
+    }
+    .choices:hover{
+        transform: scale(1.05);
+    }
+    .result{
+    position: absolute;
+    left: 45%;
+    top: 55%;
+    z-index: 12;
+    color: white;
+    font-size: 3rem;
     }
     </style>
 
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="display: flex; ">
 
-
-        <div class="label">
-            <a href="{% url 'classroom' %}" style="margin-left: -10vh;">↩</a>
-            <a href="{% url 'library' %}" style="margin-left: 2vh;"><img src="{% static 'img/mini-lib.svg' %}"></a>
-            <h2 style="color: white; margin-left: 3vh;">Сабақ</h2>
-            <div class="lbl-nums">
-                <div class="active"><a href="#">1</a></div>
-                <div><a href="#">2</a></div>
-                <div><a href="#">3</a></div>
-                <div><a href="#">4</a></div>
-                <div><a href="#">5</a></div>
+        <div class="label" style="">
+            <!-- <a href="{% url 'classroom' %}" style="margin-left: -10vh;">↩</a>
+            <a href="{% url 'library' %}" style="margin-left: 2vh;"><img src="{% static 'img/mini-lib.svg' %}"></a> -->
+            <a href="{% url 'library' %}" style="text-decoration: none;"><h2 style="">Сабақ</h2></a>
+            <div class="lbl-nums" style="margin: auto;">
+                {% for task in tasks %}
+                <div class="task-link {% if forloop.first %}active{% endif %}" data-task-id="{{ task.id }}">
+                    <a href="#">{{ forloop.counter }}</a>
+                </div>
+                {% endfor %}
             </div>
         </div>
-
-        <div class="tools">
-            <button id="pencil" onclick="init()"><img src="{% static 'img/pencil.png' %}"></button>
-            <button value="erase" id="clr" onclick="erase()"><img src="{% static 'img/eraser.png' %}"></button>
-
-        </div>
-        <div class="board">
-            <p class="brd-task-text"></p>
-            <div class="brd-task">
-            </div>
-            <canvas id="can" width="870" height="450"></canvas>
-
-            <div class="brd-tools">
-                <button style="margin-left: 17vh;">↺</button>
-                <button>↶</button>
-                <button>↷</button>
-                <button id="submit">Тапсыру</button>
-            </div>
-        </div>
-
-        <div class="ins-open">
-            <button style="font-family: Hombre; font-size: 5.5vh;" onclick="openClsIns()">i</button>
-        </div>
-
-        <div id="cls-ins" class=" overlay">
-            <div class="overlay-content">
-                <div class="outer-ins">
-                    <div><a href="javascript:void(0)" class="closebtn" onclick="closeClsIns()" style="font-family: Chelsea+Market;">&times;</a></div>
-                    <div class="inner-ins">
-                        <h2 style="font-size: 5vh; font-family: Hombre;">? Көмек</h2>
-                        <div class="bubble">
-                            <p style="font-size: 4vh; font-family: Hombre;">Қош келдіңіз!</p>
+        <div class="container-inner">
+            <div class="task-content" style="width: 100%;">
+                {% for task in tasks %}
+                <li class="task {% if forloop.first %}active{% endif %}" data-task-id="{{ task.id }}">
+                    <div class="quiz-card">
+                    <h3 style="color: #ffcd2c;">{{ task.question }}</h3>
+                    </div>
+                    <div class="result">
+                        <p id="result-{{ task.id }}"></p>
                         </div>
-                        <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
-                        <div class="inst-text-box">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
-                                <br>
-                                Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
-                                <br>
-                                Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
-                                Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
-                                <br>
-                                Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
-                                <br>
-                                Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
-                                <br>
-                                Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
-                                <br>
-                                Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
-                            </p>
+                    {% if task.question_type == 'MCQ' %}
+                    <form id="form-{{ task.id }}" class="task-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <div class="rows">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="choices" onclick="handleChoice(this)">
+                                    <input type="radio" id="choice1-{{ task.id }}" name="choice" value="choice1">
+                                    <label for="choice1-{{ task.id }}">{{ task.choice1 }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="choices red" onclick="handleChoice(this)">
+                                    <input type="radio" id="choice2-{{ task.id }}" name="choice" value="choice2">
+                                    <label for="choice1-{{ task.id }}">{{ task.choice2 }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="choices blue" onclick="handleChoice(this)">
+                                    <input type="radio" id="choice3-{{ task.id }}" name="choice" value="choice3">
+                                    <label for="choice1-{{ task.id }}">{{ task.choice3 }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="choices green" onclick="handleChoice(this)">
+                                    <input type="radio" id="choice4-{{ task.id }}" name="choice" value="choice4">
+                                    <label for="choice1-{{ task.id }}">{{ task.choice4 }}</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                        <div class="cls-ins-btn">
-                            <button type="button" onclick="location.href='{% url 'library' %}'" style="width: 7vh; height: 7vh;"><img src="{% static 'img/mini-lib.png' %}"></button>
-                            <button class="cls-start" onclick="closeClsIns()">Бастау</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <h1>Tasks for Topic: {{ topic.name }}</h1>
-
-        <ul>
-            {% for task in tasks %}
-                <li>{{ task.name }} - {{ task.description }}</li>
+                        <button type="button" onclick="submitAnswer({{ task.id }})" class="btn btn-primary" style="position: unset;">Тексеру</button>
+                    </form>
+                    
+                    {% elif task.question_type == 'OQ' %}
+                    <form id="form-{{ task.id }}" class="task-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <input type="text" name="user_answer">
+                        <button type="button" onclick="submitAnswer({{ task.id }})">Тексеру</button>
+                    </form>
+                    {% endif %}
+                </li>
             {% endfor %}
-        </ul>
-      
+            </div>
+
+            <div class="tools">
+                <button id="pencil" onclick="init()"><img src="{% static 'img/pencil.png' %}"></button>
+                <button value="erase" id="clr" onclick="erase()"><img src="{% static 'img/eraser.png' %}"></button>
+    
+            </div>
+            <div class="board" style="z-index: 0;">
+                <canvas id="can" width="430" height="228"></canvas>
+            </div>
+
+  
+        </div>
     </div>
-
     <script>
-
-    document.addEventListener("DOMContentLoaded", function() {
-        var links = document.querySelectorAll('.lbl-nums a');
-        links.forEach(function(link, index) {
-            link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                var allDivs = document.querySelectorAll('.lbl-nums div');
-                allDivs.forEach(function(div) {
-                    div.classList.remove('active'); // Remove active class from all divs
+        function handleChoice(divElement) {
+            // Находим связанный с div input
+            var radioInput = divElement.querySelector('input[type=radio]');
+            
+            // Проверяем, не выбран ли уже этот input
+            if (!radioInput.checked) {
+                // Сбрасываем выбор всех radio в текущей группе
+                var radioGroupName = radioInput.name;
+                var radioInputs = document.querySelectorAll('input[name=' + radioGroupName + ']');
+                radioInputs.forEach(function(input) {
+                    input.checked = false;
                 });
-                // Add active class to the parent div of the clicked link
-                link.parentNode.classList.add('active');
-            });
-        });
-    });
-
-    var canvas, ctx, flag = false,
-        prevX = 0,
-        currX = 0,
-        prevY = 0,
-        currY = 0,
-        dot_flag = false;
-
-    var selectedColor = "black";
-    var selectedLineWidth = 2;
-    var pencilActive = false;
-
-    function init() {
-        if (pencilActive) {
-            canvas.removeEventListener("mousemove", findxy);
-            canvas.removeEventListener("mousedown", findxy);
-            canvas.removeEventListener("mouseup", findxy);
-            canvas.removeEventListener("mouseout", findxy);
-            pencilActive = false;
-        } else {
-            canvas = document.getElementById('can');
-            ctx = canvas.getContext("2d");
-            w = canvas.width;
-            h = canvas.height;
-            ctx.lineCap = "round"
-
-            canvas.addEventListener("mousemove", findxy);
-            canvas.addEventListener("mousedown", findxy);
-            canvas.addEventListener("mouseup", findxy);
-            canvas.addEventListener("mouseout", findxy);
-            pencilActive = true;
-        }
-    }
-
-    function color(obj) {
-        selectedColor = obj.style.backgroundColor;
-    }
-
-    function line(obj) {
-        switch (obj.id) {
-            case "two":
-                selectedLineWidth = 2;
-                break;
-            case "three":
-                selectedLineWidth = 6;
-                break;
-            case "four":
-                selectedLineWidth = 10;
-                break;
-        }
-    }
-
-    function draw() {
-        ctx.beginPath();
-        ctx.moveTo(prevX, prevY);
-        ctx.lineTo(currX, currY);
-        ctx.strokeStyle = selectedColor;
-        ctx.lineWidth = selectedLineWidth;
-        ctx.stroke();
-        ctx.closePath();
-    }
-
-    function erase() {
-        var m = confirm("Суретті өшіргіңіз келеді ме?");
-        if (m) {
-            ctx.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
-        }
-    }
-
-    function findxy(e) {
-        if (e.type == 'mousedown') {
-            prevX = currX;
-            prevY = currY;
-            currX = e.clientX - canvas.getBoundingClientRect().left;
-            currY = e.clientY - canvas.getBoundingClientRect().top;
-
-            flag = true;
-            dot_flag = true;
-            if (dot_flag) {
-                ctx.beginPath();
-                ctx.fillStyle = selectedColor;
-                ctx.fillRect(currX, currY, 2, 2);
-                ctx.closePath();
-                dot_flag = false;
+    
+                // Выбираем текущий input
+                radioInput.checked = true;
+    
+                // Добавляем класс 'selected' к div
+                divElement.classList.add('selected');
+                
+                // Убираем класс 'selected' у остальных div
+                var allChoices = document.querySelectorAll('.choices');
+                allChoices.forEach(function(choice) {
+                    if (choice !== divElement) {
+                        choice.classList.remove('selected');
+                    }
+                });
             }
         }
-        if (e.type == 'mouseup' || e.type == "mouseout") {
-            flag = false;
+    </script>
+    
+    <script>
+        function submitAnswer(taskId) {
+            var form = document.getElementById('form-' + taskId);
+            var formData = new FormData(form);
+        
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submit_answer/', true);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var resultElement = document.getElementById('result-' + taskId);
+                    resultElement.textContent = response.result;
+                } else {
+                    console.error('Error submitting answer.');
+                }
+            };
+        
+            xhr.onerror = function () {
+                console.error('Error submitting answer.');
+            };
+        
+            xhr.send(formData);
         }
-        if (e.type == 'mousemove') {
-            if (flag) {
+        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskLinks = document.querySelectorAll('.lbl-nums div');
+            const tasks = document.querySelectorAll('.task');
+            let currentTaskId = null;
+        
+            taskLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    console.log('Clicked task link:', this);
+        
+                    // Получаем ID текущей активной задачи
+                    if (currentTaskId === null) {
+                        // Если текущая задача еще не выбрана, берем ID из первой задачи
+                        currentTaskId = tasks[0].getAttribute('data-task-id');
+                    }
+        
+                    // Устанавливаем taskId для новой выбранной задачи
+                    const taskId = this.getAttribute('data-task-id');
+                    console.log('Task ID:', taskId);
+        
+                    // Удалить класс 'active' у всех ссылок
+                    taskLinks.forEach(l => l.classList.remove('active'));
+                    tasks.forEach(l => l.classList.remove('active'));
+                    // Добавить класс 'active' к текущей ссылке
+                    this.classList.add('active');
+        
+                    // Показать только выбранную задачу
+                    tasks.forEach(task => {
+                        const taskDataId = task.getAttribute('data-task-id');
+                        if (taskDataId === taskId) {
+                            task.classList.add('active');
+                        } else {
+                            task.classList.remove('active');
+                        }
+                    });
+        
+                    // Обновляем текущий taskId
+                    currentTaskId = taskId;
+                });
+            });
+        
+            // Показать первую задачу по умолчанию
+            if (taskLinks.length > 0) {
+                taskLinks[0].click();
+            }
+        });
+        </script>
+        
+    <script>
+        var canvas, ctx, flag = false,
+            prevX = 0,
+            currX = 0,
+            prevY = 0,
+            currY = 0,
+            dot_flag = false;
+    
+        var selectedColor = "white";
+        var selectedLineWidth = 3;
+        var pencilActive = false;
+    
+        function init() {
+            if (pencilActive) {
+                canvas.removeEventListener("mousemove", findxy);
+                canvas.removeEventListener("mousedown", findxy);
+                canvas.removeEventListener("mouseup", findxy);
+                canvas.removeEventListener("mouseout", findxy);
+                pencilActive = false;
+            } else {
+                canvas = document.getElementById('can');
+                ctx = canvas.getContext("2d");
+                w = canvas.width;
+                h = canvas.height;
+                ctx.lineCap = "round"
+    
+                canvas.addEventListener("mousemove", findxy);
+                canvas.addEventListener("mousedown", findxy);
+                canvas.addEventListener("mouseup", findxy);
+                canvas.addEventListener("mouseout", findxy);
+                pencilActive = true;
+            }
+        }
+    
+        function color(obj) {
+            selectedColor = obj.style.backgroundColor;
+        }
+    
+        function line(obj) {
+            switch (obj.id) {
+                case "two":
+                    selectedLineWidth = 2;
+                    break;
+                case "three":
+                    selectedLineWidth = 6;
+                    break;
+                case "four":
+                    selectedLineWidth = 10;
+                    break;
+            }
+        }
+    
+        function draw() {
+            ctx.beginPath();
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(currX, currY);
+            ctx.strokeStyle = selectedColor;
+            ctx.lineWidth = selectedLineWidth;
+            ctx.stroke();
+            ctx.closePath();
+        }
+    
+        function erase() {
+            var m = confirm("Суретті өшіргіңіз келеді ме?");
+            if (m) {
+                ctx.clearRect(0, 0, w, h);
+                document.getElementById("canvasimg").style.display = "none";
+            }
+        }
+    
+        function findxy(e) {
+            if (e.type == 'mousedown') {
                 prevX = currX;
                 prevY = currY;
                 currX = e.clientX - canvas.getBoundingClientRect().left;
                 currY = e.clientY - canvas.getBoundingClientRect().top;
-                draw();
+    
+                flag = true;
+                dot_flag = true;
+                if (dot_flag) {
+                    ctx.beginPath();
+                    ctx.fillStyle = selectedColor;
+                    ctx.fillRect(currX, currY, 2, 2);
+                    ctx.closePath();
+                    dot_flag = false;
+                }
+            }
+            if (e.type == 'mouseup' || e.type == "mouseout") {
+                flag = false;
+            }
+            if (e.type == 'mousemove') {
+                if (flag) {
+                    prevX = currX;
+                    prevY = currY;
+                    currX = e.clientX - canvas.getBoundingClientRect().left;
+                    currY = e.clientY - canvas.getBoundingClientRect().top;
+                    draw();
+                }
             }
         }
-    }
-    function openClsIns() {
-        document.getElementById("cls-ins").style.display = "block";
-    }
+        function openClsIns() {
+            document.getElementById("cls-ins").style.display = "block";
+        }
+    
+        function closeClsIns() {
+            document.getElementById("cls-ins").style.display = "none";
+        }
+        </script>
 
-    function closeClsIns() {
-        document.getElementById("cls-ins").style.display = "none";
-    }
-    </script>
-</body>
-</html>
+{% endblock %}

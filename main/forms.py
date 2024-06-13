@@ -30,11 +30,10 @@ class ClassroomForm(forms.ModelForm):
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ['name', 'description', 'classroom', 'images'] 
+        fields = ['name', 'description', 'classroom', 'images', 'videos'] 
 
     def __init__(self, *args, **kwargs):
         super(TopicForm, self).__init__(*args, **kwargs)
-        # Customize the classroom field
         self.fields['classroom'].queryset = Classroom.objects.all()
 
 

@@ -183,11 +183,8 @@
 <body>
     
     <div class="container">
-        
         <h1>Тақырыпты Өңдеу</h1>
-        
         <div class="container-inner">
-            
             <form method="post" enctype="multipart/form-data" id="paper">
                 {% csrf_token %}
                 <div class="form-row">
@@ -200,6 +197,7 @@
                 </div>
                 <textarea id="text" name="description" rows="4" style="height: 160px;">{{ form.description.value|default:'' }}</textarea>
                 {{ form.images }}
+                {{ form.videos }}
                 <button type="submit" name="save_topic" class="btn draw-border">Тақырыпты Сақтау</button>
                 <button type="submit" name="delete_topic" class="btn draw-border" value="{{ topic_id }}">Тақырыпты Жою</button>
             </form>

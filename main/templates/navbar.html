@@ -56,7 +56,7 @@
         transform: translateX(-50%);
         display: none;
         position: fixed;
-        z-index: 1;
+        z-index: 9999;
         top: 0;
         left: 0;
         background-color: rgb(0,0,0);
@@ -258,11 +258,17 @@
             transform: translateY(0);
         }
     }
+
+    .logo-image {
+            width: auto !important;
+            height: 5vh !important; 
+        }
+        
     </style>
 </head>
 <body>
     <div class="navbar" id="navbar">
-        <a href="{% url 'home' %}" class="hover-effect">Logo</a>
+        <a href="{% url 'home' %}" class="hover-effect"><img src="{% static 'img/logo-white.png' %}" alt="Logo" class="logo-image"></a>
         <a href="{% url 'classroom' %}" class="hover-effect">Мектеп</a>
         <a href="{% url 'library' %}" class="hover-effect">Кітапхана</a>
         <li>
@@ -306,20 +312,18 @@
                         <img src="{% static 'img/girl.jpg' %}" alt="girl" style="width: 17vh; height: 17vh;">
                         <div class="inst-text-box">
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus. 
+                                Алдымен экранның жоғарғы жағындағы навигацияны қарастырайық. 
                                 <br>
-                                Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere, eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. 
+                                Мектеп: сыныпта сіз жұлдыздар мен олжалар табу үшін әр тарауда сабақ ала аласыз.
                                 <br>
-                                Donec ut tortor blandit, sagittis diam eget, suscipit eros. Quisque at magna neque. 
-                                Nulla faucibus mi at nunc mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est orci, vel egestas felis dictum nec. 
+                                Кітапхана: кітапханада сіз оқуға болатын онлайн Академия нұсқаулықтары бар! 
                                 <br>
-                                Phasellus porta ex sit amet turpis finibus, sed vestibulum nisl efficitur. 
+                                Анықтама: Анықтама мәзірінде сіз тұрған бет туралы пайдалы ақпарат бар. 
                                 <br>
-                                Praesent ultrices diam enim. In ut tellus sed sem placerat sollicitudin. 
+                                Параметрлер: Параметрлер дыбыстар мен музыка сияқты геймплейдің негізгі элементтерін реттеуге мүмкіндік береді. 
                                 <br>
-                                Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor, diam nunc auctor nisl, quis placerat magna erat et odio. 
+                                Бүгін аяқтағаннан кейін сіз жоғарғы оң жақ бұрышта жүйеден шыға аласыз. 
                                 <br>
-                                Phasellus feugiat turpis quis mollis lacinia. Sed ac orci et nisi venenatis pharetra ac non arcu.
                             </p>
                         </div>
                     </div>

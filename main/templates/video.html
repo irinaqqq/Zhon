@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кітап</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            background-image: url(/static/img/profile-back-dark.jpg);
+            overflow-x: hidden;
+
+            height: 100vh;
+            padding: 20px; 
+            align-content: center;       
+        }
+
+        .container-inner {
+            text-align: center; 
+        }
+
+        .container h1 {
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            margin: 10px;
+        }
+    </style>
+            {% include 'navbar.html' %}  
+
+</head>
+<body>
+    <div class="container">
+        <h1>{{ topic.name }}</h1>
+        <div class="container-inner">
+            {% for video in videos %}
+                <video controls style="width: 100%;">
+                    <source src="{{ video.video.url }}" type="video/mp4">
+                    Сіздің браузеріңіз бейне тегті қолдамайды.
+                </video>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <script>
+
+
+    </script>
+</body>
+</html>

@@ -181,7 +181,10 @@ def profile_view(request):
     print(classroom_progress)
 
     start_date = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    end_date = start_date.replace(day=1, month=start_date.month+1) - timedelta(days=1)
+    if start_date.month == 12:
+        end_date = start_date.replace(year=start_date.year + 1, month=1, day=1) - timedelta(days=1)
+    else:
+        end_date = start_date.replace(day=1, month=start_date.month + 1) - timedelta(days=1)
 
     return render(request, 'profile.html', {'profile_info': profile_info, 'classroom_progress': classroom_progress})
 
